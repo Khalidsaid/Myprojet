@@ -257,7 +257,7 @@
                                 if (statut == 'OK') {
                                     var dist = element.distance.value;
                                     var dure = element.duration.text;
-                                    document.getElementById('distance').innerHTML = '<b>' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
+                                    document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
                                     if (window.prixtotal > 0)
                                     {
                                         prix = window.prixtotal;
@@ -265,8 +265,8 @@
                                     {
                                         prix = Math.round(parseInt(dist / 1000) * window.price);
                                     }
-                                    document.getElementById('duree').innerHTML = '<b>' + dure + '<b>';
-                                    document.getElementById('prix').innerHTML = '<b>Tarif : ' + prix + ' €<b>';
+                                    document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
+                                    document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
                                     window.prixtotal = 0;
                                 } else if (statut == 'NOT_FOUND') {
                                     alert("impossible de localiser l'adresse d'arrivée");
@@ -358,18 +358,29 @@
 
                         <header>
                             <h2 style="color: #1E4F93; font-size: 25px; margin-bottom: 20px;">Réservez votre véhicule dès maintenant</h2>
-                          
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <div class="input-group-btn">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i> <i class="fa fa-bus" style="color: #1E4F93"></i> <i class="fa fa-map-marker" style="color: #1E4F93"></i></button>
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i> <i class="fa fa-bus" style="color: #1E4F93"></i></button>
                                             <ul class="dropdown-menu">
-                                                <li><a href="#">Action</a></li>
-                                                <li><a href="#">Another action</a></li>
-                                                <li><a href="#">Something else here</a></li>
+                                                <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
                                                 <li role="separator" class="divider"></li>
-                                                <li><a href="#">Separated link</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Terminal 2D, Aéroport Charles-de-Gaulle, Roissy-en-France, France'">Charles De Gaulle - Roissy</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Aéroport de Paris-Orly, Orly, France'">Orly</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Aéroport de Beauvais'">Beauvais</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Aéroport de Paris - Le Bourget, Le Bourget, France'">Le Bourget</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li><b style="padding-left: 5px;">Gares à Paris</b></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Gare Saint-Lazare, Paris, France'">Saint-Lazare</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Gare Montparnasse, Boulevard de Vaugirard, Paris, France'">Montparnasse</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Gare de Lyon, Place Louis Armand, Paris, France'">Lyon</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Paris Gare de le Est, Paris, France'">Est</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Gare du Nord, Rue de Dunkerque, Paris, France'">Nord</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Quai de Austerlitz, Quartier de la Gare, Paris, France'">Austerlitz</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('depart').value='Gare de Paris-Bercy, Boulevard de Bercy, Paris, France'">Bercy</a></li>
                                             </ul>
                                         </div><!-- /btn-group -->
                                         <input step="border-left-width: 0px;" type="text" id="depart" size="35" name="depart" class="form-control" placeholder="Adressse de départ" onkeypress="javascript:showMap()" />
@@ -378,13 +389,24 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <div class="input-group-btn">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i> <i class="fa fa-bus" style="color: #1E4F93"></i> <i class="fa fa-map-marker" style="color: #1E4F93"></i></button>
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i> <i class="fa fa-bus" style="color: #1E4F93"></i></button>
                                             <ul class="dropdown-menu">
-                                                <li><a href="#">Action</a></li>
-                                                <li><a href="#">Another action</a></li>
-                                                <li><a href="#">Something else here</a></li>
+                                                <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
                                                 <li role="separator" class="divider"></li>
-                                                <li><a href="#">Separated link</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Terminal 2D, Aéroport Charles-de-Gaulle, Roissy-en-France, France'">Charles De Gaulle - Roissy</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Aéroport de Paris-Orly, Orly, France'">Orly</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Aéroport de Beauvais'">Beauvais</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Aéroport de Paris - Le Bourget, Le Bourget, France'">Le Bourget</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li><b style="padding-left: 5px;">Gares à Paris</b></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Gare Saint-Lazare, Paris, France'">Saint-Lazare</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Gare Montparnasse, Boulevard de Vaugirard, Paris, France'">Montparnasse</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Gare de Lyon, Place Louis Armand, Paris, France'">Lyon</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Paris Gare de le Est, Paris, France'">Est</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Gare du Nord, Rue de Dunkerque, Paris, France'">Nord</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Quai de Austerlitz, Quartier de la Gare, Paris, France'">Austerlitz</a></li>
+                                                <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value='Gare de Paris-Bercy, Boulevard de Bercy, Paris, France'">Bercy</a></li>
                                             </ul>
                                         </div><!-- /btn-group -->
                                         <input type="text" id="arrivee" size="35" name="arrivee" class="form-control" placeholder="Adresse d'arrivée" />
@@ -414,42 +436,42 @@
                                 </div><!-- /.col-lg-6 --> 
                                 <div class="col-md-6" style="text-align: left; padding-top: 20px;">
                                     <label>Heure</label>
-                                     <div>
-                                    <div class="col-md-6" style="padding-left: 0px; padding-right: 15px;">
-                                        <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;">
-                                            <?php
-                                            for ($i = 0; $i < 24; $i++) {
-                                                ?>
-                                                <option>
-                                                    <?php
-                                                    if ($i < 10)
-                                                        echo "0" . $i . "h";
-                                                    else
-                                                        echo $i . "h";
-                                                    ?>
-                                                </option>
+                                    <div>
+                                        <div class="col-md-6" style="padding-left: 0px; padding-right: 15px;">
+                                            <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;">
                                                 <?php
-                                            }
-                                            ?>
-                                        </select>
+                                                for ($i = 0; $i < 24; $i++) {
+                                                    ?>
+                                                    <option>
+                                                        <?php
+                                                        if ($i < 10)
+                                                            echo "0" . $i . "h";
+                                                        else
+                                                            echo $i . "h";
+                                                        ?>
+                                                    </option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6" style="padding-left: 15px; padding-right: 0px;">
+                                            <select class="form-control" id="minutes" style="padding-left: 0px; padding-right: 0px;">
+                                                <option>00 min</option>
+                                                <option>05 min</option>
+                                                <option>10 min</option>
+                                                <option>15 min</option>
+                                                <option>20 min</option>
+                                                <option>25 min</option>
+                                                <option>30 min</option>
+                                                <option>35 min</option>
+                                                <option>40 min</option>
+                                                <option>45 min</option>
+                                                <option>50 min</option>
+                                                <option>55 min</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6" style="padding-left: 15px; padding-right: 0px;">
-                                        <select class="form-control" id="minutes" style="padding-left: 0px; padding-right: 0px;">
-                                            <option>00 min</option>
-                                            <option>05 min</option>
-                                            <option>10 min</option>
-                                            <option>15 min</option>
-                                            <option>20 min</option>
-                                            <option>25 min</option>
-                                            <option>30 min</option>
-                                            <option>35 min</option>
-                                            <option>40 min</option>
-                                            <option>45 min</option>
-                                            <option>50 min</option>
-                                            <option>55 min</option>
-                                        </select>
-                                    </div>
-                                     </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -486,22 +508,29 @@
                                 <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: #000"><div id="more_passengers" style="color: #fff; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div></div>
 
                             </div>
-                          
-                            <button type="button" class="btn btn-success" onclick="javascript:calculDistance();">Tarif</button>
-                            <button type="button" class="btn btn-danger" onclick="javascript:calculDistance();">Valider</button>
-
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-danger col-md-12" onclick="javascript:calculDistance();">Valider la commande</button>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" id="distance"></div>
+                                <div class="col-md-4" id="prix"></div>
+                                <div class="col-md-4" id="duree"></div>
+                            </div>
+                            <figure id="closemap">
+                                <a href="javascript:hideMap()">
+                                    <img src="images/hide.png" id="imgclose" />
+                                    <figcaption>Fermer la carte</figcaption>
+                                </a>
+                            </figure>
                         </header>
 
-                        <div id="distance"></div>
-                        <div id="prix"></div>
-                        <div id="duree"></div>
-
-                        <figure id="closemap">
-                            <a href="javascript:hideMap()">
-                                <img src="images/hide.png" id="imgclose" />
-                                <figcaption>Fermer la carte</figcaption>
-                            </a>
-                        </figure>
 
                     </section>
 
@@ -519,9 +548,9 @@
                                 <section class="first">
                                     <i class="icon featured alt fa-space-shuttle"></i>
                                     <header>
-                                        <h2>Service A�roport</h2>
+                                        <h2>Service Aéroport</h2>
                                     </header>
-                                    <p>R�servez votre chauffeur en quelques clics, nous assurons notre service de qualit� dans tous les a�roports.</p>
+                                    <p>Réservez votre chauffeur en quelques clics, nous assurons notre service de qualité dans tous les aéroports.</p>
                                 </section>
                             </div>
                             <div class="4u 12u(mobile)">
@@ -530,22 +559,22 @@
                                     <header>
                                         <h2>Rapide</h2>
                                     </header>
-                                    <p>Profitez d'un service tr�s rapide grace � nos nombreux chauffeurs en service en �le de france.</p>
+                                    <p>Profitez d'un service très rapide grace à nos nombreux chauffeurs en service en île de france.</p>
                                 </section>
                             </div>
                             <div class="4u 12u(mobile)">
                                 <section class="last">
                                     <i class="icon featured alt fa-star"></i>
                                     <header>
-                                        <h2>Qualit�</h2>
+                                        <h2>Qualité</h2>
                                     </header>
-                                    <p>Nos chauffeurs tr�s aimables assureront votre comfort et bien �tre tout au long de votre voyage.</p>
+                                    <p>Nos chauffeurs très aimables assureront votre comfort et bien être tout au long de votre voyage.</p>
                                 </section>
                             </div>
                         </div>
                         <footer>
                             <ul class="actions">
-                                <li><a href="#" class="button big btn btn-danger">R�servez maintenant</a></li>
+                                <li><a href="#" class="button big btn btn-danger">Réservez maintenant</a></li>
                                 <li><a href="#" class="button big btn btn-primary">Plus d'informations</a></li>
                             </ul>
                         </footer>
@@ -565,7 +594,7 @@
                             <section>
                                 <header class="major">
                                     <h2>Qui sommes nous?</h2>
-                                    <h3>MYVTC EST UNE PLATEFORME PROPOSANT LA R�SERVATION DE VOITURES AVEC CHAUFFEURS PRIV�S DE VTC EN ILE-DE-FRANCE</h3>
+                                    <h3>MYVTC EST UNE PLATEFORME PROPOSANT LA RÉSERVATION DE VOITURES AVEC CHAUFFEURS PRIVÉS DE VTC EN ILE-DE-FRANCE</h3>
                                 </header>
                                 <div class="row">
                                     <div class="6u 12u(mobile)">
@@ -573,9 +602,9 @@
                                             <a href="#" class="image featured"><img src="images/chauffeur.jpg" alt="" /></a>
                                             <header>
                                                 <h3>Nos engagements</h3>
-                                                <li>Des offres dimensionn�es � votre usage : ne payez que ce dont vous avez besoin.</li>
-                                                <li>Des fonctionnalit�s d�di�es aux entreprises : commandes invit�s, paiement fin de mois, reporting temps r�el�</li>
-                                                <li>Des solutions personnalis�es : accompagnement, d�ploiement, communication, formation.</li>
+                                                <li>Des offres dimensionnées à votre usage : ne payez que ce dont vous avez besoin.</li>
+                                                <li>Des fonctionnalités dédiées aux entreprises : commandes invités, paiement fin de mois, reporting temps réel…</li>
+                                                <li>Des solutions personnalisées : accompagnement, déploiement, communication, formation.</li>
 
                                             </header>
 
@@ -585,12 +614,12 @@
                                         <section class="box">
                                             <a href="#" class="image featured"><img src="images/chauffeur2.jpg" alt="" /></a>
                                             <header>
-                                                <h3>Qualit� de service hors pair</h3>
-                                                <li>B�n�ficiez d�un service de haute qualit�, fiable et disponible 7j/7, 24h/24.</li>
-                                                <li>R�alisez jusqu�� 40% d��conomies sur votre budget taxi actuel.</li>
-                                                <li>Optez pour la transparence et l�efficacit� : une �quipe d�di�e aux entreprises r�pond � vos questions sous 24h.</li>
+                                                <h3>Qualité de service hors pair</h3>
+                                                <li>Bénéficiez d'un service de haute qualité, fiable et disponible 7j/7, 24h/24.</li>
+                                                <li>Réalisez jusqu'à 40% d'économies sur votre budget taxi actuel.</li>
+                                                <li>Optez pour la transparence et l'efficacité : une équipe dédiée aux entreprises répond à vos questions sous 24h.</li>
                                             </header>
-                                            <p>Connectez-vous et retrouvez un espace priv� regroupant toutes vos informations client, r�servations, etc...</p>
+                                            <p>Connectez-vous et retrouvez un espace privé regroupant toutes vos informations client, réservations, etc...</p>
 
                                         </section>
                                     </div>
@@ -603,61 +632,7 @@
             </div>
 
             <!-- Footer -->
-            <div id="footer-wrapper">
-                <section id="footer" class="container">
-
-                    <div class="row">
-                        <div class="4u 12u(mobile)">
-                            <section>
-
-                                <ul class="divided">
-                                    <li><a href="#">Nous contacter</a></li>
-                                    <li><a href="#">Fonctionnement</a></li>
-                                    <li><a href="#">Conditions g�n�rales</a></li>
-
-                                </ul>
-                            </section>
-                        </div>
-                        <div class="4u 12u(mobile)">
-                            <section>
-                                <ul class="divided">
-                                    <li><a href="#">Avantages</a></li>
-                                    <li><a href="#">FAQ</a></li>
-                                </ul>
-                            </section>
-                        </div>
-                        <div class="4u 12u(mobile)">
-                            <section>
-                                <header>
-                                    <h2>R�seaux sociaux</h2>
-                                </header>
-                                <ul class="social">
-                                    <li><a class="icon fa-facebook" href="#"><span class="label">Facebook</span></a></li>
-                                    <li><a class="icon fa-twitter" href="#"><span class="label">Twitter</span></a></li>
-                                    <li><a class="icon fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
-                                    <li><a class="icon fa-linkedin" href="#"><span class="label">LinkedIn</span></a></li>
-                                    <li><a class="icon fa-google-plus" href="#"><span class="label">Google+</span></a></li>
-                                </ul>
-
-                                <img src="images/logo_paypal.jpg" />
-
-                            </section>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="12u">
-
-                            <!-- Copyright -->
-                            <div id="copyright">
-                                <ul class="links">
-                                    <li>&copy; Tout droit r�serv�.</li>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                </section>
-            </div>
+            <?php include("module/footer.php"); ?>
 
         </div>
 
