@@ -1,7 +1,9 @@
 <?php
 include("config.php");
-if (isset($_SESSION['myvtclogin']))
-    header("location:profil.php");
+if (!isset($_SESSION['myvtclogin']))
+    header("location:connexion.php");
+
+$user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -50,7 +52,6 @@ if (isset($_SESSION['myvtclogin']))
                     if (isset($_POST['email'])) {
                         $login = mysql_real_escape_string($_POST["email"]);
                         $pwd = mysql_real_escape_string($_POST["pwd"]);
-                        $pwd2 = mysql_real_escape_string($_POST["pwd2"]);
                         $prenom = mysql_real_escape_string($_POST["prenom"]);
                         $nom = mysql_real_escape_string($_POST["nom"]);
                         $adresse = mysql_real_escape_string($_POST["adresse"]);
@@ -58,22 +59,11 @@ if (isset($_SESSION['myvtclogin']))
                         $ville = mysql_real_escape_string($_POST["ville"]);
                         $tel = mysql_real_escape_string($_POST["tel"]);
                         $password = md5($pwd);
-                        if ($pwd != $pwd2) {
-                            $sql_exist = mysql_query("select * from myvtc_users where email='" . $login . "'");
-                            $nb = mysql_num_rows($sql_exist);
-                            if ($nb == 0) {
-                                mysql_query("insert into myvtc_users(nom,prenom,adresse,cp,ville,tel,email,pwd,date_add,status)values('" . $nom . "','" . $prenom . "','" . $adresse . "','" . $cp . "','" . $ville . "','" . $tel . "','" . $login . "','" . $password . "','" . date('Y-m-d H:i:s') . "',1)")or die(mysql_error());
 
-                                $_SESSION['myvtclogin'] = $login;
-                                echo '<script>window.location="profil.php"</script>';
-                            } else {
-                                echo '<script>alert("Adresse mail déjà existante !")</script>';
-                                echo '<script>history.back()</script>';
-                            }
-                        } else {
-                            echo '<script>alert("Mot de passe éronnée")</script>';
-                            echo '<script>history.back()</script>';
-                        }
+                        mysql_query("update myvtc_users set nom='" . $nom . "',prenom='" . $prenom . "',adresse='" . $adresse . "',ville='" . $ville . "',cp='" . $tel . "',nom='" . $tel . "',pwd='" . $password . "' where email='" . $_SESSION['myvtclogin'] . "'")or die(mysql_error());
+
+                        $_SESSION['myvtclogin'] = $login;
+                        echo '<script>window.location="profil.php"</script>';
                     }
                     ?>
                     <hr>
@@ -86,7 +76,7 @@ if (isset($_SESSION['myvtclogin']))
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12">
 
-                                            <blockquote style="text-align: left"><h3>Espace d'inscription</h3></blockquote>
+                                            <blockquote style="text-align: left"><h3>Mon compte</h3></blockquote>
 
                                             <div class="col-sm-12">
                                                 <form action="" name="inscription-form" role="form" class="form-horizontal" method="post" accept-charset="utf-8">
@@ -94,34 +84,34 @@ if (isset($_SESSION['myvtclogin']))
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Prénom</label>
-                                                            <input name="prenom" placeholder="Prénom" class="form-control" type="text" id="prenom" required="" />
+                                                            <input name="prenom" placeholder="Prénom" class="form-control" type="text" id="prenom" value="<?php echo $user['prenom']; ?>" required="" />
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Nom</label>
-                                                            <input name="nom" placeholder="Nom" class="form-control" type="text" id="nom" required="" />
+                                                            <input name="nom" placeholder="Nom" class="form-control" value="<?php echo $user['nom']; ?>" type="text" id="nom" required="" />
                                                         </div>
                                                     </div> 
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-12" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Adresse postale</label>
-                                                            <textarea name="adresse" placeholder="Adresse postale" class="form-control" type="text" id="adresse"></textarea>
+                                                            <textarea name="adresse" placeholder="Adresse postale" class="form-control" type="text" id="adresse"><?php echo $user['adresse']; ?></textarea>
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Ville</label>
-                                                            <input name="ville" placeholder="Ville" class="form-control" type="text" id="ville" />
+                                                            <input name="ville" placeholder="Ville" class="form-control" value="<?php echo $user['ville']; ?>" type="text" id="ville" />
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Code postal</label>
-                                                            <input name="cp" placeholder="Code postal" class="form-control" type="text" id="cp" />
+                                                            <input name="cp" placeholder="Code postal" class="form-control" value="<?php echo $user['cp']; ?>" type="text" id="cp" />
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Téléphone</label>
-                                                            <input name="tel" placeholder="Téléphone" class="form-control" type="text" id="tel" />                                                        </div>
+                                                            <input name="tel" placeholder="Téléphone" value="<?php echo $user['tel']; ?>" class="form-control" type="text" id="tel" />                                                        </div>
                                                     </div> 
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Email</label>
-                                                            <input name="email" placeholder="Email" class="form-control" type="email" id="email" required=""/>
+                                                            <input name="email" placeholder="Email" value="<?php echo $user['email']; ?>" class="form-control" type="email" id="email" disabled=""/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group" style="text-align: left;">
@@ -138,7 +128,7 @@ if (isset($_SESSION['myvtclogin']))
 
                                                     <div class="form-group" style="text-align: left">
                                                         <div class="col-md-6">
-                                                            <button  class="btn btn-success btn-lg" type="submit">Valider </button>
+                                                            <button  class="btn btn-success btn-lg" type="submit">Modifier </button>
 
                                                         </div>
                                                     </div>

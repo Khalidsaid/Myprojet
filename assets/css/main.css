@@ -1345,6 +1345,7 @@
 
 		section > :last-child, section:last-child, article > :last-child, article:last-child {
 			margin-bottom: 0;
+			text-align : center;
 		}
 
 	header > p {
@@ -1754,8 +1755,8 @@
 	}
 
 		#banner header {
-			background-color: #252122;
-			background-color: rgba(34, 30, 31, 0.98);
+			background-color: #ccc;
+			
 			opacity : 0.9;
 		}
 		
