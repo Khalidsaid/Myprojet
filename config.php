@@ -3,7 +3,7 @@ session_start();
 $dbroot='localhost';
 $dbuser='root';
 $dbpass='';
-$dbname='myvtc';
+$dbname='adprestiges';
 
 $link =@mysql_connect($dbroot,$dbuser,$dbpass);
 mysql_select_db("$dbname");
