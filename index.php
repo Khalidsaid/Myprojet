@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/bootstrap-datetimepicker.css" />
+<<<<<<< HEAD
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="assets/js/jquery.min.js"></script>
@@ -68,6 +69,39 @@
 				}
 			}
 
+=======
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery-1.11.0.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+
+
+        <link rel="stylesheet" href="css/datepicker3.css" />
+
+
+
+
+
+        <script type="text/javascript" async>
+
+
+
+            //En attendant le webservice, le prix est statique
+            price = 5;
+
+            function onload() {
+                document.getElementById('closemap').style.display = "none";
+                document.getElementById('more_passengers').style.display = "none";
+            }
+
+            function hidelogin()
+            {
+                document.getElementById('loginModal').style.display = "none";
+
+            }
+
+>>>>>>> origin/master
             function checkOrly(aero)
             {
                 var aeroports = "Aéroport de Paris-Orly, Orly";
@@ -95,6 +129,7 @@
                     return false;
                 }
             }
+<<<<<<< HEAD
 
             function annuler()
             {
@@ -106,6 +141,19 @@
                 var totalpers = document.getElementById('nbpers').value;
                 var totalbag = document.getElementById('nbbag').value;
 
+=======
+
+            function annuler()
+            {
+                document.location.href = "index.php"
+
+            }
+
+            function verif() {
+                var totalpers = document.getElementById('nbpers').value;
+                var totalbag = document.getElementById('nbbag').value;
+
+>>>>>>> origin/master
                 if (totalpers > 4 || totalbag > 4) {
                     document.getElementById('more_passengers').style.display = "block";
                 } else {
@@ -183,6 +231,7 @@
                     if (!place.geometry) {
                         window.alert("Autocomplete's returned place contains no geometry");
                         return;
+<<<<<<< HEAD
                     }
                     expandViewportToFitPlace(map, place);
 
@@ -198,11 +247,31 @@
                     if (!place.geometry) {
                         window.alert("Autocomplete's returned place contains no geometry");
                         return;
+=======
+>>>>>>> origin/master
                     }
                     expandViewportToFitPlace(map, place);
 
                     // If the place has a geometry, store its place ID and route if we have
                     // the other place ID
+<<<<<<< HEAD
+=======
+                    origin_place_id = place.place_id;
+                    route(origin_place_id, destination_place_id, travel_mode,
+                            directionsService, directionsDisplay);
+                });
+
+                destination_autocomplete.addListener('place_changed', function () {
+                    var place = destination_autocomplete.getPlace();
+                    if (!place.geometry) {
+                        window.alert("Autocomplete's returned place contains no geometry");
+                        return;
+                    }
+                    expandViewportToFitPlace(map, place);
+
+                    // If the place has a geometry, store its place ID and route if we have
+                    // the other place ID
+>>>>>>> origin/master
                     destination_place_id = place.place_id;
                     route(origin_place_id, destination_place_id, travel_mode,
                             directionsService, directionsDisplay);
@@ -376,9 +445,14 @@
 
                     <?php include("module/connexion.php"); ?>
                     <!-- Banner -->
+<<<<<<< HEAD
 					<form action="" method="post">
                     <section id="banner">
 						
+=======
+                    <section id="banner">
+
+>>>>>>> origin/master
                         <header>
                             <h2 style="color: #1E4F93; font-size: 25px; margin-bottom: 20px;">Réservez votre véhicule dès maintenant</h2>
 
@@ -407,7 +481,10 @@
                                             </ul>
                                         </div><!-- /btn-group -->
                                         <input step="border-left-width: 0px;" type="text" id="depart" size="35" name="depart" class="form-control" placeholder="Adressse de départ" onkeypress="javascript:showMap()" />
+<<<<<<< HEAD
 										
+=======
+>>>>>>> origin/master
                                     </div><!-- /input-group -->
                                 </div><!-- /.col-lg-6 -->
                                 <div class="col-md-6">
@@ -529,6 +606,7 @@
                                         </select>
                                     </div>
                                 </div>
+<<<<<<< HEAD
                                 <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: #000;font-weight : bold"><div id="more_passengers" style="color: #black; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div></div>
 
                             </div>
@@ -564,6 +642,43 @@
                     </center>
 
 
+=======
+                                <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: #000"><div id="more_passengers" style="color: #fff; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div></div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-danger col-md-12" onclick="javascript:calculDistance();">Valider la commande</button>
+                                </div>
+                                <div class="col-md-2"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" id="distance"></div>
+                                <div class="col-md-4" id="prix"></div>
+                                <div class="col-md-4" id="duree"></div>
+                            </div>
+                            <figure id="closemap">
+                                <a href="javascript:hideMap()">
+                                    <img src="images/hide.png" id="imgclose" />
+                                    <figcaption>Fermer la carte</figcaption>
+                                </a>
+                            </figure>
+                        </header>
+
+
+                    </section>
+
+
+                    <center>
+                        <header id="bannner"></header>
+                    </center>
+
+
+>>>>>>> origin/master
 
                     <!-- Intro -->
                     <section id="intro" class="container">
@@ -585,6 +700,7 @@
                                     </header>
                                     <p>Profitez d'un service très rapide grace à nos nombreux chauffeurs en service en île de france.</p>
                                 </section>
+<<<<<<< HEAD
                             </div>
                             <div class="4u 12u(mobile)">
                                 <section class="last">
@@ -595,6 +711,18 @@
                                     <p>Nos chauffeurs très aimables assureront votre comfort et bien être tout au long de votre voyage.</p>
                                 </section>
                             </div>
+=======
+                            </div>
+                            <div class="4u 12u(mobile)">
+                                <section class="last">
+                                    <i class="icon featured alt fa-star"></i>
+                                    <header>
+                                        <h2>Qualité</h2>
+                                    </header>
+                                    <p>Nos chauffeurs très aimables assureront votre comfort et bien être tout au long de votre voyage.</p>
+                                </section>
+                            </div>
+>>>>>>> origin/master
                         </div>
                         <footer>
                             <ul class="actions">

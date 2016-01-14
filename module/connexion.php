@@ -67,7 +67,11 @@
                     </div>
                     <br />
                     <input type="button" class="btn btn-success" value="M'inscrire!" onclick="inscription()">
+<<<<<<< HEAD
                     <input type="submit" class="btn btn-warning" value="Fermer" onclick="javascript:annuler()">
+=======
+                    
+>>>>>>> origin/master
 
                 </form>
             </div>
