@@ -75,7 +75,7 @@ echo '<script>alert("requete non reussi !")</script>';
 
                 $.ajax({
                     method: "GET",
-                    url: "http://muslimcab.fr/webservice/v1/users/getPrix",
+                    url: "http://myvtc.fr/webservice/v1/users/getPrix",
                     success: function (data) {
                         var response = JSON.parse(data);
 
@@ -87,7 +87,34 @@ echo '<script>alert("requete non reussi !")</script>';
 
 
             }
-            ;
+            
+			
+			function checkCode()
+			{
+				var code = document.getElementById('codepromo').value;
+				
+				 $.ajax({
+                    method: "GET",
+                    url: "http://myvtc.fr/webservice/v1/users/getCodepromo",
+                    success: function (data) {
+                        var response = JSON.parse(data);
+
+                        for (var i = 0; i < response.length; i++) 
+						{
+                            if (code == response[i].value )
+							{
+								return true;
+							}else
+							{
+								return false;
+							}
+							
+                        }
+                    }
+                });
+				
+				
+			}
 
 
 
@@ -244,7 +271,12 @@ echo '<script>alert("requete non reussi !")</script>';
                             </div>
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
-                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"></div>
+                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">Code Promo ?</div>
+								<div class="col-md-3" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">
+								<input step="border-left-width: 0px;" type="text" id="depart" size="10" name="depart" class="form-control" placeholder="Code promo" onkeypress="javascript:checkCode()" />
+								<br>
+								<button type="button" class="btn btn-info col-md-12" onclick="javascript:checkCode();">Appliquer</button>
+								</div>
                                 <div class="col-md-8" style="text-align: left"><?php
                                     if (!isset($_SESSION['myvtclogin'])) {
                                         ?>
