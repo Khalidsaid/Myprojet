@@ -1752,6 +1752,7 @@
 		background-size: auto 100%;
 		background-repeat: no-repeat;
 		text-align: center;
+		
 	}
 
 		#banner header {
@@ -2104,9 +2105,18 @@
 		/* Banner */
 
 			#banner {
-				position: relative;
-				padding: 1em 0;
-				margin: 3em 0 0 0;
+			display: block;
+			margin: 50px auto 0;
+			z-index: 1;
+			width: 840px;
+		
+			filter: alpha(opacity=90);
+			opacity: .9;
+			-webkit-border-radius: 20px;
+			-moz-border-radius: 20px;
+			border-radius: 20px;
+			height: auto;
+			padding-bottom: 25px;
 			}
 
 				#banner header {
@@ -2114,6 +2124,7 @@
 					padding: 2.5em 5em;
 					border-radius: 5px;
 					opacity : 0.9;
+					height : 35px;
 				}
 				
 				.passengers {

@@ -5,9 +5,10 @@ $chaine_cmd = "";
 $identifiant =  uniqid();
 $depart =  $_GET['depart'];
 $arrivee =  $_GET['arrivee'];
-$localtime = localtime();
+date_default_timezone_set('Europe/Paris');
+$date = date('d/m/Y h:i:s a', time());
 
-$requete = "insert into reservation_attente(depart, arrivee, codecommande, date, etat) values ('" .$identifiant. "', '" .$depart. "', '" .$arrivee. "', '" .$localtime. "', 0)";
+$requete = "insert into reservation_attente(depart, arrivee, codecommande, date, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($arrivee) . "', '" . addslashes($date) . "', 0);";
 $exec = mysql_query($requete);
 /*if(mysql_query($requete)){
 echo '<script>alert("requete réussi !")</script>';

@@ -21,12 +21,7 @@
         <script src="assets/js/jquery-1.11.0.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript" LANGUAGE="JavaScript"></script>
 
-
         <link rel="stylesheet" href="css/datepicker3.css" />
-
-
-
-
 
         <script type="text/javascript" async>
 
@@ -138,7 +133,7 @@
                         lat: 47.3590900,
                         lng: 3.3852100
                     },
-                    zoom: 10,
+                    zoom: 9,
                     navigationControl: true,
                     mapTypeControl: true,
                             scaleControl: true,
@@ -376,11 +371,11 @@
 
                     <?php include("module/connexion.php"); ?>
                     <!-- Banner -->
-					<form action="" method="post">
-                    <section id="banner">
-						
+					<form id="form1" name="form1" action="" method="post" style="height : 443px; background : url(images/pic01.jpg); z-index: 1;">
+                    <section id="banner" style="height : 443px; ; z-index: 1; ">	
                         <header>
-                            <h2 style="color: #1E4F93; font-size: 25px; margin-bottom: 20px;">Réservez votre véhicule dès maintenant</h2>
+						
+                            <h2 style="color: #1E4F93; font-size: 25px; margin-bottom: 20px; display : block;">Réservez votre véhicule dès maintenant</h2>
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -547,23 +542,15 @@
                                 <div class="col-md-4" id="prix"></div>
                                 <div class="col-md-4" id="duree"></div>
                             </div>
-                            <figure id="closemap">
-                                <a href="javascript:hideMap()">
-                                    <img src="images/hide.png" id="imgclose" />
-                                    <figcaption>Fermer la carte</figcaption>
-                                </a>
-                            </figure>
+                        <section id="bannner" style="height : 400px; ; z-index: 0; "></div>
                         </header>
 
 
                     </section>
 				</form>
 
-                    <center>
-                        <header id="bannner"></header>
-                    </center>
 
-
+				</div>
 
                     <!-- Intro -->
                     <section id="intro" class="container">
