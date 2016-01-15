@@ -106,7 +106,7 @@ if (!isset($_SESSION['backend']))
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select * from users, reservation where reservation.id_user = users.id_user");
+                                                $sql = mysql_query("select * from myvtc_users, reservation where reservation.id_user = myvtc_users.id");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>

@@ -30,7 +30,10 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
 
 
         <link rel="stylesheet" href="css/datepicker3.css" />
+        <style>
+            form input {padding-bottom: 0px !important; padding-top: 0px !important;}
 
+        </style>
     </head>
 
     <body  class="homepage">
@@ -58,9 +61,10 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                         $cp = mysql_real_escape_string($_POST["cp"]);
                         $ville = mysql_real_escape_string($_POST["ville"]);
                         $tel = mysql_real_escape_string($_POST["tel"]);
+                        $parrain = mysql_real_escape_string($_POST["parrain"]);
                         $password = md5($pwd);
 
-                        mysql_query("update myvtc_users set nom='" . $nom . "',prenom='" . $prenom . "',adresse='" . $adresse . "',ville='" . $ville . "',cp='" . $tel . "',nom='" . $tel . "',pwd='" . $password . "' where email='" . $_SESSION['myvtclogin'] . "'")or die(mysql_error());
+                        mysql_query("update myvtc_users set nom='" . $nom . "',prenom='" . $prenom . "',adresse='" . $adresse . "',ville='" . $ville . "',cp='" . $tel . "',nom='" . $tel . "',pwd='" . $password . "',parrain='" . parrain . "' where email='" . $_SESSION['myvtclogin'] . "'")or die(mysql_error());
 
                         $_SESSION['myvtclogin'] = $login;
                         echo '<script>window.location="profil.php"</script>';
@@ -68,7 +72,7 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                     ?>
                     <hr>
                     <div class="container">
-                        <div class="row">
+                       <div class="row" style="margin-top: 0px;">
                             <div class="col-xs-12">
 
                                 <div class="main">
@@ -106,7 +110,12 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Téléphone</label>
-                                                            <input name="tel" placeholder="Téléphone" value="<?php echo $user['tel']; ?>" class="form-control" type="text" id="tel" />                                                        </div>
+                                                            <input name="tel" placeholder="Téléphone" value="<?php echo $user['tel']; ?>" class="form-control" type="text" id="tel" />                                                       
+                                                        </div>
+                                                        <div class="col-md-6" style="padding-top: 10px;">
+                                                            <label style="font-weight: bold;">Parrain</label>
+                                                            <input name="parrain" placeholder="Parrain" value="<?php echo $user['parrain']; ?>" class="form-control" type="text" id="tel" />                                                       
+                                                        </div>
                                                     </div> 
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">

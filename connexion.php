@@ -48,11 +48,27 @@ if (isset($_SESSION['myvtclogin']))
                     <!-- Banner -->
                     <hr>
                     <div class="container">
-                        <div class="row">
+                       <div class="row" style="margin-top: 0px;">
                             <div class="col-xs-12">
 
                                 <div class="main">
-
+                                    <?php
+                                    if (isset($_POST['username'])) {
+                                        $login = $_POST['username'];
+                                        $pwd = md5($_POST['password']);
+                                        
+                                        $verif=  mysql_query("select * from myvtc_users where email='".$login."' and pwd='".$pwd."'");
+                                        $nb=  mysql_num_rows($verif);
+                                        if($nb==0){
+                                            echo "<script>alert('Veuillez vérifier vos paramètres de connexion');</script>";
+                                        }else{
+                                            $_SESSION['myvtclogin'] = $login;
+                                             echo "<script>window.location='profil.php'</script>";
+                                        }
+                                        
+                                        
+                                    }
+                                    ?>
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-11 col-sm-offset-1">
 

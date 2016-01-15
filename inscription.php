@@ -10,7 +10,7 @@ if (isset($_SESSION['myvtclogin']))
 <html>
 
     <head>
-        <title>Connexion</title>
+        <title>Inscription</title>
         <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -28,7 +28,10 @@ if (isset($_SESSION['myvtclogin']))
 
 
         <link rel="stylesheet" href="css/datepicker3.css" />
-
+        <style>
+            form input {padding-bottom: 0px !important; padding-top: 0px !important;}
+            
+        </style>
     </head>
 
     <body  class="homepage">
@@ -57,12 +60,13 @@ if (isset($_SESSION['myvtclogin']))
                         $cp = mysql_real_escape_string($_POST["cp"]);
                         $ville = mysql_real_escape_string($_POST["ville"]);
                         $tel = mysql_real_escape_string($_POST["tel"]);
+                        $parrain = mysql_real_escape_string($_POST["parrain"]);
                         $password = md5($pwd);
-                        if ($pwd != $pwd2) {
+                        if ($pwd == $pwd2) {
                             $sql_exist = mysql_query("select * from myvtc_users where email='" . $login . "'");
                             $nb = mysql_num_rows($sql_exist);
                             if ($nb == 0) {
-                                mysql_query("insert into myvtc_users(nom,prenom,adresse,cp,ville,tel,email,pwd,date_add,status)values('" . $nom . "','" . $prenom . "','" . $adresse . "','" . $cp . "','" . $ville . "','" . $tel . "','" . $login . "','" . $password . "','" . date('Y-m-d H:i:s') . "',1)")or die(mysql_error());
+                                mysql_query("insert into myvtc_users(nom,prenom,adresse,cp,ville,tel,email,pwd,date_add,status,parrain)values('" . $nom . "','" . $prenom . "','" . $adresse . "','" . $cp . "','" . $ville . "','" . $tel . "','" . $login . "','" . $password . "','" . date('Y-m-d H:i:s') . "',1,'".$parrain."')")or die(mysql_error());
 
                                 $_SESSION['myvtclogin'] = $login;
                                 echo '<script>window.location="profil.php"</script>';
@@ -78,7 +82,7 @@ if (isset($_SESSION['myvtclogin']))
                     ?>
                     <hr>
                     <div class="container">
-                        <div class="row">
+                     <div class="row" style="margin-top: 0px;">
                             <div class="col-xs-12">
 
                                 <div class="main">
@@ -116,7 +120,12 @@ if (isset($_SESSION['myvtclogin']))
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Téléphone</label>
-                                                            <input name="tel" placeholder="Téléphone" class="form-control" type="text" id="tel" />                                                        </div>
+                                                            <input name="tel" placeholder="Téléphone" class="form-control" type="text" id="tel" />                                                        
+                                                        </div>
+                                                        <div class="col-md-6" style="padding-top: 10px;">
+                                                            <label style="font-weight: bold;">Parrain</label>
+                                                            <input name="parrain" placeholder="Parrain" class="form-control" type="text" id="parrain" />                                                        
+                                                        </div>
                                                     </div> 
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">

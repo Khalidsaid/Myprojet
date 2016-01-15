@@ -107,18 +107,18 @@ if (!isset($_SESSION['backend']))
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select * from users");
+                                                $sql = mysql_query("select * from myvtc_users");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $data['prenom']." ".$data['nom'];  ?></td>
                                                         <td><?php echo $data['email'];  ?></td>
                                                         <td><?php echo $data['adresse'];  ?></td>
-														<td><?php echo $data['mobilephone'];  ?></td>
+														<td><?php echo $data['tel'];  ?></td>
 														<td><?php echo $data['promos'];  ?></td>
-														<td><?php echo $data['dateadd'];  ?></td>
+														<td><?php echo $data['date_add'];  ?></td>
 												
-                                                        <td><a href="detail.php?id=<?php echo $data['id_user'];  ?>" class="btn btn-warning btn-xs">Détail</a></td>
+                                                        <td><a href="detail.php?id=<?php echo $data['id'];  ?>" class="btn btn-warning btn-xs">Détail</a></td>
                                                     </tr>
                                                     <?php
                                                 }

@@ -3,7 +3,7 @@ include("../config.php");
 include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
-$client = mysql_fetch_array(mysql_query("select * from users where id_user=" . $_GET['id']));
+$client = mysql_fetch_array(mysql_query("select * from myvtc_users where id=" . $_GET['id']));
 ?>
 <!doctype html>
 <html class="no-js">
@@ -166,7 +166,7 @@ $client = mysql_fetch_array(mysql_query("select * from users where id_user=" . $
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Mobile</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="mobilephone" placeholder="Fax" value="<?php echo $client['mobilephone']; ?>" class="form-control">
+                                                    <input type="text" id="mobilephone" placeholder="Fax" value="<?php echo $client['tel']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
