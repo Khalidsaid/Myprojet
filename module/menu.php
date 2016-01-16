@@ -20,8 +20,17 @@
         </li>
         <li><a href="left-sidebar.html">FAQ</a></li>
         <li><a href="right-sidebar.html">Nous contacter</a></li>
-        <li><a href="connexion.php">Connexion</a></li>
-
+        <?php
+        if (!isset($_SESSION['myvtclogin'])) {
+            ?>
+            <li><a href="connexion.php">Connexion</a></li>
+            <?php
+        } else {
+            ?>
+            <li><a href="profil.php">Mon compte</a></li>
+            <?php
+        }
+        ?>
 
     </ul>
 </nav>

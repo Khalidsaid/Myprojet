@@ -28,7 +28,10 @@ if (isset($_SESSION['myvtclogin']))
 
 
         <link rel="stylesheet" href="css/datepicker3.css" />
-
+        <style>
+                   form input {padding-bottom: 0px !important; padding-top: 0px !important;}
+            
+        </style>
     </head>
 
     <body  class="homepage">

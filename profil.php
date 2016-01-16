@@ -12,7 +12,7 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
 <html>
 
     <head>
-        <title>Connexion</title>
+        <title>Mon compte</title>
         <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -72,7 +72,7 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                     ?>
                     <hr>
                     <div class="container">
-                       <div class="row" style="margin-top: 0px;">
+                        <div class="row" style="margin-top: 0px;">
                             <div class="col-xs-12">
 
                                 <div class="main">
@@ -80,9 +80,14 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12">
 
-                                            <blockquote style="text-align: left"><h3>Mon compte</h3></blockquote>
-
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-3 well">
+                                                <ul class="nav nav-pills nav-stacked">
+                                                <li class="active"><a href="profil.php"> <i class="fa fa-user"></i> Mon compte</a></li>
+                                                <li ><a href="commande.php"> <i class="fa fa-money"></i> Mes commandes</a></li>
+                                                <li><a href="deconnect.php"> <i class="fa fa-sign-out"></i> Déconnexion</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-9">
                                                 <form action="" name="inscription-form" role="form" class="form-horizontal" method="post" accept-charset="utf-8">
 
                                                     <div class="form-group" style="text-align: left;">
