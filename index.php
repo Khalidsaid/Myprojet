@@ -21,12 +21,7 @@
         <script src="assets/js/jquery-1.11.0.js"></script>
         <script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript" LANGUAGE="JavaScript"></script>
 
-
         <link rel="stylesheet" href="css/datepicker3.css" />
-
-
-
-
 
         <script type="text/javascript" async>
 
@@ -138,7 +133,7 @@
                         lat: 47.3590900,
                         lng: 3.3852100
                     },
-                    zoom: 10,
+                    zoom: 9,
                     navigationControl: true,
                     mapTypeControl: true,
                             scaleControl: true,
@@ -356,10 +351,6 @@
             }
             ;
         </script>
-        <style>
-            form input {padding-bottom: 0px !important; padding-top: 0px !important;}
-            
-        </style>
     </head>
 
     <body onload="javascript:onload()" class="homepage">
@@ -380,12 +371,13 @@
 
                     <?php include("module/connexion.php"); ?>
                     <!-- Banner -->
-					<form action="" method="post">
-                    <section id="banner">
-						
+					<br/><br/>
+					<form id="form1" name="form1" action="" method="post" >
+                    <section id="banner" style="height : 225px; ; z-index: 1; ">	
                         <header>
-                            <h2 style="color: #1E4F93; font-size: 25px; margin-bottom: 20px;">Réservez votre véhicule dès maintenant</h2>
 						
+                            <h2 style="color: #1E4F93; font-size: 25px; margin-bottom: 20px; display : block;">Réservez votre véhicule dès maintenant</h2>
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
@@ -465,7 +457,7 @@
                                 <div class="col-md-6" style="text-align: left; padding-top: 20px;">
                                     <label>Heure</label>
                                     <div>
-                                        <div class="col-md-6 col-xs-6" style="padding-left: 0px; padding-right: 15px;">
+                                        <div class="col-md-6" style="padding-left: 0px; padding-right: 15px;">
                                             <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;">
                                                 <?php
                                                 for ($i = 0; $i < 24; $i++) {
@@ -483,7 +475,7 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-6 col-xs-6" style="padding-left: 15px; padding-right: 0px;">
+                                        <div class="col-md-6" style="padding-left: 15px; padding-right: 0px;">
                                             <select class="form-control" id="minutes" style="padding-left: 0px; padding-right: 0px;">
                                                 <option>00 min</option>
                                                 <option>05 min</option>
@@ -551,24 +543,16 @@
                                 <div class="col-md-4" id="prix"></div>
                                 <div class="col-md-4" id="duree"></div>
                             </div>
-                            <figure id="closemap">
-                                <a href="javascript:hideMap()">
-                                    <img src="images/hide.png" id="imgclose" />
-                                    <figcaption>Fermer la carte</figcaption>
-                                </a>
-                            </figure>
+                        
                         </header>
 
 
                     </section>
 				</form>
+				<section id="bannner" style="height : 443px;  width: 100%; position: relative; display: block; "></section>
 
-                    <center>
-                        <header id="bannner"></header>
-                    </center>
-
-
-
+				</div>
+					<br/><br/><br/><br/>
                     <!-- Intro -->
                     <section id="intro" class="container">
                         <div class="row">
