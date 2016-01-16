@@ -31,8 +31,10 @@
             price = 5;
 
             function onload() {
-                document.getElementById('closemap').style.display = "none";
+                document.getElementById('bannner').style.display = "none";
+				document.getElementById('bannner2').style.display = "block";
                 document.getElementById('more_passengers').style.display = "none";
+				
             }
 
             function hidelogin()
@@ -111,12 +113,12 @@
 
             function showMap() {
                 document.getElementById('bannner').style.display = "block";
-                document.getElementById('closemap').style.display = "block";
+                document.getElementById('bannner2').style.display = "none";
             }
 
             function hideMap() {
                 document.getElementById('bannner').style.display = "none";
-                document.getElementById('closemap').style.display = "none";
+                document.getElementById('bannner2').style.display = "none";
             }
 
             // init map google with itineraire and autocomplete
@@ -376,7 +378,7 @@
                     <section id="banner" style="height : 225px; ; z-index: 1; ">	
                         <header>
 						
-                            <h2 style="color: #1E4F93; font-size: 25px; margin-bottom: 20px; display : block;">Réservez votre véhicule dès maintenant</h2>
+                            <h2 style="color: white; font-size: 25px; margin-bottom: 20px; display : block;">Réservez votre véhicule dès maintenant</h2>
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -549,8 +551,8 @@
 
                     </section>
 				</form>
-				<section id="bannner" style="height : 443px;  width: 100%; position: relative; display: block; "></section>
-
+				<section id="bannner" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; display: block; opacity: 0.8; "></section>
+				<section id="bannner2" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; opacity: 0.8; "></section>
 				</div>
 					<br/><br/><br/><br/>
                     <!-- Intro -->

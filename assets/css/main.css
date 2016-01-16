@@ -1247,7 +1247,7 @@
 
 	form label {
 		display: block;
-		color: #252122;
+		color: white;
 		font-weight: 400;
 		margin: 0 0 0.5em 0;
 	}
@@ -1749,13 +1749,19 @@
 	height : 443px;
 	z-index: 1;
 	position: absolute;
-	opacity: 0.6;
+	opacity: 0.8;
 	background: rgba(11,32,53,0.8);
 	margin-left: auto;
 	margin-right: auto;
 	left: 0;
 	right: 0;
 	width: 56%;
+	border-radius: 40px;
+	
+	}
+	
+	#mapdiv{
+	height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; display: block; opacity: 0.8; 
 	}
 
 	#banner {
