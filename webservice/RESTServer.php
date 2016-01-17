@@ -56,10 +56,10 @@ class RESTServer
 	public $root;
 	public $token;
 
-	public $dbhost = '.mysql.db';
-	public $dbuser = '';
-	public $dbpass = '';
-	public $dbname = '';
+	public $dbhost = 'reserverrzad.mysql.db';
+	public $dbuser = 'reserverrzad';
+	public $dbpass = 'H6JVXGp5GSKG';
+	public $dbname = 'reserverrzad';
 	
 	protected $map = array();
 	protected $errorClasses = array();

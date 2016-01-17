@@ -1,9 +1,9 @@
 <?php
 
-$dbhost = '.mysql.db';
-$dbuser = '';
-$dbpass = '';
-$dbname = '';
+$dbhost = 'reserverrzad.mysql.db';
+$dbuser = 'reserverrzad';
+$dbpass = 'H6JVXGp5GSKG';
+$dbname = 'reserverrzad';
 
 /* 
  *	Establish connection

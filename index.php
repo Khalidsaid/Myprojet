@@ -2,6 +2,14 @@
 <!--
         Developer : Said KHALID, khalidsaid.box@gmail.com, 2015.
 -->
+<?php
+
+	if(!isset($_SESSION)) {
+			session_start();
+			
+		}
+
+?>
 <html>
 
     <head>
@@ -28,9 +36,11 @@
 
 
             //En attendant le webservice, le prix est statique
-            price = 5;
-
+           
+			var price = "undefined";
+			
             function onload() {
+				getprix();
                 document.getElementById('bannner').style.display = "none";
                 document.getElementById('bannner2').style.display = "block";
                 document.getElementById('more_passengers').style.display = "none";
@@ -42,9 +52,120 @@
                 document.getElementById('loginModal').style.display = "none";
 
             }
+			
+			function checkDate() {
+			 
+			var now = new Date();
+			 
+			var annee   = now.getFullYear();
+			var mois    = ('0'+now.getMonth()+1).slice(-2);
+			var jour    = ('0'+now.getDate()   ).slice(-2);
+			var heure   = ('0'+now.getHours()  ).slice(-2);
+			var minute  = ('0'+now.getMinutes()).slice(-2);
+			var seconde = ('0'+now.getSeconds()).slice(-2);
+ 
+			 
+            var EnteredDate = document.getElementById("datedep").value; //for javascript
+
+            var EnteredDate = $("#datedep").val(); // For JQuery
+
+            var month = EnteredDate.substring(0, 2);
+            var date = EnteredDate.substring(3, 5);
+            var year = EnteredDate.substring(6, 10);
+			
+			
+            var myDate = new Date(month - 1, date, year);
+			
+
+			var today = new Date();
+			var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+		
+		
+			
+			
+			if (dd <= date || year < yyyy || month < mm) 
+			{
+			
+			}else
+			{
+                alert("La date ne peux etre dans le passé !");
+				document.location.href="index.php";
+            }
+			
+			
+        }
+			
+						function checkonlytime()
+			{
+			
+				//Heure courante.
+				var now = new Date();
+				var annee   = now.getFullYear();
+				var mois    = ('0'+now.getMonth()+1).slice(-2);
+				var jour    = ('0'+now.getDate()   ).slice(-2);
+				var heure   = ('0'+now.getHours()  ).slice(-2);
+				var minute  = ('0'+now.getMinutes()).slice(-2);
+				var seconde = ('0'+now.getSeconds()).slice(-2);
+				
+				var EnteredDate = document.getElementById("datedep").value; //for javascript
+				var EnteredDate = $("#datedep").val(); // For JQuery
+
+				var month = EnteredDate.substring(0, 2);
+				var date = EnteredDate.substring(3, 5);
+				var year = EnteredDate.substring(6, 10);
+				
+				var currentTime = new Date();
+				var result = currentTime.setMinutes(currentTime.getMinutes() + 30);
+				var h = currentTime.getHours();
+				var m = currentTime.getMinutes();
+				
+			if(document.getElementById("minutes").value < result)
+			 {
+			 
+			 }
+			else if (document.getElementById("minutes").value < minute)
+			{
+				alert("Vous pouvez choisir un départ à partir de : " +h+" heures "+m+" minutes ");
+			}
+           
+			}
+			
+			
+			function checkMytime()
+			{
+			
+				//Heure courante.
+				var now = new Date();
+				var annee   = now.getFullYear();
+				var mois    = ('0'+now.getMonth()+1).slice(-2);
+				var jour    = ('0'+now.getDate()   ).slice(-2);
+				var heure   = ('0'+now.getHours()  ).slice(-2);
+				var minute  = ('0'+now.getMinutes()).slice(-2);
+				var seconde = ('0'+now.getSeconds()).slice(-2);
+				
+				var EnteredDate = document.getElementById("datedep").value; //for javascript
+				var EnteredDate = $("#datedep").val(); // For JQuery
+
+				var month = EnteredDate.substring(0, 2);
+				var date = EnteredDate.substring(3, 5);
+				var year = EnteredDate.substring(6, 10);
+				
+				if( document.getElementById("heyres").value < heure && mois == month && year == annee && jour == date )
+			{
+			
+				alert("L'heure ne peux etre dans le passé !");
+				//document.location.href="index.php";
+            } 
+           
+			}
 
             function checkAndgo()
             {
+			
+				
+			
                 var totalpers = document.getElementById('nbpers').value;
                 var totalbag = document.getElementById('nbbag').value;
                 var adr_dep = document.getElementById('depart').value;
@@ -108,8 +229,12 @@
 
                 if (totalpers > 4 || totalbag > 4) {
                     document.getElementById('more_passengers').style.display = "block";
+					document.getElementById('mybuton').style.display = "none";
+					document.getElementById('mybuton2').style.display = "none";
                 } else {
                     document.getElementById('more_passengers').style.display = "none";
+					document.getElementById('mybuton').style.display = "block";
+					document.getElementById('mybuton2').style.display = "block";
                 }
 
             }
@@ -285,7 +410,6 @@
                                 if (statut == 'OK') {
                                     var dist = element.distance.value;
                                     var dure = element.duration.text;
-                                    document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
                                     if (window.prixtotal > 0)
                                     {
                                         prix = window.prixtotal;
@@ -293,9 +417,22 @@
                                     {
                                         prix = Math.round(parseInt(dist / 1000) * window.price);
                                     }
+									
+									if (prix<8)
+									{
+										document.getElementById('more_passengers').innerHTML = '<b style="color : red;">Le minimum pour une course est de 8€, <a href="index.php">cliquez ici pour reinitialiser</a><b>';
+										document.getElementById('more_passengers').style.display = "block";
+										document.getElementById('mybuton').style.display = "none";
+										document.getElementById('mybuton2').style.display = "none";
+										//document.getElementById('mybuton').setAttribute('type', 'reset');
+									} else
+									{
+									document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
                                     document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                     document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
-                                    window.prixtotal = 0;
+                                    }
+									window.prixtotal = 0;
+									
                                 } else if (statut == 'NOT_FOUND') {
                                     alert("impossible de localiser l'adresse d'arrivée");
                                 } else if (statut == 'ZERO_RESULTS') {
@@ -313,6 +450,7 @@
 
             function calculDistance() {
 
+				
 
                 //initMap();
                 document.getElementById("distance").style.display = "block";
@@ -344,11 +482,11 @@
 
             }
 
-            function getPrix() {
+            function getprix() {
 
                 $.ajax({
                     method: "GET",
-                    url: "http://aaaaaaa.fr/webservice/v1/users/getPrix",
+                    url: "http://reserveruncab.com/webservice/v1/users/getPrix",
                     success: function (data) {
                         var response = JSON.parse(data);
 
@@ -464,7 +602,7 @@
                                         <label>Date</label>
                                         <div class="form-group">
                                             <div class="input-group date" data-provide="datepicker">
-                                                <input type="text" class="form-control" id="datedep">
+                                                <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()">
                                                 <div class="input-group-addon">
                                                     <span class="glyphicon glyphicon-th"></span>
                                                 </div>
@@ -479,7 +617,7 @@
                                         <label>Heure</label>
                                         <div>
                                             <div class="col-md-6" style="padding-left: 0px; padding-right: 15px;">
-                                                <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;">
+                                                <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkMytime()">
                                                     <?php
                                                     for ($i = 0; $i < 24; $i++) {
                                                         ?>
@@ -497,7 +635,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-6" style="padding-left: 15px; padding-right: 0px;">
-                                                <select class="form-control" id="minutes" style="padding-left: 0px; padding-right: 0px;">
+                                                <select class="form-control" id="minutes" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkonlytime()">
                                                     <option>00 min</option>
                                                     <option>05 min</option>
                                                     <option>10 min</option>
@@ -546,16 +684,16 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: #000;font-weight : bold"><div id="more_passengers" style="color: white; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div></div>
+                                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: white;font-weight : bold"><div id="more_passengers" style="color: white; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div></div>
 
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2"></div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
+                                        <button type="button" id="mybuton2" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-danger col-md-12" onclick="javascript:checkAndgo();">Valider la commande</button>
+                                        <button type="button" id="mybuton" class="btn btn-danger col-md-12" onclick="javascript:checkAndgo();">Valider la commande</button>
                                     </div>
                                     <div class="col-md-2"></div>
                                 </div>

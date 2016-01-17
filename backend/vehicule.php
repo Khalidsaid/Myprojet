@@ -221,7 +221,7 @@ if (isset($_GET['marque'])) {
             </div><!-- /#right -->
         </div><!-- /#wrap -->
         <footer class="Footer bg-dark dker">
-            <p>2015 &copy; MuslimCab</p>
+            <p>2015 &copy; Reserveruncab</p>
         </footer><!-- /#footer -->
 
         <!-- #helpModal -->

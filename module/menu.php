@@ -27,7 +27,13 @@
             <?php
         } else {
             ?>
-            <li><a href="profil.php">Mon compte</a></li>
+            <li>
+			<a href="profil.php">Mon compte</a>
+			      <ul>
+                <li><a href="deconnect.php">Aéroport</a></li>
+                
+            </ul>
+			</li>
             <?php
         }
         ?>
