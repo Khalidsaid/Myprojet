@@ -124,8 +124,14 @@
             // init map google with itineraire and autocomplete
 
             function initMap() {
-
-
+				var a = document.getElementById("depart").value;
+				  if ( a == "")
+				  {
+				  document.getElementById('bannner').style.display = "none";
+				  } else
+				  {
+				  document.getElementById('bannner').style.display = "block";
+				  }
                 var origin_place_id = null;
                 var destination_place_id = null;
                 var travel_mode = google.maps.TravelMode.DRIVING;
@@ -537,7 +543,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: #000;font-weight : bold"><div id="more_passengers" style="color: #black; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div></div>
+                                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: #000;font-weight : bold"><div id="more_passengers" style="color: white; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div></div>
 
                                 </div>
                                 <div class="row">
