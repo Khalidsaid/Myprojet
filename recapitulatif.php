@@ -79,7 +79,7 @@ $exec = mysql_query($requete)or die(mysql_error());
 
                 $.ajax({
                     method: "GET",
-                    url: "http://myvtc.fr/webservice/v1/users/getPrix",
+                    url: "http://reserveruncab.com/webservice/v1/users/getPrix",
                     success: function (data) {
                         var response = JSON.parse(data);
 
@@ -99,7 +99,7 @@ $exec = mysql_query($requete)or die(mysql_error());
 
                 $.ajax({
                     method: "GET",
-                    url: "http://myvtc.fr/webservice/v1/users/getCodepromo",
+                    url: "http://reserveruncab.com/webservice/v1/users/getCodepromo",
                     success: function (data) {
                         var response = JSON.parse(data);
 
@@ -200,6 +200,29 @@ $exec = mysql_query($requete)or die(mysql_error());
 
             }
         </script>
+		<script>
+    function connexion() {
+        var login = document.getElementById("login_user").value;
+        var pwd = document.getElementById("pwd_user").value;
+        $.ajax({
+            url: 'connexion.php?login=' + login + '&pwd=' + pwd,
+            success: function (data) {
+                var t = eval(data);
+                if (t[0]["message"] == "ok") {
+                    if (t[0]["etat"] == "1") {
+
+                        window.location = "mon-compte";
+                    } else {
+                        window.location = "compte-inactif";
+                    }
+                } else {
+                    alert("Veuillez vérifier vos paramètres de connexion !");
+
+                }
+            }
+        });
+    }
+</script>  
     </head>
 
     <body onload="javascript:onload()" class="homepage">
@@ -316,10 +339,6 @@ $exec = mysql_query($requete)or die(mysql_error());
                     <div class="col-md-2"></div>
 
                     </div>
-
-
-
-
                     <br>
                     <br>
                     <footer>
