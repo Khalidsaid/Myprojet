@@ -49,6 +49,9 @@
                 var totalbag = document.getElementById('nbbag').value;
                 var adr_dep = document.getElementById('depart').value;
                 var adr_arr = document.getElementById('arrivee').value;
+                var datedep = document.getElementById('datedep').value;
+                var distance = document.getElementById('distance').value;
+                var heyres = document.getElementById('heyres').value+":"+document.getElementById('minutes').value;
 
 
                 if (totalpers > 4 || totalbag > 4)
@@ -61,7 +64,7 @@
                 }
                 else
                 {
-                    window.location.href = "recapitulatif.php?depart=" + adr_dep + "&arrivee=" + adr_arr;
+                    window.location.href = "recapitulatif.php?depart=" + adr_dep + "&arrivee=" + adr_arr+"&totalpers="+totalpers+"&totalbag="+totalbag+"&datedep="+datedep+"&heyres="+heyres+"&distance="+distance;
                 }
             }
 
@@ -461,7 +464,7 @@
                                         <label>Date</label>
                                         <div class="form-group">
                                             <div class="input-group date" data-provide="datepicker">
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" id="datedep">
                                                 <div class="input-group-addon">
                                                     <span class="glyphicon glyphicon-th"></span>
                                                 </div>

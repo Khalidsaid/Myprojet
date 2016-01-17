@@ -2,28 +2,32 @@
 include("config.php");
 $chaine_cmd = "";
 // Identifiant unique
-$identifiant =  uniqid();
-$depart =  $_GET['depart'];
-$arrivee =  $_GET['arrivee'];
+$identifiant = uniqid();
+$depart = $_GET['depart'];
+$arrivee = $_GET['arrivee'];
+$totalpers = $_GET['totalpers'];
+$totalbag = $_GET['totalbag'];
+$datedep_tab = explode("/", $_GET['datedep']);
+$datedep = $datedep_tab[2] . "-" . $datedep_tab[0] . "-" . $datedep_tab[1];
+$heyres = $_GET['heyres'];
+$distance = $_GET['distance'];
 date_default_timezone_set('Europe/Paris');
-$date = date('d/m/Y h:i:s a', time());
+$date = date('Y-m-d H:i:s');
 
-$requete = "insert into reservation_attente(depart, arrivee, codecommande, date, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($arrivee) . "', '" . addslashes($date) . "', 0);";
-$exec = mysql_query($requete);
-/*if(mysql_query($requete)){
-echo '<script>alert("requete réussi !")</script>';
-}else{
-echo '<script>alert("requete non reussi !")</script>';
-}*/
-
-
+$requete = "insert into reservation_attente(codecommande,depart, arrivee,passager,valise,dtdeb,heure,distance,  date_add, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($arrivee) . "', '" . addslashes($totalpers) . "', '" . addslashes($totalbag) . "', '" . addslashes($datedep) . "', '" . addslashes($heyres) . "', '" . addslashes($distance) . "', '" . addslashes($date) . "', 0);";
+$exec = mysql_query($requete)or die(mysql_error());
+/* if(mysql_query($requete)){
+  echo '<script>alert("requete réussi !")</script>';
+  }else{
+  echo '<script>alert("requete non reussi !")</script>';
+  } */
 ?>
 <!DOCTYPE HTML>
 
 <html>
 
     <head>
-        <title>MyVtc</title>
+        <title>Récapitulatif</title>
         <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -87,34 +91,34 @@ echo '<script>alert("requete non reussi !")</script>';
 
 
             }
-            
-			
-			function checkCode()
-			{
-				var code = document.getElementById('codepromo').value;
-				
-				 $.ajax({
+
+
+            function checkCode()
+            {
+                var code = document.getElementById('codepromo').value;
+
+                $.ajax({
                     method: "GET",
                     url: "http://myvtc.fr/webservice/v1/users/getCodepromo",
                     success: function (data) {
                         var response = JSON.parse(data);
 
-                        for (var i = 0; i < response.length; i++) 
-						{
-                            if (code == response[i].value )
-							{
-								return true;
-							}else
-							{
-								return false;
-							}
-							
+                        for (var i = 0; i < response.length; i++)
+                        {
+                            if (code == response[i].value)
+                            {
+                                return true;
+                            } else
+                            {
+                                return false;
+                            }
+
                         }
                     }
                 });
-				
-				
-			}
+
+
+            }
 
 
 
@@ -223,7 +227,7 @@ echo '<script>alert("requete non reussi !")</script>';
 
             </section>
             <!-- Intro -->
-        
+
 
             <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" id="paypal" name="paypal" method="post">
 
@@ -261,8 +265,24 @@ echo '<script>alert("requete non reussi !")</script>';
                             </div>
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
-                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Distance</div>
+                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Durée</div>
                                 <div class="col-md-8" style="text-align: left">  <p id="duree" style="font-size: 22px;"></p></div>
+                            </div>
+                            <?php
+                            if ($distance != 'undefined') {
+                                ?>
+                                <hr style="border: 1px dashed ! important;">
+                                <div class="row">
+                                    <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Distance</div>
+                                    <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $distance; ?></b></p></div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                            <hr style="border: 1px dashed ! important;">
+                            <div class="row">
+                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Date</div>
+                                <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $datedep . " à " . $heyres; ?></b></p></div>
                             </div>
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
@@ -272,11 +292,11 @@ echo '<script>alert("requete non reussi !")</script>';
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">Code Promo ?</div>
-								<div class="col-md-3" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">
-								<input step="border-left-width: 0px;" type="text" id="depart" size="10" name="depart" class="form-control" placeholder="Code promo" onkeypress="javascript:checkCode()" />
-								<br>
-								<button type="button" class="btn btn-info col-md-12" onclick="javascript:checkCode();">Appliquer</button>
-								</div>
+                                <div class="col-md-3" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">
+                                    <input step="border-left-width: 0px;" type="text" id="depart" size="10" name="depart" class="form-control" placeholder="Code promo" onkeypress="javascript:checkCode()" />
+                                    <br>
+                                    <button type="button" class="btn btn-info col-md-12" onclick="javascript:checkCode();">Appliquer</button>
+                                </div>
                                 <div class="col-md-8" style="text-align: left"><?php
                                     if (!isset($_SESSION['myvtclogin'])) {
                                         ?>
@@ -285,7 +305,7 @@ echo '<script>alert("requete non reussi !")</script>';
                                     } else {
                                         ?>
                                         <a href="#" class="button big btn btn-success" onclick="javascript:reservation(depart, arrivee, prix, iduser, email);
-                                            return false;">Payer</a>
+                                                    return false;">Payer</a>
                                            <?php
                                        }
                                        ?> <a href="javascript:modifier()" class="button big btn btn-warning">Modifier</a></div>
@@ -303,7 +323,7 @@ echo '<script>alert("requete non reussi !")</script>';
                     <br>
                     <br>
                     <footer>
-                        
+
                         <br><br>
                     </footer>
                 </section>
