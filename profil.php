@@ -34,6 +34,14 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
             form input {padding-bottom: 0px !important; padding-top: 0px !important;}
 
         </style>
+        <script>
+            function hide_bloc() {
+                $("#bloc_pro").hide();
+            }
+            function show_bloc() {
+                $("#bloc_pro").show();
+            }
+        </script>
     </head>
 
     <body  class="homepage">
@@ -52,7 +60,7 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                     <?php include("module/connexion.php"); ?>
                     <!-- Banner -->
                     <?php
-                    if (isset($_POST['email'])) {
+                    if (isset($_POST['pwd'])) {
                         $login = mysql_real_escape_string($_POST["email"]);
                         $pwd = mysql_real_escape_string($_POST["pwd"]);
                         $prenom = mysql_real_escape_string($_POST["prenom"]);
@@ -62,11 +70,18 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                         $ville = mysql_real_escape_string($_POST["ville"]);
                         $tel = mysql_real_escape_string($_POST["tel"]);
                         $parrain = mysql_real_escape_string($_POST["parrain"]);
+                        $type_user = mysql_real_escape_string($_POST["type_user"]);
+                        $fax = mysql_real_escape_string($_POST["fax"]);
+                        $url = mysql_real_escape_string($_POST["url"]);
+                        $siren = mysql_real_escape_string($_POST["siren"]);
+                        $tva = mysql_real_escape_string($_POST["tva"]);
+                        $societe = mysql_real_escape_string($_POST["societe"]);
                         $password = md5($pwd);
 
-                        mysql_query("update myvtc_users set nom='" . $nom . "',prenom='" . $prenom . "',adresse='" . $adresse . "',ville='" . $ville . "',cp='" . $tel . "',nom='" . $tel . "',pwd='" . $password . "',parrain='" . parrain . "' where email='" . $_SESSION['myvtclogin'] . "'")or die(mysql_error());
+                        mysql_query("update myvtc_users set nom='" . $nom . "',prenom='" . $prenom . "',adresse='" . $adresse . "',ville='" . $ville . "',cp='" . $tel . "',nom='" . $tel . "',pwd='" . $password . "',parrain='" . $parrain . "',type_user='" . $type_user . "',societe='" . $societe . "',fax='" . $fax . "',url='" . $url . "',siren='" . $siren . "',tva='" . $tva . "' where email='" . $_SESSION['myvtclogin'] . "'")or die(mysql_error());
 
-                        $_SESSION['myvtclogin'] = $login;
+                       
+                        echo '<script>alert("Modification effectuée avec succès !");</script>';
                         echo '<script>window.location="profil.php"</script>';
                     }
                     ?>
@@ -82,14 +97,23 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
 
                                             <div class="col-sm-3 well">
                                                 <ul class="nav nav-pills nav-stacked">
-                                                <li class="active"><a href="profil.php"> <i class="fa fa-user"></i> Mon compte</a></li>
-                                                <li ><a href="commande.php"> <i class="fa fa-money"></i> Mes commandes</a></li>
-                                                <li><a href="deconnect.php"> <i class="fa fa-sign-out"></i> Déconnexion</a></li>
+                                                    <li class="active"><a href="profil.php"> <i class="fa fa-user"></i> Mon compte</a></li>
+                                                    <li ><a href="commande.php"> <i class="fa fa-money"></i> Mes commandes</a></li>
+                                                    <li><a href="deconnect.php"> <i class="fa fa-sign-out"></i> Déconnexion</a></li>
                                                 </ul>
                                             </div>
                                             <div class="col-sm-9">
                                                 <form action="" name="inscription-form" role="form" class="form-horizontal" method="post" accept-charset="utf-8">
+                                                    <div class="form-group" style="text-align: left;">
+                                                        <div class="col-md-6" style="padding-top: 10px;">
+                                                            <div class="input-group">
+                                                                <label style="font-weight: bold;">Vous êtes </label><br>
+                                                                <label class="checkbox-inline registeredv" style="font-weight: bold; font-size: 15px" onclick="show_bloc()"><input type="radio" name="type_user" value="Professionnel" <?php if ($user['type_user'] == "Professionnel") echo "checked=''"; ?> > Professionnel</label>
+                                                                <label class="checkbox-inline noregisteredv" style="font-weight: bold; font-size: 15px" onclick="hide_bloc()"><input type="radio" name="type_user" value="Particulier" <?php if ($user['type_user'] == "Particulier") echo "checked=''"; ?>> Particulier</label>
+                                                            </div>
+                                                        </div>
 
+                                                    </div> 
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Prénom</label>
@@ -121,7 +145,35 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                                                             <label style="font-weight: bold;">Parrain</label>
                                                             <input name="parrain" placeholder="Parrain" value="<?php echo $user['parrain']; ?>" class="form-control" type="text" id="tel" />                                                       
                                                         </div>
-                                                    </div> 
+                                                    </div>
+                                                    <div class="form-group" style="text-align: left;">
+                                                        <div id="bloc_pro" <?php if ($user['type_user'] == "Particulier") echo "style=display:none"; ?>>
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+
+                                                                <label style="font-weight: bold;">Société</label>
+                                                                <input type="text" name="societe" class="form-control" placeholder="Société" value="<?php echo $user['societe']; ?>">
+                                                            </div>
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+                                                                <label style="font-weight: bold;">Fax</label>
+                                                                <input type="text" name="fax" class="form-control" placeholder="Fax" value="<?php echo $user['fax']; ?>">
+                                                            </div>
+
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+                                                                <label style="font-weight: bold;">Site web</label>
+                                                                <input type="text" name="url" class="form-control" placeholder="Site web" value="<?php echo $user['url']; ?>">
+                                                            </div>
+
+
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+                                                                <label style="font-weight: bold;">SIREN</label>
+                                                                <input type="text" name="siren" class="form-control" placeholder="SIREN" value="<?php echo $user['siren']; ?>">
+                                                            </div>
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+                                                                <label style="font-weight: bold;">Numéro TVA</label>
+                                                                <input type="text" name="tva" class="form-control" placeholder="Numéro TVA" value="<?php echo $user['tva']; ?>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Email</label>

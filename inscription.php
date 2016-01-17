@@ -30,8 +30,17 @@ if (isset($_SESSION['myvtclogin']))
         <link rel="stylesheet" href="css/datepicker3.css" />
         <style>
             form input {padding-bottom: 0px !important; padding-top: 0px !important;}
-            
+            form label {color:#000}
+
         </style>
+        <script>
+            function hide_bloc() {
+                $("#bloc_pro").hide();
+            }
+            function show_bloc() {
+                $("#bloc_pro").show();
+            }
+        </script>
     </head>
 
     <body  class="homepage">
@@ -61,14 +70,27 @@ if (isset($_SESSION['myvtclogin']))
                         $ville = mysql_real_escape_string($_POST["ville"]);
                         $tel = mysql_real_escape_string($_POST["tel"]);
                         $parrain = mysql_real_escape_string($_POST["parrain"]);
+                        $type_user = mysql_real_escape_string($_POST["type_user"]);
+                        $fax = mysql_real_escape_string($_POST["fax"]);
+                        $url = mysql_real_escape_string($_POST["url"]);
+                        $siren = mysql_real_escape_string($_POST["siren"]);
+                        $tva = mysql_real_escape_string($_POST["tva"]);
+                        $societe = mysql_real_escape_string($_POST["societe"]);
                         $password = md5($pwd);
+                        $headers = 'From: info@illico-immat.fr' . "\r\n" .
+                                'Reply-To: info@illico-immat.fr' . "\r\n" .
+                                'X-Mailer: PHP/' . phpversion();
                         if ($pwd == $pwd2) {
                             $sql_exist = mysql_query("select * from myvtc_users where email='" . $login . "'");
                             $nb = mysql_num_rows($sql_exist);
                             if ($nb == 0) {
-                                mysql_query("insert into myvtc_users(nom,prenom,adresse,cp,ville,tel,email,pwd,date_add,status,parrain)values('" . $nom . "','" . $prenom . "','" . $adresse . "','" . $cp . "','" . $ville . "','" . $tel . "','" . $login . "','" . $password . "','" . date('Y-m-d H:i:s') . "',1,'".$parrain."')")or die(mysql_error());
+                                mysql_query("insert into myvtc_users(type_user,nom,prenom,adresse,cp,ville,tel,email,pwd,date_add,status,parrain,fax,url,siren,tva,societe)values('" . $type_user . "','" . $nom . "','" . $prenom . "','" . $adresse . "','" . $cp . "','" . $ville . "','" . $tel . "','" . $login . "','" . $password . "','" . date('Y-m-d H:i:s') . "',1,'" . $parrain . "','" . $fax . "','" . $url . "','" . $siren . "','" . $tva . "','" . $societe . "')")or die(mysql_error());
 
                                 $_SESSION['myvtclogin'] = $login;
+                                $message = "Bonjour Madame, Monsieur,\n
+
+Nous vous remercions de votre visite sur le site ReserverUnCab.com. Vous pouvez des-à-présent profiter des prestations de l'équipe ReserverUnCab.com.\n";
+                                mail($login, "Inscription au site ReserverUnCab.com", $message, $headers);
                                 echo '<script>window.location="profil.php"</script>';
                             } else {
                                 echo '<script>alert("Adresse mail déjà existante !")</script>';
@@ -82,7 +104,7 @@ if (isset($_SESSION['myvtclogin']))
                     ?>
                     <hr>
                     <div class="container">
-                     <div class="row" style="margin-top: 0px;">
+                        <div class="row" style="margin-top: 0px;">
                             <div class="col-xs-12">
 
                                 <div class="main">
@@ -95,6 +117,16 @@ if (isset($_SESSION['myvtclogin']))
                                             <div class="col-sm-12">
                                                 <form action="" name="inscription-form" role="form" class="form-horizontal" method="post" accept-charset="utf-8">
 
+                                                    <div class="form-group" style="text-align: left;">
+                                                        <div class="col-md-6" style="padding-top: 10px;">
+                                                            <div class="input-group">
+                                                                <label style="font-weight: bold;">Vous êtes </label><br>
+                                                                <label class="checkbox-inline registeredv" style="font-weight: bold; font-size: 15px" onclick="show_bloc()"><input type="radio" name="type_user" value="Professionnel" checked=""> Professionnel</label>
+                                                                <label class="checkbox-inline noregisteredv" style="font-weight: bold; font-size: 15px" onclick="hide_bloc()"><input type="radio" name="type_user" value="Particulier"> Particulier</label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div> 
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Prénom</label>
@@ -141,6 +173,34 @@ if (isset($_SESSION['myvtclogin']))
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Confirmer mot de passe</label>
                                                             <input name="pwd2" placeholder="Confirmer mot de passe" class="form-control" type="password" id="pwd1" required="" />
+                                                        </div>
+                                                    </div> 
+                                                    <div class="form-group" style="text-align: left;">
+                                                        <div id="bloc_pro">
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+
+                                                                <label style="font-weight: bold;">Société</label>
+                                                                <input type="text" name="societe" class="form-control" placeholder="Société">
+                                                            </div>
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+                                                                <label style="font-weight: bold;">Fax</label>
+                                                                <input type="text" name="fax" class="form-control" placeholder="Fax">
+                                                            </div>
+
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+                                                                <label style="font-weight: bold;">Site web</label>
+                                                                <input type="text" name="url" class="form-control" placeholder="Site web">
+                                                            </div>
+
+
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+                                                                <label style="font-weight: bold;">SIREN</label>
+                                                                <input type="text" name="siren" class="form-control" placeholder="SIREN">
+                                                            </div>
+                                                            <div class="col-md-6" style="padding-top: 10px;">
+                                                                <label style="font-weight: bold;">Numéro TVA</label>
+                                                                <input type="text" name="tva" class="form-control" placeholder="Numéro TVA">
+                                                            </div>
                                                         </div>
                                                     </div> 
 
