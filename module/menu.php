@@ -18,8 +18,8 @@
 
             </ul>
         </li>
-        <li><a href="left-sidebar.html">FAQ</a></li>
-        <li><a href="right-sidebar.html">Nous contacter</a></li>
+        <li><a href="">FAQ</a></li>
+        <li><a href="contact.php">Nous contacter</a></li>
         <?php
         if (!isset($_SESSION['myvtclogin'])) {
             ?>
