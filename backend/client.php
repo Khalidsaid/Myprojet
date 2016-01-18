@@ -72,11 +72,11 @@ if (!isset($_SESSION['backend']))
                     <div class="user-media-toggleHover">
                         <span class="fa fa-user"></span> 
                     </div>
-                    
+
                 </div>
 
                 <!-- #menu -->
-                <?php include("menu.php");  ?><!-- /#menu -->
+                <?php include("menu.php"); ?><!-- /#menu -->
             </div><!-- /#left -->
             <div id="content">
                 <div class="outer">
@@ -96,12 +96,13 @@ if (!isset($_SESSION['backend']))
                                         <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
                                             <thead>
                                                 <tr>
+                                                    <th>Type</th>
                                                     <th>Prénom Nom</th>
                                                     <th>Email</th>
                                                     <th>Adresse</th>
                                                     <th>Tel</th>
-													<th>Promos</th>
-													<th>Date inscription</th>
+                                                    <th>Promos</th>
+                                                    <th>Date inscription</th>
                                                     <th>Détail</th>
                                                 </tr>
                                             </thead>
@@ -111,14 +112,21 @@ if (!isset($_SESSION['backend']))
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>
-                                                        <td><?php echo $data['prenom']." ".$data['nom'];  ?></td>
-                                                        <td><?php echo $data['email'];  ?></td>
-                                                        <td><?php echo $data['adresse'];  ?></td>
-														<td><?php echo $data['tel'];  ?></td>
-														<td><?php echo $data['promos'];  ?></td>
-														<td><?php echo $data['date_add'];  ?></td>
-												
-                                                        <td><a href="detail.php?id=<?php echo $data['id'];  ?>" class="btn btn-warning btn-xs">Détail</a></td>
+                                                        <td><span class="label label-<?php
+                                                            if ($data['type_user'] == "Professionnel")
+                                                                echo "success";
+                                                            else
+                                                                echo "info";
+                                                            ?>"><?php echo $data['type_user']; ?></span>
+                                                        </td>
+                                                        <td><?php echo $data['prenom'] . " " . $data['nom']; ?></td>
+                                                        <td><?php echo $data['email']; ?></td>
+                                                        <td><?php echo $data['adresse']; ?></td>
+                                                        <td><?php echo $data['tel']; ?></td>
+                                                        <td><?php echo $data['promos']; ?></td>
+                                                        <td><?php echo $data['date_add']; ?></td>
+
+                                                        <td><a href="detail.php?id=<?php echo $data['id']; ?>" class="btn btn-warning btn-xs">Détail</a></td>
                                                     </tr>
                                                     <?php
                                                 }

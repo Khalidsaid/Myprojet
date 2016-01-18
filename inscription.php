@@ -36,9 +36,13 @@ if (isset($_SESSION['myvtclogin']))
         <script>
             function hide_bloc() {
                 $("#bloc_pro").hide();
+                document.getElementById("siren").required = false;
+                document.getElementById("societe").required = false;
             }
             function show_bloc() {
                 $("#bloc_pro").show();
+                document.getElementById("siren").required = true;
+                document.getElementById("societe").required = true;
             }
         </script>
     </head>
@@ -180,7 +184,7 @@ Nous vous remercions de votre visite sur le site ReserverUnCab.com. Vous pouvez 
                                                             <div class="col-md-6" style="padding-top: 10px;">
 
                                                                 <label style="font-weight: bold;">Société</label>
-                                                                <input type="text" name="societe" class="form-control" placeholder="Société">
+                                                                <input type="text" id="societe" name="societe" class="form-control" placeholder="Société" required="">
                                                             </div>
                                                             <div class="col-md-6" style="padding-top: 10px;">
                                                                 <label style="font-weight: bold;">Fax</label>
@@ -195,11 +199,11 @@ Nous vous remercions de votre visite sur le site ReserverUnCab.com. Vous pouvez 
 
                                                             <div class="col-md-6" style="padding-top: 10px;">
                                                                 <label style="font-weight: bold;">SIREN</label>
-                                                                <input type="text" name="siren" class="form-control" placeholder="SIREN">
+                                                                <input type="text" id="siren" name="siren" class="form-control" placeholder="SIREN" required="">
                                                             </div>
                                                             <div class="col-md-6" style="padding-top: 10px;">
                                                                 <label style="font-weight: bold;">Numéro TVA</label>
-                                                                <input type="text" name="tva" class="form-control" placeholder="Numéro TVA">
+                                                                <input type="text" id="tva" name="tva" class="form-control" placeholder="Numéro TVA">
                                                             </div>
                                                         </div>
                                                     </div> 
