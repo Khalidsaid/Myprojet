@@ -21,6 +21,14 @@ $exec = mysql_query($requete)or die(mysql_error());
   }else{
   echo '<script>alert("requete non reussi !")</script>';
   } */
+$nb == 0;
+if (isset($_SESSION['myvtclogin'])) {
+    $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
+    if ($user['promos'] == 1) {
+        $sql = mysql_query("select * from reservation where id_user=" . $user['id']);
+        $nb = mysql_num_rows($sql);
+    }
+}
 ?>
 <!DOCTYPE HTML>
 
@@ -309,11 +317,25 @@ $exec = mysql_query($requete)or die(mysql_error());
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Date</div>
                                 <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $datedep . " à " . $heyres; ?></b></p></div>
                             </div>
-                            <hr style="border: 1px dashed ! important;">
-                            <div class="row">
-                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
-                                <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p></div>
-                            </div>
+                            <?php
+                            if ($nb != 9) {
+                                ?>
+                                <hr style="border: 1px dashed ! important;">
+                                <div class="row">
+                                    <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
+                                    <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p></div>
+                                </div>
+                                <?php
+                            } if ($nb == 9) {
+                                ?>
+                                <hr style="border: 1px dashed ! important;">
+                                <div class="row">
+                                    <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
+                                    <div class="col-md-8" style="text-align: left"><span id="prix" name="prix" style="width: 0px; color: rgb(255, 255, 255) ! important; display: none;"></span> <p  style="font-size: 22px;">Gratuit</p></div>
+                                </div>
+                                <?php
+                            }
+                            ?>
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">Code Promo ?</div>

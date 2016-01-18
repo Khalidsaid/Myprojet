@@ -120,7 +120,7 @@ $client = mysql_fetch_array(mysql_query("select * from myvtc_users where id=" . 
                                             <div class="form-group center">
 
                                                 <div class="col-lg-8">
-                                                    <button type="submit" class="btn btn-primary" onclick="modifuser(<?php echo $_GET['id']; ?>)">Modifier</button>
+                                                    <button type="button" class="btn btn-primary" onclick="modifuser(<?php echo $_GET['id']; ?>)">Modifier</button>
                                                 </div>
                                             </div><!-- /.form-group -->
 
@@ -176,9 +176,19 @@ $client = mysql_fetch_array(mysql_query("select * from myvtc_users where id=" . 
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Promos</label>
+                                                <label for="text1" class="control-label col-lg-4">Parrain valide</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="promos" placeholder="Promo" value="<?php echo $client['promos']; ?>" class="form-control">
+                                                    <select  id="promos"  class="form-control">
+                                                        <option value="<?php echo $client['promos']; ?>"><?php
+                                                            if ($client['promos'] == 0)
+                                                                echo "Non";
+                                                            else
+                                                                echo "Oui";
+                                                            ?></option>
+                                                        <option value="0">Non</option>
+                                                        <option value="1">Oui</option>
+
+                                                    </select>
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
@@ -271,6 +281,7 @@ $client = mysql_fetch_array(mysql_query("select * from myvtc_users where id=" . 
 
         <script>
             function modifuser(id) {
+               
                 var prenom = document.getElementById("prenom").value;
                 var nom = document.getElementById("nom").value;
                 var ville = document.getElementById("ville").value;
@@ -285,7 +296,7 @@ $client = mysql_fetch_array(mysql_query("select * from myvtc_users where id=" . 
                 var promos = document.getElementById("promos").value;
                 var email = document.getElementById("email").value;
                 $.ajax({
-                    url: 'modifuser.php?prenom=' + prenom + '&nom=' + nom + '&ville=' + ville + '&cp=' + cp + '&adresse=' + adresse + '&promos=' + promos + '&type_user=' + type_user + '&societe=' + societe + '&fax=' + fax + '&url=' + url + '&siren=' + siren + '&tva=' + tva,
+                    url: 'modifuser.php?prenom=' + prenom + '&nom=' + nom + '&ville=' + ville + '&cp=' + cp + '&adresse=' + adresse + '&promos=' + promos + '&type_user=' + type_user + '&societe=' + societe + '&fax=' + fax + '&url=' + url + '&siren=' + siren + '&tva=' + tva+ '&id=' + id,
                     success: function (data) {
                         var t = eval(data);
 

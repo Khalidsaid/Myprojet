@@ -20,7 +20,7 @@ $url = $_GET['url'];
 $siren = $_GET['siren'];
 $tva = $_GET['tva'];
 
-$sql = mysql_query("update users set prenom='" . $prenom . "', nom='" . $nom . "', cp='" . $cp . "', adresse='" . $adresse . "', ville='" . $ville . "', email='" . $email . "', promos='" . $promos . "',type_user='" . $type_user . "',societe='" . $societe . "',fax='" . $fax . "',url='" . $url . "',siren='" . $siren . "',tva='" . $tva . "' where id_user=" . $id)or die(mysql_error());
+$sql = mysql_query("update myvtc_users set prenom='" . $prenom . "', nom='" . $nom . "', cp='" . $cp . "', adresse='" . $adresse . "', ville='" . $ville . "',  promos='" . $promos . "',type_user='" . $type_user . "',societe='" . $societe . "',fax='" . $fax . "',url='" . $url . "',siren='" . $siren . "',tva='" . $tva . "' where id=" . $id)or die(mysql_error());
 
 $rs = "[";
 
