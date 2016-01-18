@@ -92,7 +92,7 @@ if (isset($_SESSION['myvtclogin']))
                                                         <div class="col-md-7 col-sm-offset-3">
                                                             <button  class="btn btn-success btn-lg" type="submit">Connexion </button>
                                                             <br><br>
-                                                            Mot de passe oublié ? cliquez <a href="">ici</a>
+                                                            Mot de passe oublié ? cliquez <a href="oublier.php">ici</a>
                                                         </div>
                                                     </div>
                                                     <hr>

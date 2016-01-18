@@ -200,29 +200,31 @@ $exec = mysql_query($requete)or die(mysql_error());
 
             }
         </script>
-		<script>
-    function connexion() {
-        var login = document.getElementById("login_user").value;
-        var pwd = document.getElementById("pwd_user").value;
-        $.ajax({
-            url: 'connexion.php?login=' + login + '&pwd=' + pwd,
-            success: function (data) {
-                var t = eval(data);
-                if (t[0]["message"] == "ok") {
-                    if (t[0]["etat"] == "1") {
+        <script>
+            function connexion() {
+                var login = document.getElementById("login_user").value;
+                var pwd = document.getElementById("pwd_user").value;
+                $.ajax({
+                    url: 'connect.php?login=' + login + '&pwd=' + pwd,
+                    success: function (data) {
+                        var t = eval(data);
+                        if (t[0]["message"] == "ok") {
 
-                        window.location = "mon-compte";
-                    } else {
-                        window.location = "compte-inactif";
+
+                            location.reload();
+
+                        } else {
+                            alert("Veuillez vérifier vos paramètres de connexion !");
+
+                        }
                     }
-                } else {
-                    alert("Veuillez vérifier vos paramètres de connexion !");
-
-                }
+                });
             }
-        });
-    }
-</script>  
+        </script>
+        <style>
+            form input {padding-bottom: 0px !important; padding-top: 0px !important;}
+
+        </style>
     </head>
 
     <body onload="javascript:onload()" class="homepage">

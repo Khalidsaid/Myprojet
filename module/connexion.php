@@ -19,11 +19,11 @@
                     <br />
                     <input type="button" class="btn btn-primary" value="Connexion" onclick="connexion()">
                 </form>
-                <a href="mot-de-passe-oublie" type="button" class="btn btn-link"><i class="fa fa-eraser"></i> Mot de passe oublié?</a>
+                <a href="oublier.php" type="button" class="btn btn-link"><i class="fa fa-eraser"></i> Mot de passe oublié?</a>
             </div>
             <div class="modal-footer">
 
-                <a href="" onclick="javascript:hidelogin();" data-toggle="modal" data-target="#modal-register" type="button" class="btn btn-block btn-facebook btn-social"><i class="fa fa-lock"></i> Créer mon compte</a>
+                <a href="inscription.php" data-toggle="modal" data-target="#modal-register" type="button" class="btn btn-block btn-facebook btn-social"><i class="fa fa-lock"></i> Créer mon compte</a>
 
             </div>
         </div>
