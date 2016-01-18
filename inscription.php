@@ -160,7 +160,7 @@ Nous vous remercions de votre visite sur le site ReserverUnCab.com. Vous pouvez 
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Parrain</label>
-                                                            <input name="parrain" placeholder="Parrain" class="form-control" type="text" id="parrain" />                                                        
+                                                            <input name="parrain" placeholder="Email de votre Parrain" class="form-control" type="email" id="parrain" />                                                        
                                                         </div>
                                                     </div> 
                                                     <div class="form-group" style="text-align: left;">
