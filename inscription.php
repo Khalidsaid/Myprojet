@@ -81,8 +81,8 @@ if (isset($_SESSION['myvtclogin']))
                         $tva = mysql_real_escape_string($_POST["tva"]);
                         $societe = mysql_real_escape_string($_POST["societe"]);
                         $password = md5($pwd);
-                        $headers = 'From: info@illico-immat.fr' . "\r\n" .
-                                'Reply-To: info@illico-immat.fr' . "\r\n" .
+                        $headers = 'From: info@reserveruncab.com' . "\r\n" .
+                                'Reply-To: info@reserveruncab.com' . "\r\n" .
                                 'X-Mailer: PHP/' . phpversion();
                         if ($pwd == $pwd2) {
                             $sql_exist = mysql_query("select * from myvtc_users where email='" . $login . "'");
@@ -91,9 +91,15 @@ if (isset($_SESSION['myvtclogin']))
                                 mysql_query("insert into myvtc_users(type_user,nom,prenom,adresse,cp,ville,tel,email,pwd,date_add,status,parrain,fax,url,siren,tva,societe)values('" . $type_user . "','" . $nom . "','" . $prenom . "','" . $adresse . "','" . $cp . "','" . $ville . "','" . $tel . "','" . $login . "','" . $password . "','" . date('Y-m-d H:i:s') . "',1,'" . $parrain . "','" . $fax . "','" . $url . "','" . $siren . "','" . $tva . "','" . $societe . "')")or die(mysql_error());
 
                                 $_SESSION['myvtclogin'] = $login;
-                                $message = "Bonjour Madame, Monsieur,\n
+                                $message = "Bienvenue " . $prenom . " " . $nom . ",
 
-Nous vous remercions de votre visite sur le site ReserverUnCab.com. Vous pouvez des-à-présent profiter des prestations de l'équipe ReserverUnCab.com.\n";
+Nous vous remercions de votre inscription sur reservuncab.com. Vous pouvez accéder à nos services
+directement en cliquant sur le lien suivant : <a href='www.reserveruncab.com' target='_blanc'>www.reserveruncab.com</a>.
+
+Merci de votre confiance et à bientôt !
+
+L'équipe ReserverUnCab.com.
+";
                                 mail($login, "Inscription au site ReserverUnCab.com", $message, $headers);
                                 echo '<script>window.location="profil.php"</script>';
                             } else {

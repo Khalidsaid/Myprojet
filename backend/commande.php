@@ -102,11 +102,13 @@ if (!isset($_SESSION['backend']))
                                                     <th>Arrivee</th>
                                                     <th>Date</th>
                                                     <th>Total</th>
+                                                    <th>Chauffeur</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select * from myvtc_users, reservation where reservation.id_user = myvtc_users.id");
+                                                $sql = mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation.depart,reservation.arrivee,reservation.chauffeur,reservation.id,reservation.date,reservation.prix from myvtc_users, reservation where reservation.id_user = myvtc_users.id");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>
@@ -117,6 +119,8 @@ if (!isset($_SESSION['backend']))
                                                         <td><?php echo $data['arrivee']; ?></td>
                                                         <td><?php echo $data['date']; ?></td>
                                                         <td><?php echo $data['prix']; ?>€</td>
+                                                        <td><?php echo $data['chauffeur']; ?>€</td>
+                                                        <td><a class="btn btn-success btn-sm" href="detailcmd.php?id=<?php echo $data['id'] ?>">Notifier le chauffeur</a></td>
                                                     </tr>
                                                     <?php
                                                 }
