@@ -115,24 +115,76 @@ if (!isset($_SESSION)) {
                 var year = EnteredDate.substring(6, 10);
 
                 var currentTime = new Date();
+				var desti = document.getElementById("depart").value;
+				if (checkParis(desti) == true)
+				{
                 var result = currentTime.setMinutes(currentTime.getMinutes() + 30);
+				} else
+				{
+				var result = currentTime.setMinutes(currentTime.getMinutes() + 45);
+				}
                 var h = currentTime.getHours();
                 var m = currentTime.getMinutes();
-
-                if (document.getElementById("minutes").value < result)
+				
+				//
+				var hdep = document.getElementById("heyres").value;
+				var mdep= document.getElementById("minutes").value;
+				
+				var heurecourante= hmsToSecondsOnly(h+":"+m);
+				var heureselection = hmsToSecondsOnly(hdep+":"+mdep);
+				//
+				
+		
+                if (heurecourante < heureselection && mois >= month && year >= annee && jour >= date)
                 {
-
+					
                 }
-                else if (document.getElementById("minutes").value < minute)
+                else 
                 {
                     alert("Vous pouvez choisir un départ à partir de : " + h + " heures " + m + " minutes ");
+					document.getElementById("heyres").selectedIndex = 0;
+					document.getElementById("minutes").selectedIndex = 0;
+					
                 }
 
             }
+			
+		function hmsToSecondsOnly(str) {
+			var p = str.split(':'),
+				s = 0, m = 1;
 
+			while (p.length > 0) {
+				s += m * parseInt(p.pop(), 10);
+				m *= 60;
+			}
+
+			return s;
+		}
 
             function checkMytime()
             {
+			
+				// Destination
+				
+				var desti = document.getElementById("depart").value;
+				
+				if (desti == "")
+				{
+					alert('Veuillez selectionner une adresse de depart');
+					document.getElementById("heyres").selectedIndex = 0;
+					document.getElementById("minutes").selectedIndex = 0;
+				} else if ( document.getElementById("datedep").value == "")
+				{
+					
+					alert('Veuillez selectionner une date');
+					document.getElementById("heyres").selectedIndex = 0;
+					document.getElementById("minutes").selectedIndex = 0;
+				
+				}
+				
+
+				
+				
 
                 //Heure courante.
                 var now = new Date();
@@ -154,9 +206,13 @@ if (!isset($_SESSION)) {
                 {
 
                     alert("L'heure ne peux etre dans le passé !");
-                    //document.location.href="index.php";
+                    document.getElementById("heyres").selectedIndex = 0;
+					document.getElementById("minutes").selectedIndex = 0;
                 }
-
+				
+			
+			
+				
             }
 
             function checkAndgo()
@@ -186,6 +242,16 @@ if (!isset($_SESSION)) {
                     window.location.href = "recapitulatif.php?depart=" + adr_dep + "&arrivee=" + adr_arr + "&totalpers=" + totalpers + "&totalbag=" + totalbag + "&datedep=" + datedep + "&heyres=" + heyres + "&distance=" + distance;
                 }
             }
+			
+			     function checkParis(aero)
+            {
+                var aeroports = "Paris";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 
             function checkOrly(aero)
             {
@@ -207,7 +273,16 @@ if (!isset($_SESSION)) {
             }
             function checkBeauvais(aero)
             {
-                var aeroports = "Aéroport Paris Beauvais Tillé, Tillé";
+                var aeroports = "Aéroport de Beauvais";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+			   function checkBourget(aero)
+            {
+                var aeroports = "Aéroport de Paris - Le Bourget, Le Bourget, France";
                 if (aero.indexOf(aeroports) >= 0) {
                     return true;
                 } else {
@@ -263,14 +338,10 @@ if (!isset($_SESSION)) {
                 var travel_mode = google.maps.TravelMode.DRIVING;
                 var map = new google.maps.Map(document.getElementById('bannner'), {
                     mapTypeControl: true,
-                    center: {
-                        lat: 47.3590900,
-                        lng: 3.3852100
-                    },
                     zoom: 9,
                     navigationControl: true,
                     mapTypeControl: true,
-                            scaleControl: true,
+                    scaleControl: true,
                     draggable: true,
                     componentRestrictions: {
                         country: "fr"
@@ -366,28 +437,80 @@ if (!isset($_SESSION)) {
 
             function callback(response, status) {
 
-
+			
                 var prixtotal = 0;
                 //r?cup?ration des champs du formulaire
                 var adr_dep = document.getElementById('depart').value;
                 var adr_arr = document.getElementById('arrivee').value;
+				
+				//Conditions départ de Paris
+				if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
+				{
+					
+				} else 
+				{
+					alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
+					document.location.href="index.php";
+				}
+				
 
                 var a = checkOrly(adr_dep);
-                var b = checkOrly(adr_arr)
+                var b = checkOrly(adr_arr);
+				
+				var c = checkBeauvais(adr_dep);
+				var d = checkBeauvais(adr_arr);
+				
+				var e = checkCharlle(adr_dep);
+				var f = checkCharlle(adr_arr);
+				
+				var g = checkBourget(adr_dep);
+				var h = checkBourget(adr_arr);
+				
+				var rep = false;
+				
+				if( (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
+				{
+					window.prixtotal = 0;
+					rep=true;
+				}
+				
+				else
+				{
 
-                if (a == true || b == true)
+                if (rep == false && (a == true && b == false) || (a == false && b == true) || (!c && !d) && (!e && !f) && (!g && !h))
                 {
-                    window.prixtotal = 49;
-                }
-                if (checkBeauvais(adr_dep) == true || checkBeauvais(adr_arr) == true)
+                    window.prixtotal = 0;
+                } else
+				{
+					window.prixtotal = 49;
+					rep = true;
+				}
+                if (rep == false && (c == true && d == false) || (c == false && d == true) || (!a && !b) && (!e && !f) && (!g && !h))
                 {
-                    window.prixtotal = 49;
-                }
-                if (checkCharlle(adr_dep) == true || checkCharlle(adr_arr) == true)
+                    window.prixtotal = 0;
+                } else
+				{
+					window.prixtotal = 49;
+					rep = true;
+				}
+                if (rep == false && (e == true && f == false) || (e == false && f == true) || (!a && !b) && (!c && !d)  && (!g && !h))
                 {
-                    window.prixtotal = 49;
-                }
-
+                    window.prixtotal = 0;
+                } else
+				{
+					window.prixtotal = 49;
+					rep = true;
+				}
+				
+				   if (rep == false && (g == true && h == false) || (g == false && h == true) || (!a && !b) && (!c && !d)  && (!e && !f))
+                {
+                    window.prixtotal = 0;
+                } else
+				{
+					window.prixtotal = 49;
+					rep = true;
+				}
+		}
 
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
@@ -422,6 +545,10 @@ if (!isset($_SESSION)) {
                                         document.getElementById('more_passengers').style.display = "block";
                                         document.getElementById('mybuton').style.display = "none";
                                         document.getElementById('mybuton2').style.display = "none";
+										// Hide price and booking infos
+										document.getElementById('distance').style.display = "none";
+										document.getElementById('duree').style.display = "none";
+										document.getElementById('prix').style.display = "none";
                                         //document.getElementById('mybuton').setAttribute('type', 'reset');
                                     } else
                                     {
@@ -537,7 +664,7 @@ if (!isset($_SESSION)) {
                                                 <ul class="dropdown-menu">
                                                     <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
                                                     <li role="separator" class="divider"></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Terminal 2D, Aéroport Charles-de-Gaulle, Roissy-en-France, France';
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
             showMap()">Charles De Gaulle - Roissy</a></li>
                                                     <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Paris-Orly, Orly, France';
                                                             showMap()">Orly</a></li>
@@ -580,7 +707,7 @@ if (!isset($_SESSION)) {
                                                 <ul class="dropdown-menu">
                                                     <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
                                                     <li role="separator" class="divider"></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Terminal 2D, Aéroport Charles-de-Gaulle, Roissy-en-France, France';
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
                                                             showMap()">Charles De Gaulle - Roissy</a></li>
                                                     <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Paris-Orly, Orly, France';
                                                             showMap()">Orly</a></li>
@@ -622,7 +749,7 @@ if (!isset($_SESSION)) {
                                         <label>Date</label>
                                         <div class="form-group">
                                             <div class="input-group date" data-provide="datepicker">
-                                                <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()">
+                                                <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" required="required">
                                                 <div class="input-group-addon">
                                                     <span class="glyphicon glyphicon-th"></span>
                                                 </div>
@@ -638,9 +765,9 @@ if (!isset($_SESSION)) {
                                         <div>
                                             <div class="col-md-6" style="padding-left: 0px; padding-right: 15px;">
                                                 <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkMytime()">
-<?php
-for ($i = 0; $i < 24; $i++) {
-    ?>
+														<?php
+														for ($i = 0; $i < 24; $i++) {
+															?>
                                                         <option>
                                                         <?php
                                                         if ($i < 10)
@@ -843,6 +970,7 @@ for ($i = 0; $i < 24; $i++) {
                                                format: 'dd/mm/yyyy',
                                                startDate: '-3d'
                                            });
+										   
     </script>
 </body>
 

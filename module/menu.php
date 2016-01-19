@@ -30,7 +30,7 @@
             <li>
 			<a href="profil.php">Mon compte</a>
 			      <ul>
-                <li><a href="deconnect.php">Aéroport</a></li>
+                <li><a href="deconnect.php">Deconnexion</a></li>
                 
             </ul>
 			</li>

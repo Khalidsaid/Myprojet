@@ -29,6 +29,18 @@ if (isset($_SESSION['myvtclogin'])) {
         $nb = mysql_num_rows($sql);
     }
 }
+
+
+		$user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
+		if ($user['type_user'] == 'Professionnel') {
+		//prix pro
+		echo "<script>window.pricepro = 2;</script>";
+		}
+		else
+		{
+		echo "<script>window.pricepro = 0;</script>";
+		}
+									
 ?>
 <!DOCTYPE HTML>
 
@@ -60,6 +72,7 @@ if (isset($_SESSION['myvtclogin'])) {
 
         <script type="text/javascript">
             var price2 = "undefined";
+			var pricepro;
 
             function onload() {
                 calculDistance();
@@ -128,7 +141,15 @@ if (isset($_SESSION['myvtclogin'])) {
 
             }
 
-
+				     function checkParis(aero)
+            {
+                var aeroports = "Paris";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 
             function getURIParameter(param, asArray) {
                 return document.location.search.substring(1).split('&').reduce(function (p, c) {
@@ -167,13 +188,90 @@ if (isset($_SESSION['myvtclogin'])) {
             }
 
             function callback(response, status) {
+			
+				var prixtotal = 0;
+                //r?cup?ration des champs du formulaire
+				var adr_dep = getURIParameter("depart");
+                var adr_arr = getURIParameter("arrivee");
+				
+				//Conditions départ de Paris
+				if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
+				{
+					
+				} else 
+				{
+					alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
+					document.location.href="index.php";
+				}
+				
+
+                var a = checkOrly(adr_dep);
+                var b = checkOrly(adr_arr);
+				
+				var c = checkBeauvais(adr_dep);
+				var d = checkBeauvais(adr_arr);
+				
+				var e = checkCharlle(adr_dep);
+				var f = checkCharlle(adr_arr);
+				
+				var g = checkBourget(adr_dep);
+				var h = checkBourget(adr_arr);
+				
+				var rep = false;
+				
+				if( (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
+				{
+					window.prixtotal = 0;
+					rep=true;
+				}
+				
+				else
+				{
+
+                if (rep == false && (a == true && b == false) || (a == false && b == true) || (!c && !d) && (!e && !f) && (!g && !h))
+                {
+                    window.prixtotal = 0;
+                } else
+				{
+					window.prixtotal = 49;
+					rep = true;
+				}
+                if (rep == false && (c == true && d == false) || (c == false && d == true) || (!a && !b) && (!e && !f) && (!g && !h))
+                {
+                    window.prixtotal = 0;
+                } else
+				{
+					window.prixtotal = 49;
+					rep = true;
+				}
+                if (rep == false && (e == true && f == false) || (e == false && f == true) || (!a && !b) && (!c && !d)  && (!g && !h))
+                {
+                    window.prixtotal = 0;
+                } else
+				{
+					window.prixtotal = 49;
+					rep = true;
+				}
+				
+				   if (rep == false && (g == true && h == false) || (g == false && h == true) || (!a && !b) && (!c && !d)  && (!e && !f))
+                {
+                    window.prixtotal = 0;
+                } else
+				{
+					window.prixtotal = 49;
+					rep = true;
+				}
+		}
+			
+			
+			
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
                 } else {
                     //rponses du serveur 
                     var origins = response.originAddresses;
                     var destinations = response.destinationAddresses;
-                    window.price = 5;
+                    
 
                     for (var i = 0; i < origins.length; i++) {
                         var results = response.rows[i].elements;
@@ -186,13 +284,22 @@ if (isset($_SESSION['myvtclogin'])) {
                                 if (statut == 'OK') {
                                     var dist = element.distance.value;
                                     var dure = element.duration.text;
-                                    price2 = Math.round(parseInt(dist / 1000) * window.price);
-                                    document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
+									if (window.pricepro == 0)
+									{
+										price2 = Math.round(parseInt(dist / 1000) * window.price);
+										document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
+										document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price);
+									} else
+									{
+                                    price2 = Math.round(parseInt(dist / 1000) * window.pricepro);
+									document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
+									 document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.pricepro);
+									}
                                     document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
                                     document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
                                     +' kilomètres<b> ';
                                     document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
-                                    document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price);
+                                   
                                 } else if (statut == 'NOT_FOUND') {
                                     //alert("impossible de localiser l'adresse d'arrivee");
                                 } else if (statut == 'ZERO_RESULTS') {
@@ -206,6 +313,55 @@ if (isset($_SESSION['myvtclogin'])) {
                 }
 
 
+            }
+			
+			
+			
+			     function checkParis(aero)
+            {
+                var aeroports = "Paris";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function checkOrly(aero)
+            {
+                var aeroports = "Aéroport de Paris-Orly, Orly";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function checkCharlle(aero)
+            {
+                var aeroports = "Aéroport Charles-de-Gaulle, Roissy-en-France";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function checkBeauvais(aero)
+            {
+                var aeroports = "Aéroport de Beauvais";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+			   function checkBourget(aero)
+            {
+                var aeroports = "Aéroport de Paris - Le Bourget, Le Bourget, France";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         </script>
         <script>
@@ -314,9 +470,19 @@ if (isset($_SESSION['myvtclogin'])) {
                             ?>
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
+						
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Date</div>
                                 <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $datedep . " à " . $heyres; ?></b></p></div>
                             </div>
+							
+							<script type="text/javascript">
+								var rep = getURIParameter("depart");
+								var bool = checkParis(rep);
+								
+								<?php $marep = "<script>document.write(bool)</script>"?>   
+								
+							</script>
+						
                             <?php
                             if ($nb != 9) {
                                 ?>
@@ -326,12 +492,13 @@ if (isset($_SESSION['myvtclogin'])) {
                                     <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p></div>
                                 </div>
                                 <?php
-                            } if ($nb == 9) {
+                            } if ($nb == 9 && $marep == true) {
+							
                                 ?>
                                 <hr style="border: 1px dashed ! important;">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
-                                    <div class="col-md-8" style="text-align: left"><span id="prix" name="prix" style="width: 0px; color: rgb(255, 255, 255) ! important; display: none;"></span> <p  style="font-size: 22px;">Gratuit</p></div>
+                                    <div class="col-md-8" style="text-align: left"><span id="prix" name="prix" value="0" style="width: 0px; color: rgb(255, 255, 255) ! important; display: none;"></span> <p  style="font-size: 22px;">Gratuit (offre parrainage de la 10e course)</p></div>
                                 </div>
                                 <?php
                             }
