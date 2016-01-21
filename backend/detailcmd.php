@@ -3,7 +3,7 @@ include("../config.php");
 include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
-$client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation.depart,myvtc_users.tel,reservation.arrivee,reservation.id,reservation.date,reservation.prix from myvtc_users, reservation where reservation.id_user = myvtc_users.id and reservation.id=" . $_GET['id']));
+$client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,myvtc_users.tel,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.prix from myvtc_users, reservation_attente where reservation_attente.id_user = myvtc_users.id and reservation_attente.id=" . $_GET['id']));
 ?>
 <!doctype html>
 <html class="no-js">
@@ -128,7 +128,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Chauffeur</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="chauffeur" placeholder="Chauffeur Email"  class="form-control">
+                                                    <input type="text" id="chauffeur" placeholder="Chauffeur"  class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
@@ -165,7 +165,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Date</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="date11" placeholder="Adresse" value="<?php echo $client['date']; ?>" class="form-control">
+                                                    <input type="text" id="date11" placeholder="Adresse" value="<?php echo $client['dtdeb']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">

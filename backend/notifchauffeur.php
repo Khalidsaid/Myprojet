@@ -15,7 +15,7 @@ $date = $_GET['heure'];
 $heure = $_GET['heure'];
 $prix = $_GET['prix'];
 
-$headers = 'From: info@reserveruncab.com' . "\r\n" .
+/*$headers = 'From: info@reserveruncab.com' . "\r\n" .
         'Reply-To: info@reserveruncab.com' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
 $message = "Notification de réservation :\n
@@ -29,9 +29,9 @@ Prix : " . $prix . "\n
 Date : " . $date . "\n
 Heure : " . $heure . "\n
 ";
-mail($chauffeur, "Notification sur ReserverUnCab.com", $message, $headers);
+mail($chauffeur, "Notification sur ReserverUnCab.com", $message, $headers);*/
 
-$sql = mysql_query("update reservation set notif=1,chauffeur='".$chauffeur."' where id=" . $id)or die(mysql_error());
+$sql = mysql_query("update reservation_attente set notif=1,chauffeur='".$chauffeur."' where id=" . $id)or die(mysql_error());
 
 $rs = "[";
 

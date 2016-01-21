@@ -108,7 +108,7 @@ if (!isset($_SESSION['backend']))
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation.depart,reservation.arrivee,reservation.chauffeur,reservation.id,reservation.date,reservation.prix from myvtc_users, reservation where reservation.id_user = myvtc_users.id");
+                                                $sql = mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,reservation_attente.arrivee,reservation_attente.chauffeur,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.prix from myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.etat=1");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>
@@ -117,9 +117,9 @@ if (!isset($_SESSION['backend']))
                                                         <td><?php echo $data['prenom']; ?></td>
                                                         <td><?php echo $data['depart']; ?></td>
                                                         <td><?php echo $data['arrivee']; ?></td>
-                                                        <td><?php echo $data['date']; ?></td>
+                                                        <td><?php echo $data['dtdeb']; ?></td>
                                                         <td><?php echo $data['prix']; ?>€</td>
-                                                        <td><?php echo $data['chauffeur']; ?>€</td>
+                                                        <td><?php echo $data['chauffeur']; ?></td>
                                                         <td><a class="btn btn-success btn-sm" href="detailcmd.php?id=<?php echo $data['id'] ?>">Notifier le chauffeur</a></td>
                                                     </tr>
                                                     <?php

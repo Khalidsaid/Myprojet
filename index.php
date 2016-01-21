@@ -746,7 +746,7 @@ if (!isset($_SESSION)) {
                                                 <label>Date</label>
                                                 <div class="form-group">
                                                     <div class="input-group date" data-provide="datepicker">
-                                                        <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" required="required">
+                                                        <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" value="<?php echo date("m/d/Y"); ?>" required="required">
                                                         <div class="input-group-addon">
                                                             <span class="glyphicon glyphicon-th"></span>
                                                         </div>

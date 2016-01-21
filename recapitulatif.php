@@ -1,20 +1,21 @@
 <?php
 include("config.php");
-$chaine_cmd = "";
+$chaine_cmd = "Reservation sur ReserverUnCab";
 // Identifiant unique
 $identifiant = uniqid();
+$_SESSION['reference'] = $identifiant;
 $depart = $_GET['depart'];
 $arrivee = $_GET['arrivee'];
 $totalpers = $_GET['totalpers'];
 $totalbag = $_GET['totalbag'];
 $datedep_tab = explode("/", $_GET['datedep']);
-$datedep = $datedep_tab[1] . "-" . $datedep_tab[0] . "-" . $datedep_tab[2];
+$datedep = $datedep_tab[2] . "-" . $datedep_tab[0] . "-" . $datedep_tab[1];
 $heyres = $_GET['heyres'];
 $distance = $_GET['distance'];
 date_default_timezone_set('Europe/Paris');
 $date = date('Y-m-d H:i:s');
 
-$requete = "insert into reservation_attente(codecommande,depart, arrivee,passager,valise,dtdeb,heure,distance,  date_add, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($arrivee) . "', '" . addslashes($totalpers) . "', '" . addslashes($totalbag) . "', '" . addslashes($datedep) . "', '" . addslashes($heyres) . "', '" . addslashes($distance) . "', '" . addslashes($date) . "', 0);";
+$requete = "insert into reservation_attente(codecommande,depart, arrivee,passager,valise,dtdeb,heure,distance,  date_add, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($arrivee) . "', '" . addslashes($totalpers) . "', '" . addslashes($totalbag) . "', '" . trim($datedep) . "', '" . addslashes($heyres) . "', '" . addslashes($distance) . "', '" . addslashes($date) . "', 0);";
 $exec = mysql_query($requete)or die(mysql_error());
 /* if(mysql_query($requete)){
   echo '<script>alert("requete réussi !")</script>';
@@ -25,22 +26,19 @@ $nb == 0;
 if (isset($_SESSION['myvtclogin'])) {
     $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
     if ($user['promos'] == 1) {
-        $sql = mysql_query("select * from reservation where id_user=" . $user['id']);
+        $sql = mysql_query("select * from reservation_attente where etat=1 and id_user=" . $user['id']);
         $nb = mysql_num_rows($sql);
     }
 }
 
 
-		$user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
-		if ($user['type_user'] == 'Professionnel') {
-		//prix pro
-		echo "<script>window.pricepro = 2;</script>";
-		}
-		else
-		{
-		echo "<script>window.pricepro = 0;</script>";
-		}
-									
+$user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
+if ($user['type_user'] == 'Professionnel') {
+    //prix pro
+    echo "<script>window.pricepro = 2;</script>";
+} else {
+    echo "<script>window.pricepro = 0;</script>";
+}
 ?>
 <!DOCTYPE HTML>
 
@@ -72,9 +70,9 @@ if (isset($_SESSION['myvtclogin'])) {
 
         <script type="text/javascript">
             var price2 = "undefined";
-			var pricepro;
-			var codepromo = 0;
-			
+            var pricepro;
+            var codepromo = 0;
+
             function onload() {
                 calculDistance();
                 getPrix();
@@ -117,7 +115,7 @@ if (isset($_SESSION['myvtclogin'])) {
 
             function checkCode()
             {
-				
+
                 var code = document.getElementById('codepromo').value;
 
                 $.ajax({
@@ -128,18 +126,18 @@ if (isset($_SESSION['myvtclogin'])) {
 
                         for (var i = 0; i < response.length; i++)
                         {
-						//alert(response[i].value);
+                            //alert(response[i].value);
                             if (code == response[i].code)
                             {
-								codepromo = response[i].montant;
-								alert("Code ajouté avec succès !");
-								document.getElementById('codepromo').value ="";
-								calculDistance();
+                                codepromo = response[i].montant;
+                                alert("Code ajouté avec succès !");
+                                document.getElementById('codepromo').value = "";
+                                calculDistance();
                                 return true;
                             } else
                             {
-								alert("Code non valide !");
-								document.getElementById('codepromo').value ="";
+                                alert("Code non valide !");
+                                document.getElementById('codepromo').value = "";
                                 return false;
                             }
 
@@ -150,7 +148,7 @@ if (isset($_SESSION['myvtclogin'])) {
 
             }
 
-			  function checkParis(aero)
+            function checkParis(aero)
             {
                 var aeroports = "Paris";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -169,7 +167,7 @@ if (isset($_SESSION['myvtclogin'])) {
                     return false;
                 }
             }
-			     function checkAero(aero)
+            function checkAero(aero)
             {
                 var aeroports = "Aéroport";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -196,7 +194,7 @@ if (isset($_SESSION['myvtclogin'])) {
                     return false;
                 }
             }
-			   function checkBourget(aero)
+            function checkBourget(aero)
             {
                 var aeroports = "Aéroport de Paris - Le Bourget, Le Bourget, France";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -241,97 +239,81 @@ if (isset($_SESSION['myvtclogin'])) {
 
 
             }
-			
-			function reservation() {
 
-			  /*var rep = isNaN(window.price2);
-			  if ( typeof(window.price2) == "undefined" || window.price2 == null || rep == 1 )
-			   
-			   {
-				 alert("Erreur, veuillez recommencer");
-				 window.location.href="index.php"
-				} 
-				
-			   var dep = getURIParameter("txtpickup");
-			   var arr = getURIParameter("txtdrop");
-			   var email = document.getElementById("monemail").value;
-			   var id_user = document.getElementById("iduser").value;
-			   
-					
-				  $.ajax({
+            function reservation() {
+                var price = document.getElementById("amounttxt").value;
+                var ref = document.getElementById("myref").value;
+               
+                $.ajax({
+                    url: 'reservation.php?price=' + price+"&ref="+ref,
+                    success: function (data) {
+                        var t = eval(data);
+                       document.paypal.submit();
+                    }
+                });
 
-					 type: "POST",
-					 url: "http://reserveruncab.com/webservice/v1/users/reservation/txtpickup/"+ txtpickup + "/txtdrop/" + txtdrop + "/prix/" + window.price2 + "/email/" + email + "/id_user/" + id_user,
-					success: function(data) {
-					   
-					 },
-					 error: function(xhr, status, error) {
-					 
-					 }
-				  });*/
-				  
-				  document.paypal.submit();
-	  
-	}
+
+
+            }
 
 
             function callback(response, status) {
-			
-				var prixtotal = 0;
+
+                var prixtotal = 0;
                 //r?cup?ration des champs du formulaire
-				var adr_dep = getURIParameter("depart");
+                var adr_dep = getURIParameter("depart");
                 var adr_arr = getURIParameter("arrivee");
-				
-				//Conditions départ de Paris
-				if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
-				{
-					
-				} else 
-				{
-					alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
-					document.location.href="index.php";
-				}
-				
+
+                //Conditions départ de Paris
+                if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
+                {
+
+                } else
+                {
+                    alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
+                    document.location.href = "index.php";
+                }
+
 
                 var a = checkOrly(adr_dep);
                 var b = checkOrly(adr_arr);
-				
-				var c = checkBeauvais(adr_dep);
-				var d = checkBeauvais(adr_arr);
-				
-				var e = checkCharlle(adr_dep);
-				var f = checkCharlle(adr_arr);
-				
-				var g = checkBourget(adr_dep);
-				var h = checkBourget(adr_arr);
-				
-				// Verifier si le départ est un aeroport et l'arrivée
-				var aero_dep = checkAero(adr_dep);
-				var aero_arr = checkAero(adr_arr);
-				
-				var chkdep = checkParis(adr_dep);
-				var chkarr = checkParis(adr_arr);
-			
-				
-				var rep = false;
-				
-				if( (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true) || (aero_dep == true && aero_arr == true))
-				{ 
-					window.prixtotal = 0;
-					rep=true;
-				} else if ( rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true))
-				{
-					window.prixtotal = 49;
-					rep=true;
-				}
-			
+
+                var c = checkBeauvais(adr_dep);
+                var d = checkBeauvais(adr_arr);
+
+                var e = checkCharlle(adr_dep);
+                var f = checkCharlle(adr_arr);
+
+                var g = checkBourget(adr_dep);
+                var h = checkBourget(adr_arr);
+
+                // Verifier si le départ est un aeroport et l'arrivée
+                var aero_dep = checkAero(adr_dep);
+                var aero_arr = checkAero(adr_arr);
+
+                var chkdep = checkParis(adr_dep);
+                var chkarr = checkParis(adr_arr);
+
+
+                var rep = false;
+
+                if ((a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true) || (aero_dep == true && aero_arr == true))
+                {
+                    window.prixtotal = 0;
+                    rep = true;
+                } else if (rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true))
+                {
+                    window.prixtotal = 49;
+                    rep = true;
+                }
+
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
                 } else {
                     //rponses du serveur 
                     var origins = response.originAddresses;
                     var destinations = response.destinationAddresses;
-                    
+
 
                     for (var i = 0; i < origins.length; i++) {
                         var results = response.rows[i].elements;
@@ -344,22 +326,24 @@ if (isset($_SESSION['myvtclogin'])) {
                                 if (statut == 'OK') {
                                     var dist = element.distance.value;
                                     var dure = element.duration.text;
-									if (window.pricepro == 0)
-									{
-										price2 = Math.round(parseInt(dist / 1000) * window.price - window.codepromo);
-										document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
-										document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price - window.codepromo);
-									} else
-									{
-                                    price2 = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
-									document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
-									 document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
-									}
+                                    if (window.pricepro == 0)
+                                    {
+                                        price2 = Math.round(parseInt(dist / 1000) * window.price - window.codepromo);
+                                        document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
+                                        document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price - window.codepromo);
+                                        document.getElementById('amounttxt').value = price2;
+                                    } else
+                                    {
+                                        price2 = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
+                                        document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
+                                        document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
+                                        document.getElementById('amounttxt').value = price2;
+                                    }
                                     document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
                                     document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
                                     +' kilomètres<b> ';
                                     document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
-                                   
+
                                 } else if (statut == 'NOT_FOUND') {
                                     //alert("impossible de localiser l'adresse d'arrivee");
                                 } else if (statut == 'ZERO_RESULTS') {
@@ -374,10 +358,10 @@ if (isset($_SESSION['myvtclogin'])) {
 
 
             }
-			
-			
-			
-			     function checkParis(aero)
+
+
+
+            function checkParis(aero)
             {
                 var aeroports = "Paris";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -414,7 +398,7 @@ if (isset($_SESSION['myvtclogin'])) {
                     return false;
                 }
             }
-			   function checkBourget(aero)
+            function checkBourget(aero)
             {
                 var aeroports = "Aéroport de Paris - Le Bourget, Le Bourget, France";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -488,7 +472,7 @@ if (isset($_SESSION['myvtclogin'])) {
                 <input name="tax" type="hidden" value="0.00" />
                 <input name="return" type="hidden" value="/paiementValide.php" />
                 <input name="cancel_return" type="hidden" value="/paiementAnnule.php" />
-                <input name="notify_url" type="hidden" value="/validationPaiement.php" />
+                <input name="notify_url" type="hidden" value="/paiementValide.php" />
                 <input name="cmd" type="hidden" value="_xclick" />
                 <input name="business" type="hidden" value="ad.prestiges@gmail.com" />
                 <input name="item_name" type="hidden" value="<?php echo $chaine_cmd; ?>" />
@@ -530,35 +514,34 @@ if (isset($_SESSION['myvtclogin'])) {
                             ?>
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
-						
+
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Date</div>
                                 <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $datedep . " à " . $heyres; ?></b></p></div>
                             </div>
-							
-							<script type="text/javascript">
-								var rep = getURIParameter("depart");
-								var bool = checkParis(rep);
-								
-								<?php $marep = "<script>document.write(bool)</script>"?>   
-								
-							</script>
-						
+
+                            <script type="text/javascript">
+                                var rep = getURIParameter("depart");
+                                var bool = checkParis(rep);
+
+<?php $marep = "<script>document.write(bool)</script>" ?>
+
+                            </script>
+
                             <?php
                             if ($nb != 9) {
                                 ?>
                                 <hr style="border: 1px dashed ! important;">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
-                                    <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p></div>
+                                    <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p><input type="hidden" id="amounttxt" /><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /></div>
                                 </div>
                                 <?php
                             } if ($nb == 9 && $marep == true) {
-							
                                 ?>
                                 <hr style="border: 1px dashed ! important;">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
-                                    <div class="col-md-8" style="text-align: left"><span id="prix" name="prix" value="0" style="width: 0px; color: rgb(255, 255, 255) ! important; display: none;"></span> <p  style="font-size: 22px;">Gratuit (offre parrainage de la 10e course)</p></div>
+                                    <div class="col-md-8" style="text-align: left"><input type="hidden" id="amounttxt" /><span id="prix" name="prix" value="0" style="width: 0px; color: rgb(255, 255, 255) ! important; display: none;"></span><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /> <p  style="font-size: 22px;">Gratuit (offre parrainage de la 10e course)</p></div>
                                 </div>
                                 <?php
                             }
@@ -568,8 +551,8 @@ if (isset($_SESSION['myvtclogin'])) {
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">Code Promo ?</div>
                                 <div class="col-md-3" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">
                                     <input step="border-left-width: 0px;" type="text" id="codepromo" size="10" name="codepromo" class="form-control" placeholder="Code promo"/>
-                                  
-									<br>
+
+                                    <br>
                                     <button type="button" class="btn btn-info col-md-12" onclick="javascript:checkCode();">Appliquer</button>
                                 </div>
                                 <div class="col-md-8" style="text-align: left"><?php

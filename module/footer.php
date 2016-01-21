@@ -6,25 +6,26 @@
                 <section>
 
                     <ul class="divided">
-                        <li><a href="#">Nous contacter</a></li>
-                        <li><a href="#">Fonctionnement</a></li>
-                        <li><a href="#">Conditions générales</a></li>
-
+                        <li><a href="faq.php">FAQ</a></li>
+                        <li><a href="avantage.php">Avantages</a></li>
+                        <li><a href="fonctionnement.php">Fonctionnement</a></li>
+                        <li><a href="condition.php">Conditions générales</a></li>
+                        <li><a href="contact.php">Nous contacter</a></li>
                     </ul>
                 </section>
             </div>
             <div class="4u 12u(mobile)">
                 <section>
                     <ul class="divided">
-                        <li><a href="#">Avantages</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li> <img src="images/logo_paypal.jpg" alt="" class="img-responsive" /></li>
+
                     </ul>
                 </section>
             </div>
             <div class="4u 12u(mobile)">
                 <section>
                     <header>
-                        <h2>Réseaux sociaux</h2>
+                        <h2>Suivez-nous sur</h2>
                     </header>
                     <ul class="social">
                         <li><a class="icon fa-facebook" href="#"><span class="label">Facebook</span></a></li>
@@ -34,7 +35,7 @@
                         <li><a class="icon fa-google-plus" href="#"><span class="label">Google+</span></a></li>
                     </ul>
 
-                    <img src="images/logo_paypal.jpg" />
+
 
                 </section>
             </div>
