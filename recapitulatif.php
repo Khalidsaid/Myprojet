@@ -241,6 +241,39 @@ if (isset($_SESSION['myvtclogin'])) {
 
 
             }
+			
+			function reservation() {
+
+			  /*var rep = isNaN(window.price2);
+			  if ( typeof(window.price2) == "undefined" || window.price2 == null || rep == 1 )
+			   
+			   {
+				 alert("Erreur, veuillez recommencer");
+				 window.location.href="index.php"
+				} 
+				
+			   var dep = getURIParameter("txtpickup");
+			   var arr = getURIParameter("txtdrop");
+			   var email = document.getElementById("monemail").value;
+			   var id_user = document.getElementById("iduser").value;
+			   
+					
+				  $.ajax({
+
+					 type: "POST",
+					 url: "http://reserveruncab.com/webservice/v1/users/reservation/txtpickup/"+ txtpickup + "/txtdrop/" + txtdrop + "/prix/" + window.price2 + "/email/" + email + "/id_user/" + id_user,
+					success: function(data) {
+					   
+					 },
+					 error: function(xhr, status, error) {
+					 
+					 }
+				  });*/
+				  
+				  document.paypal.submit();
+	  
+	}
+
 
             function callback(response, status) {
 			
@@ -546,7 +579,7 @@ if (isset($_SESSION['myvtclogin'])) {
                                         <?php
                                     } else {
                                         ?>
-                                        <a href="#" class="button big btn btn-success" onclick="javascript:reservation(depart, arrivee, prix, iduser, email);
+                                        <a href="#" class="button big btn btn-success" onclick="javascript:reservation();
                                                     return false;">Payer</a>
                                            <?php
                                        }
