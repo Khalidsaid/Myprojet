@@ -4,7 +4,10 @@ include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
 
-
+$client_pro=  mysql_query("select count(*) from myvtc_users where type_user='Professionnel'");
+$nb_client_pro=  mysql_num_rows($client_pro);
+$client_part=  mysql_query("select count(*) from myvtc_users where type_user='Particulier'");
+$nb_client_part=  mysql_num_rows($client_part);
 $commande=  mysql_query("select * from reservation");
 $nb_commande=  mysql_num_rows($commande);
 ?>
@@ -85,12 +88,21 @@ $nb_commande=  mysql_num_rows($commande);
         <!-- #menu -->
         <?php include("menu.php");  ?><!-- /#menu -->
       </div><!-- /#left -->
-      <div id="content">
+  <div id="content">
         <div class="outer">
           <div class="inner bg-light lter">
            
             <div class="text-center">
-           
+              <a class="quick-btn" href="client.php">
+                <i class="fa fa-users fa-2x"></i>
+                <span>PRO</span> 
+                <span class="label label-default"><?php echo $nb_client_pro; ?></span> 
+              </a> 
+              <a class="quick-btn" href="client.php">
+                <i class="fa fa-users fa-2x"></i>
+                <span>Particuliers</span> 
+                <span class="label label-danger"><?php echo $nb_client_part; ?></span> 
+              </a> 
               <a class="quick-btn" href="commande.php">
                 <i class="fa fa-money fa-2x"></i>
                 <span>Commandes</span> 
@@ -109,6 +121,7 @@ $nb_commande=  mysql_num_rows($commande);
           </div><!-- /.inner -->
         </div><!-- /.outer -->
       </div><!-- /#content -->
+     
      
     </div><!-- /#wrap -->
     <footer class="Footer bg-dark dker">

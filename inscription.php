@@ -93,8 +93,8 @@ if (isset($_SESSION['myvtclogin']))
                                 $_SESSION['myvtclogin'] = $login;
                                 $message = "Bienvenue " . $prenom . " " . $nom . ",
 
-Nous vous remercions de votre inscription sur reservuncab.com. Vous pouvez accéder à nos services
-directement en cliquant sur le lien suivant : <a href='www.reserveruncab.com' target='_blanc'>www.reserveruncab.com</a>.
+Fécilitation ! vous êtes maintenant inscrit sur reservuncab.com. Nous vous remercions de nous avoir choisi.  Vous pouvez accéder à nos offres et services
+directement en cliquant sur le lien suivant : www.reserveruncab.com.
 
 Merci de votre confiance et à bientôt !
 

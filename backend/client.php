@@ -103,7 +103,7 @@ if (!isset($_SESSION['backend']))
                                                     <th>Tel</th>
                                                     <th>Promos</th>
                                                     <th>Date inscription</th>
-                                                    <th>Détail</th>
+                                                    <th>Détails</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -126,7 +126,7 @@ if (!isset($_SESSION['backend']))
                                                         <td><?php echo $data['promos']; ?></td>
                                                         <td><?php echo $data['date_add']; ?></td>
 
-                                                        <td><a href="detail.php?id=<?php echo $data['id']; ?>" class="btn btn-warning btn-xs">Détail</a></td>
+                                                        <td><a href="detail.php?id=<?php echo $data['id']; ?>" class="btn btn-warning btn-xs">Détails</a></td>
                                                     </tr>
                                                     <?php
                                                 }

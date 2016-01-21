@@ -8,7 +8,7 @@ $arrivee = $_GET['arrivee'];
 $totalpers = $_GET['totalpers'];
 $totalbag = $_GET['totalbag'];
 $datedep_tab = explode("/", $_GET['datedep']);
-$datedep = $datedep_tab[2] . "-" . $datedep_tab[0] . "-" . $datedep_tab[1];
+$datedep = $datedep_tab[1] . "-" . $datedep_tab[0] . "-" . $datedep_tab[2];
 $heyres = $_GET['heyres'];
 $distance = $_GET['distance'];
 date_default_timezone_set('Europe/Paris');
@@ -73,7 +73,8 @@ if (isset($_SESSION['myvtclogin'])) {
         <script type="text/javascript">
             var price2 = "undefined";
 			var pricepro;
-
+			var codepromo = 0;
+			
             function onload() {
                 calculDistance();
                 getPrix();
@@ -116,6 +117,7 @@ if (isset($_SESSION['myvtclogin'])) {
 
             function checkCode()
             {
+				
                 var code = document.getElementById('codepromo').value;
 
                 $.ajax({
@@ -126,11 +128,18 @@ if (isset($_SESSION['myvtclogin'])) {
 
                         for (var i = 0; i < response.length; i++)
                         {
-                            if (code == response[i].value)
+						//alert(response[i].value);
+                            if (code == response[i].code)
                             {
+								codepromo = response[i].montant;
+								alert("Code ajouté avec succès !");
+								document.getElementById('codepromo').value ="";
+								calculDistance();
                                 return true;
                             } else
                             {
+								alert("Code non valide !");
+								document.getElementById('codepromo').value ="";
                                 return false;
                             }
 
@@ -141,9 +150,55 @@ if (isset($_SESSION['myvtclogin'])) {
 
             }
 
-				     function checkParis(aero)
+			  function checkParis(aero)
             {
                 var aeroports = "Paris";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function checkOrly(aero)
+            {
+                var aeroports = "Aéroport de Paris-Orly, Orly";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+			     function checkAero(aero)
+            {
+                var aeroports = "Aéroport";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function checkCharlle(aero)
+            {
+                var aeroports = "Aéroport Charles-de-Gaulle, Roissy-en-France";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function checkBeauvais(aero)
+            {
+                var aeroports = "Aéroport de Beauvais";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+			   function checkBourget(aero)
+            {
+                var aeroports = "Aéroport de Paris - Le Bourget, Le Bourget, France";
                 if (aero.indexOf(aeroports) >= 0) {
                     return true;
                 } else {
@@ -217,53 +272,25 @@ if (isset($_SESSION['myvtclogin'])) {
 				var g = checkBourget(adr_dep);
 				var h = checkBourget(adr_arr);
 				
+				// Verifier si le départ est un aeroport et l'arrivée
+				var aero_dep = checkAero(adr_dep);
+				var aero_arr = checkAero(adr_arr);
+				
+				var chkdep = checkParis(adr_dep);
+				var chkarr = checkParis(adr_arr);
+			
+				
 				var rep = false;
 				
-				if( (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
-				{
+				if( (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true) || (aero_dep == true && aero_arr == true))
+				{ 
 					window.prixtotal = 0;
 					rep=true;
-				}
-				
-				else
-				{
-
-                if (rep == false && (a == true && b == false) || (a == false && b == true) || (!c && !d) && (!e && !f) && (!g && !h))
-                {
-                    window.prixtotal = 0;
-                } else
+				} else if ( rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true))
 				{
 					window.prixtotal = 49;
-					rep = true;
+					rep=true;
 				}
-                if (rep == false && (c == true && d == false) || (c == false && d == true) || (!a && !b) && (!e && !f) && (!g && !h))
-                {
-                    window.prixtotal = 0;
-                } else
-				{
-					window.prixtotal = 49;
-					rep = true;
-				}
-                if (rep == false && (e == true && f == false) || (e == false && f == true) || (!a && !b) && (!c && !d)  && (!g && !h))
-                {
-                    window.prixtotal = 0;
-                } else
-				{
-					window.prixtotal = 49;
-					rep = true;
-				}
-				
-				   if (rep == false && (g == true && h == false) || (g == false && h == true) || (!a && !b) && (!c && !d)  && (!e && !f))
-                {
-                    window.prixtotal = 0;
-                } else
-				{
-					window.prixtotal = 49;
-					rep = true;
-				}
-		}
-			
-			
 			
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
@@ -286,14 +313,14 @@ if (isset($_SESSION['myvtclogin'])) {
                                     var dure = element.duration.text;
 									if (window.pricepro == 0)
 									{
-										price2 = Math.round(parseInt(dist / 1000) * window.price);
+										price2 = Math.round(parseInt(dist / 1000) * window.price - window.codepromo);
 										document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
-										document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price);
+										document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price - window.codepromo);
 									} else
 									{
-                                    price2 = Math.round(parseInt(dist / 1000) * window.pricepro);
+                                    price2 = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
 									document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
-									 document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.pricepro);
+									 document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
 									}
                                     document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
                                     document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
@@ -507,8 +534,9 @@ if (isset($_SESSION['myvtclogin'])) {
                             <div class="row">
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">Code Promo ?</div>
                                 <div class="col-md-3" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">
-                                    <input step="border-left-width: 0px;" type="text" id="depart" size="10" name="depart" class="form-control" placeholder="Code promo" onkeypress="javascript:checkCode()" />
-                                    <br>
+                                    <input step="border-left-width: 0px;" type="text" id="codepromo" size="10" name="codepromo" class="form-control" placeholder="Code promo"/>
+                                  
+									<br>
                                     <button type="button" class="btn btn-info col-md-12" onclick="javascript:checkCode();">Appliquer</button>
                                 </div>
                                 <div class="col-md-8" style="text-align: left"><?php

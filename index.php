@@ -7,7 +7,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 ?>
-<html>
+    <html>
 
     <head>
         <title>MyVtc</title>
@@ -29,9 +29,6 @@ if (!isset($_SESSION)) {
         <link rel="stylesheet" href="css/datepicker3.css" />
 
         <script type="text/javascript" async>
-
-
-
             //En attendant le webservice, le prix est statique
 
             var price = "undefined";
@@ -142,7 +139,7 @@ if (!isset($_SESSION)) {
                 else 
                 {
                     alert("Vous pouvez choisir un départ à partir de : " + h + " heures " + m + " minutes ");
-					document.getElementById("heyres").selectedIndex = 0;
+
 					document.getElementById("minutes").selectedIndex = 0;
 					
                 }
@@ -218,7 +215,13 @@ if (!isset($_SESSION)) {
             function checkAndgo()
             {
 
-
+				var mydate = document.getElementById('datedep').value;
+				
+					if (mydate == "")
+				{
+						alert("Veuillez saisir une date");
+						return;
+				}
 
                 var totalpers = document.getElementById('nbpers').value;
                 var totalbag = document.getElementById('nbbag').value;
@@ -256,6 +259,15 @@ if (!isset($_SESSION)) {
             function checkOrly(aero)
             {
                 var aeroports = "Aéroport de Paris-Orly, Orly";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+			     function checkAero(aero)
+            {
+                var aeroports = "Aéroport";
                 if (aero.indexOf(aeroports) >= 0) {
                     return true;
                 } else {
@@ -453,7 +465,8 @@ if (!isset($_SESSION)) {
 					document.location.href="index.php";
 				}
 				
-
+				// Prix fixe aéroports
+				
                 var a = checkOrly(adr_dep);
                 var b = checkOrly(adr_arr);
 				
@@ -466,51 +479,26 @@ if (!isset($_SESSION)) {
 				var g = checkBourget(adr_dep);
 				var h = checkBourget(adr_arr);
 				
+				// Verifier si le départ est un aeroport et l'arrivée
+				var aero_dep = checkAero(adr_dep);
+				var aero_arr = checkAero(adr_arr);
+				
+				var chkdep = checkParis(adr_dep);
+				var chkarr = checkParis(adr_arr);
+			
+				
 				var rep = false;
 				
-				if( (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
-				{
+				if( (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true) || (aero_dep == true && aero_arr == true))
+				{ 
 					window.prixtotal = 0;
+					rep=true;
+				} else if ( rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true))
+				{
+					window.prixtotal = 49;
 					rep=true;
 				}
 				
-				else
-				{
-
-                if (rep == false && (a == true && b == false) || (a == false && b == true) || (!c && !d) && (!e && !f) && (!g && !h))
-                {
-                    window.prixtotal = 0;
-                } else
-				{
-					window.prixtotal = 49;
-					rep = true;
-				}
-                if (rep == false && (c == true && d == false) || (c == false && d == true) || (!a && !b) && (!e && !f) && (!g && !h))
-                {
-                    window.prixtotal = 0;
-                } else
-				{
-					window.prixtotal = 49;
-					rep = true;
-				}
-                if (rep == false && (e == true && f == false) || (e == false && f == true) || (!a && !b) && (!c && !d)  && (!g && !h))
-                {
-                    window.prixtotal = 0;
-                } else
-				{
-					window.prixtotal = 49;
-					rep = true;
-				}
-				
-				   if (rep == false && (g == true && h == false) || (g == false && h == true) || (!a && !b) && (!c && !d)  && (!e && !f))
-                {
-                    window.prixtotal = 0;
-                } else
-				{
-					window.prixtotal = 49;
-					rep = true;
-				}
-		}
 
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
@@ -575,7 +563,7 @@ if (!isset($_SESSION)) {
 
             function calculDistance() {
 
-
+				
 
                 //initMap();
                 document.getElementById("distance").style.display = "block";
@@ -587,7 +575,7 @@ if (!isset($_SESSION)) {
                 var adr_dep = document.getElementById('depart').value;
                 var adr_arr = document.getElementById('arrivee').value;
 
-
+				
 
 
                 var origine = adr_dep;
@@ -626,8 +614,10 @@ if (!isset($_SESSION)) {
             ;
         </script>
         <style>
-            form input {padding-bottom: 0px !important; padding-top: 0px !important;}
-
+            form input {
+                padding-bottom: 0px !important;
+                padding-top: 0px !important;
+            }
         </style>
     </head>
 
@@ -645,220 +635,233 @@ if (!isset($_SESSION)) {
                     <h3><img src="images/logo.png"/></h3>
 
                     <!-- Nav -->
-<?php include("module/menu.php"); ?>
+                    <?php include("module/menu.php"); ?>
 
-                    <?php include("module/connexion.php"); ?>
-                    <!-- Banner -->
-                    <br/><br/>
-                    <form id="form1" name="form1" action="" method="post" >
-                        <section id="banner" style="height : 225px; ; z-index: 1; ">	
-                            <header>
+                        <?php include("module/connexion.php"); ?>
+                            <!-- Banner -->
+                            <br/>
+                            <br/>
+                            <form id="form1" name="form1" action="" method="post">
+                                <section id="banner" style="height : 225px; ; z-index: 1; ">
+                                    <header>
 
-                                <h2 style="color: white; font-size: 25px; margin-bottom: 20px; display : block;">Réservez votre véhicule dès maintenant</h2>
+                                        <h2 style="color: white; font-size: 25px; margin-bottom: 20px; display : block;">Réservez votre véhicule dès maintenant</h2>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
-                                                <ul class="dropdown-menu">
-                                                    <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
-                                                    <li role="separator" class="divider"></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <div class="input-group-btn">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
             showMap()">Charles De Gaulle - Roissy</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Paris-Orly, Orly, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Paris-Orly, Orly, France';
                                                             showMap()">Orly</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Beauvais';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Beauvais';
                                                             showMap()">Beauvais</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Paris - Le Bourget, Le Bourget, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Paris - Le Bourget, Le Bourget, France';
                                                             showMap()">Le Bourget</a></li>
 
-                                                </ul>
-                                            </div>
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
-                                                <ul class="dropdown-menu">
-                                                    <li><b style="padding-left: 5px;">Gares à Paris</b></li>
-                                                    <li role="separator" class="divider"></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Saint-Lazare, Paris, France';
+                                                        </ul>
+                                                    </div>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><b style="padding-left: 5px;">Gares à Paris</b></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Saint-Lazare, Paris, France';
                                                             showMap()">Saint-Lazare</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Montparnasse, Boulevard de Vaugirard, Paris, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Montparnasse, Boulevard de Vaugirard, Paris, France';
                                                             showMap()">Montparnasse</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Lyon, Place Louis Armand, Paris, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Lyon, Place Louis Armand, Paris, France';
                                                             showMap()">Lyon</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Paris Gare de le Est, Paris, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Paris Gare de le Est, Paris, France';
                                                             showMap()">Est</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare du Nord, Rue de Dunkerque, Paris, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare du Nord, Rue de Dunkerque, Paris, France';
                                                             showMap()">Nord</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Quai de Austerlitz, Quartier de la Gare, Paris, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Quai de Austerlitz, Quartier de la Gare, Paris, France';
                                                             showMap()">Austerlitz</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Paris-Bercy, Boulevard de Bercy, Paris, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Paris-Bercy, Boulevard de Bercy, Paris, France';
                                                             showMap()">Bercy</a></li>
-                                                </ul>
-                                            </div><!-- /btn-group -->
-                                            <input step="border-left-width: 0px;" type="text" id="depart" size="35" name="depart" class="form-control" placeholder="Adressse de départ" onkeypress="javascript:showMap()" />
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /btn-group -->
+                                                    <input step="border-left-width: 0px;" type="text" id="depart" size="35" name="depart" class="form-control" placeholder="Adressse de départ" onkeypress="javascript:showMap()" />
 
-                                        </div><!-- /input-group -->
-                                    </div><!-- /.col-lg-6 -->
-                                    <div class="col-md-6">
-                                        <div class="input-group">
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
-                                                <ul class="dropdown-menu">
-                                                    <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
-                                                    <li role="separator" class="divider"></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
-                                                            showMap()">Charles De Gaulle - Roissy</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Paris-Orly, Orly, France';
-                                                            showMap()">Orly</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Beauvais';
-                                                            showMap()">Beauvais</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Paris - Le Bourget, Le Bourget, France';
-                                                            showMap()">Le Bourget</a></li>
-
-                                                </ul>
-                                            </div>
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
-                                                <ul class="dropdown-menu">
-                                                    <li><b style="padding-left: 5px;">Gares à Paris</b></li>
-                                                    <li role="separator" class="divider"></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare Saint-Lazare, Paris, France';
-                                                            showMap()">Saint-Lazare</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare Montparnasse, Boulevard de Vaugirard, Paris, France';
-                                                            showMap()">Montparnasse</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare de Lyon, Place Louis Armand, Paris, France';
-                                                            showMap()">Lyon</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Paris Gare de le Est, Paris, France';
-                                                            showMap()">Est</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare du Nord, Rue de Dunkerque, Paris, France';
-                                                            showMap()">Nord</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Quai de Austerlitz, Quartier de la Gare, Paris, France';
-                                                            showMap()">Austerlitz</a></li>
-                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare de Paris-Bercy, Boulevard de Bercy, Paris, France';
-                                                            showMap()">Bercy</a></li>
-                                                </ul>
-                                            </div><!-- /btn-group -->
-                                            <input type="text" id="arrivee" size="35" name="arrivee" class="form-control" placeholder="Adresse d'arrivée" />
-                                        </div><!-- /input-group -->
-                                    </div><!-- /.col-lg-6 -->
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6" style="text-align: left; padding-top: 20px;">
-                                        <label>Date</label>
-                                        <div class="form-group">
-                                            <div class="input-group date" data-provide="datepicker">
-                                                <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" required="required">
-                                                <div class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-th"></span>
                                                 </div>
+                                                <!-- /input-group -->
                                             </div>
+                                            <!-- /.col-lg-6 -->
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <div class="input-group-btn">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
+                                                            showMap()">Charles De Gaulle - Roissy</a></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Paris-Orly, Orly, France';
+                                                            showMap()">Orly</a></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Beauvais';
+                                                            showMap()">Beauvais</a></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Paris - Le Bourget, Le Bourget, France';
+                                                            showMap()">Le Bourget</a></li>
+
+                                                        </ul>
+                                                    </div>
+                                                    <div class="input-group-btn">
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><b style="padding-left: 5px;">Gares à Paris</b></li>
+                                                            <li role="separator" class="divider"></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare Saint-Lazare, Paris, France';
+                                                            showMap()">Saint-Lazare</a></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare Montparnasse, Boulevard de Vaugirard, Paris, France';
+                                                            showMap()">Montparnasse</a></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare de Lyon, Place Louis Armand, Paris, France';
+                                                            showMap()">Lyon</a></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Paris Gare de le Est, Paris, France';
+                                                            showMap()">Est</a></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare du Nord, Rue de Dunkerque, Paris, France';
+                                                            showMap()">Nord</a></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Quai de Austerlitz, Quartier de la Gare, Paris, France';
+                                                            showMap()">Austerlitz</a></li>
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare de Paris-Bercy, Boulevard de Bercy, Paris, France';
+                                                            showMap()">Bercy</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- /btn-group -->
+                                                    <input type="text" id="arrivee" size="35" name="arrivee" class="form-control" placeholder="Adresse d'arrivée" />
+                                                </div>
+                                                <!-- /input-group -->
+                                            </div>
+                                            <!-- /.col-lg-6 -->
+
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-6" style="text-align: left; padding-top: 20px;">
+                                                <label>Date</label>
+                                                <div class="form-group">
+                                                    <div class="input-group date" data-provide="datepicker">
+                                                        <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" required="required">
+                                                        <div class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-th"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
 
 
 
-                                    </div><!-- /.col-lg-6 --> 
-                                    <div class="col-md-6" style="text-align: left; padding-top: 20px;">
-                                        <label>Heure</label>
-                                        <div>
-                                            <div class="col-md-6" style="padding-left: 0px; padding-right: 15px;">
-                                                <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkMytime()">
-														<?php
+                                            </div>
+                                            <!-- /.col-lg-6 -->
+                                            <div class="col-md-6" style="text-align: left; padding-top: 20px;">
+                                                <label>Heure</label>
+                                                <div>
+                                                    <div class="col-md-6" style="padding-left: 0px; padding-right: 15px;">
+                                                        <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkMytime()">
+                                                            <?php
 														for ($i = 0; $i < 24; $i++) {
 															?>
-                                                        <option>
-                                                        <?php
+                                                                <option>
+                                                                    <?php
                                                         if ($i < 10)
                                                             echo "0" . $i . "h";
                                                         else
                                                             echo $i . "h";
                                                         ?>
-                                                        </option>
-                                                            <?php
+                                                                </option>
+                                                                <?php
                                                         }
                                                         ?>
-                                                </select>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6" style="padding-left: 15px; padding-right: 0px;">
+                                                        <select class="form-control" id="minutes" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkonlytime()">
+                                                            <option>00 min</option>
+                                                            <option>05 min</option>
+                                                            <option>10 min</option>
+                                                            <option>15 min</option>
+                                                            <option>20 min</option>
+                                                            <option>25 min</option>
+                                                            <option>30 min</option>
+                                                            <option>35 min</option>
+                                                            <option>40 min</option>
+                                                            <option>45 min</option>
+                                                            <option>50 min</option>
+                                                            <option>55 min</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-md-6" style="padding-left: 15px; padding-right: 0px;">
-                                                <select class="form-control" id="minutes" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkonlytime()">
-                                                    <option>00 min</option>
-                                                    <option>05 min</option>
-                                                    <option>10 min</option>
-                                                    <option>15 min</option>
-                                                    <option>20 min</option>
-                                                    <option>25 min</option>
-                                                    <option>30 min</option>
-                                                    <option>35 min</option>
-                                                    <option>40 min</option>
-                                                    <option>45 min</option>
-                                                    <option>50 min</option>
-                                                    <option>55 min</option>
-                                                </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6" style="text-align: left; padding-top: 10px;">
+                                                <label>Passagers</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-users"></i></span>
+                                                    <select id="nbpers" class="form-control" onchange="javascript:verif()">
+                                                        <option selected="" value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                    </select>
+                                                </div>
                                             </div>
+                                            <div class="col-md-6" style="text-align: left; padding-top: 10px;">
+                                                <label>Valises</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-suitcase"></i></span>
+                                                    <select id="nbbag" class="form-control" onchange="javascript:verif()">
+                                                        <option selected="" value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: white;font-weight : bold">
+                                                <div id="more_passengers" style="color: white; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div>
+                                            </div>
+
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6" style="text-align: left; padding-top: 10px;">
-                                        <label>Passagers</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-users"></i></span>
-                                            <select id="nbpers" class="form-control" onchange="javascript:verif()">
-                                                <option selected="" value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-4">
+                                                <button type="button" id="mybuton2" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button type="button" id="mybuton" class="btn btn-danger col-md-12" onclick="javascript:checkAndgo();">Valider la commande</button>
+                                            </div>
+                                            <div class="col-md-2"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6" style="text-align: left; padding-top: 10px;">
-                                        <label>Valises</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-suitcase"></i></span>
-                                            <select id="nbbag" class="form-control" onchange="javascript:verif()">
-                                                <option selected="" value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
+                                        <div class="row">
+                                            <div class="col-md-4" id="distance"></div>
+                                            <div class="col-md-4" id="prix"></div>
+                                            <div class="col-md-4" id="duree"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: white;font-weight : bold"><div id="more_passengers" style="color: white; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div></div>
 
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-4">
-                                        <button type="button" id="mybuton2" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" id="mybuton" class="btn btn-danger col-md-12" onclick="javascript:checkAndgo();">Valider la commande</button>
-                                    </div>
-                                    <div class="col-md-2"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4" id="distance"></div>
-                                    <div class="col-md-4" id="prix"></div>
-                                    <div class="col-md-4" id="duree"></div>
-                                </div>
-
-                            </header>
+                                    </header>
 
 
-                        </section>
-                    </form>
-                    <section id="bannner" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; display: block; opacity: 0.8; "></section>
-                    <section id="bannner2" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; opacity: 0.8; "></section>
+                                </section>
+                            </form>
+                            <section id="bannner" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; display: block; opacity: 0.8; "></section>
+                            <section id="bannner2" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; opacity: 0.8; "></section>
                 </div>
-                <br/><br/><br/><br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
                 <!-- Intro -->
                 <section id="intro" class="container">
                     <div class="row">
@@ -950,28 +953,27 @@ if (!isset($_SESSION)) {
         </div>
 
         <!-- Footer -->
-<?php include("module/footer.php"); ?>
+        <?php include("module/footer.php"); ?>
 
-    </div>
+            </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.dropotron.min.js"></script>
-    <script src="assets/js/skel.min.js"></script>
-    <script src="assets/js/skel-viewport.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-    <script src="assets/js/main.js"></script>
-    <script src="css/moment-with-locales.js" type="text/javascript" LANGUAGE="JavaScript"></script>
-    <script src="css/bootstrap-datetimepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
-    <script src="css/bootstrap-datepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
-    <script type="text/javascript">
-                                           $('.datepicker').datepicker({
+            <!-- Scripts -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/jquery.dropotron.min.js"></script>
+            <script src="assets/js/skel.min.js"></script>
+            <script src="assets/js/skel-viewport.min.js"></script>
+            <script src="assets/js/util.js"></script>
+            <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+            <script src="assets/js/main.js"></script>
+            <script src="css/moment-with-locales.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+            <script src="css/bootstrap-datetimepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+            <script src="css/bootstrap-datepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+            <script type="text/javascript">
+                $('.datepicker').datepicker({
                                                format: 'dd/mm/yyyy',
                                                startDate: '-3d'
                                            });
-										   
-    </script>
-</body>
+            </script>
+    </body>
 
-</html>
+    </html>
