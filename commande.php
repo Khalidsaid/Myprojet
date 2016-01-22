@@ -71,27 +71,28 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                                             </div>
                                             <div class="col-sm-9">
                                                 <?php
-                                                $sql = mysql_query("select * from reservation where id_user=" . $user['id']);
+                                                $sql = mysql_query("select depart, arrivee, heure, prix, DATE_FORMAT(dtdeb, '%d/%m/%Y') as dtdeb from reservation_attente where id_user=" . $user['id'] ." AND etat='1'");
                                                 $nb = mysql_num_rows($sql);
                                                 if ($nb > 0) {
                                                     ?>
                                                     <table>
-                                                        <th>
+													
+                                                        <tr>
                                                         <td>Départ</td>
                                                         <td>Arrivé</td>
                                                         <td>Date</td>
                                                         <td>Heure</td>
                                                         <td>Prix</td>
-                                                        </th>
+                                                        </tr>
                                                         <?php
                                                         
                                                             while ($data = mysql_fetch_array($sql)) {
                                                                 ?>
                                                                 <tr>
                                                                     <td><?php echo $data['depart']; ?></td>
-                                                                    <td><?php echo $data['arivee']; ?></td>
-                                                                    <td><?php echo $data['date']; ?></td>
-                                                                    <td><?php echo $data['date']; ?></td>
+                                                                    <td><?php echo $data['arrivee']; ?></td>
+                                                                    <td><?php echo $data['dtdeb']; ?></td>
+                                                                    <td><?php echo $data['heure']; ?></td>
                                                                     <td><?php echo $data['prix']; ?></td>
                                                                 </tr>
                                                                 <?php
@@ -102,6 +103,7 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                                                             <?php
                                                         }
                                                         ?>
+														
                                                     </table>
                                                 </div>
 
