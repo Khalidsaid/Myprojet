@@ -136,14 +136,14 @@ if (!isset($_SESSION)) {
 		
                 if (heurecourante < heureselection && mois >= month && year >= annee && jour >= date)
                 {
-					
+					 return false;
                 }
                 else 
                 {
                     alert("Vous pouvez choisir un départ à partir de : " + h + " heures " + m + " minutes ");
 
 					document.getElementById("minutes").selectedIndex = 0;
-					
+					return true;
                 }
 
             }
@@ -216,7 +216,13 @@ if (!isset($_SESSION)) {
 
             function checkAndgo()
             {
-
+				
+				var response = checkonlytime();
+				
+				if ( response == true)
+				{
+					return;
+				}
 				var mydate = document.getElementById('datedep').value;
 				
 					if (mydate == "")

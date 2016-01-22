@@ -79,15 +79,14 @@ include("config.php");
                                             <blockquote style="text-align: left"><h3>Contact</h3></blockquote>
                                             <div class="col-sm-3 well" style="text-align: left">
                                                 <i class="fa fa-home"></i></span> <b>ReserverUnCab.com</b><br>
-                                                41, RUE AUGUSTIN HENRY <br>
-                                                Elbeuf France<br><br>
-                                                <i class="fa fa-phone"></i> <b>02 35 76 52 80</b><br>
+                                                20 rue Saint John Perse <br>
+                                                94450 Limeil-Brevannes, France<br>813 685 484 R.C.S. CRETEIL<br>
+                                                <i class="fa fa-phone"></i> <b>06 59 56 63 83</b><br>
+												
 
                                                 <i class="fa fa-envelope"></i> <a href="mailto:info@reserveruncab.com">info@reserveruncab.com</a><br><br>
-                                                <i class="fa fa-home"></i>Horaires :<br><b><span style="font-weight: bold">Lundi</span> <br>14:00 – 18:30</b><br>
-                                                <b><span style="font-weight: bold">Mardi - Vendredi</span> <br>09:30 – 12:30, 14:00 – 18:30</b><br>
-                                                <b><span style="font-weight: bold">Samedi</span> <br>10:00 – 12:30, 13:30 – 16:30</b><br>
-                                                <b><span style="font-weight: bold">Dimanche</span> <br>Fermé</b><br>
+                                                <i class="fa fa-home"></i>Horaires :<br><b><span style="font-weight: bold">7j/7</span> <br>24h/24h</b><br>
+                                             
 
                                             </div>
                                             <div class="col-sm-9">
@@ -123,7 +122,8 @@ include("config.php");
 
                                                 </form>
                                                 <div class="page-header parallax">
-                                                    <div id="contact-map" style="width:100%;height:300px"></div>
+                                               
+													<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2630.6129026786834!2d2.470915815148826!3d48.751090816210564!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e60b151d491b51%3A0x66d2b053cc08f026!2s20+Rue+St+John+Perse%2C+94450+Limeil-Br%C3%A9vannes!5e0!3m2!1sfr!2sfr!4v1453475956043" width="100%" height="300px" frameborder="0" style="border:0" allowfullscreen></iframe>
                                                 </div>
                                             </div>
 
@@ -163,78 +163,7 @@ include("config.php");
         <script src="assets/js/main.js"></script>
         <script src="css/moment-with-locales.js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <script src="css/bootstrap-datetimepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
-        <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-        <script type="text/javascript">
-            var geocoder = new google.maps.Geocoder();
-            var address = "41, RUE AUGUSTIN HENRY Elbeuf France"; //Add your address here, all on one line.
-            var latitude;
-            var longitude;
-            var color = "#ffffff"; //Set your tint color. Needs to be a hex value.
-
-            function getGeocode() {
-                geocoder.geocode({'address': address}, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        latitude = results[0].geometry.location.lat();
-                        longitude = results[0].geometry.location.lng();
-                        initGoogleMap();
-                    }
-                });
-            }
-
-            function initGoogleMap() {
-                var styles = [
-                    {
-                        stylers: [
-                            {saturation: -100}
-                        ]
-                    }
-                ];
-
-                var options = {
-                    mapTypeControlOptions: {
-                        mapTypeIds: ['Styled']
-                    },
-                    center: new google.maps.LatLng(latitude, longitude),
-                    zoom: 13,
-                    scrollwheel: false,
-                    navigationControl: false,
-                    mapTypeControl: false,
-                    zoomControl: true,
-                    disableDefaultUI: true,
-                    mapTypeId: 'Styled'
-                };
-                var div = document.getElementById('contact-map');
-                var map = new google.maps.Map(div, options);
-                marker = new google.maps.Marker({
-                    map: map,
-                    draggable: false,
-                    animation: google.maps.Animation.DROP,
-                    position: new google.maps.LatLng(latitude, longitude)
-                });
-                var styledMapType = new google.maps.StyledMapType(styles, {name: 'Styled'});
-                map.mapTypes.set('Styled', styledMapType);
-
-                var infowindow = new google.maps.InfoWindow({
-                    content: "<div class='iwContent'>" + address + "</div>"
-                });
-                google.maps.event.addListener(marker, 'click', function () {
-                    infowindow.open(map, marker);
-                });
-
-
-                bounds = new google.maps.LatLngBounds(
-                        new google.maps.LatLng(-49.29104050000001, -1.0055671999999731),
-                        new google.maps.LatLng(49.29104050000001, 1.0055671999999731));
-
-                rect = new google.maps.Rectangle({
-                    bounds: bounds,
-                    fillColor: color,
-                    fillOpacity: 0.2,
-                    strokeWeight: 0,
-                    map: map
-                });
-            }
-            google.maps.event.addDomListener(window, 'load', getGeocode);</script>
+      
     </body>
 
 </html>
