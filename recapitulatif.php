@@ -26,9 +26,9 @@ $nb == 0;
 if (isset($_SESSION['myvtclogin'])) {
     $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
     if ($user['promos'] == 1) {
-        $sql = mysql_query("select * from reservation_attente re, myvtc_users my where my.parrain IS NOT NULL AND re.etat=1 AND re.id_user=" . $user['id']);
+        $sql = mysql_query("select * from reservation_attente inner join myvtc_users on reservation_attente.id_user= myvtc_users.id where parrain IS NOT NULL AND etat=1 AND id_user=" . $user['id']);
         $nb = mysql_num_rows($sql);
-        echo $nb;
+        
     }
 }
 
@@ -558,6 +558,7 @@ if ($user['type_user'] == 'Professionnel') {
                             </script>
 
                             <?php
+                            echo "nb : ".$nb;
                             if ($nb != 9) {
                                 ?>
                                 <hr style="border: 1px dashed ! important;">
