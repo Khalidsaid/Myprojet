@@ -28,7 +28,7 @@ if (isset($_SESSION['myvtclogin'])) {
     if ($user['promos'] == 1) {
         $sql = mysql_query("select * from reservation_attente re, myvtc_users my where my.parrain IS NOT NULL AND re.etat=1 AND re.id_user=" . $user['id']);
         $nb = mysql_num_rows($sql);
-		 echo $nb;
+        echo $nb;
     }
 }
 
@@ -36,13 +36,13 @@ if (isset($_SESSION['myvtclogin'])) {
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
 if ($user['type_user'] == 'Professionnel') {
 
-$req = mysql_fetch_array(mysql_query("select prixpro from prixkm"));
-$rr=$req['prixpro'];
+    $req = mysql_fetch_array(mysql_query("select prixpro from prixkm where id=1"));
+    $rr = $req['prixpro'];
 
     //prix pro
-	echo "<script>window.pricepro = 2</script>";
-    /*echo "<script>window.pricepro = <?php $rr; ?></script>";*/
-	//echo "<script>alert(window.pricepro);</script>";
+    echo "<script>window.pricepro = " . $rr . "</script>";
+    /* echo "<script>window.pricepro = <?php $rr; ?></script>"; */
+    //echo "<script>alert(window.pricepro);</script>";
 } else {
     echo "<script>window.pricepro = 0;</script>";
 }
@@ -137,15 +137,15 @@ $rr=$req['prixpro'];
                             if (code == response[i].code)
                             {
                                 codepromo = response[i].montant;
-								var mareponse = getURIParameter("offre");
-									if(mareponse == 49)
-									{
-										alert("Les codes promos ne sont pas valable sur les offres aéroports");
-									}
-									else
-									{
-										alert("Code ajouté avec succès !");
-									}
+                                var mareponse = getURIParameter("offre");
+                                if (mareponse == 49)
+                                {
+                                    alert("Les codes promos ne sont pas valable sur les offres aéroports");
+                                }
+                                else
+                                {
+                                    alert("Code ajouté avec succès !");
+                                }
                                 document.getElementById('codepromo').value = "";
                                 calculDistance();
                                 return true;
@@ -158,7 +158,7 @@ $rr=$req['prixpro'];
 
                         }
                     }
-					
+
                 });
 
 
@@ -259,12 +259,12 @@ $rr=$req['prixpro'];
             function reservation() {
                 var price = document.getElementById("amounttxt").value;
                 var ref = document.getElementById("myref").value;
-               
+
                 $.ajax({
-                    url: 'reservation.php?price=' + price+"&ref="+ref,
+                    url: 'reservation.php?price=' + price + "&ref=" + ref,
                     success: function (data) {
                         var t = eval(data);
-                       document.paypal.submit();
+                        document.paypal.submit();
                     }
                 });
 
@@ -273,52 +273,52 @@ $rr=$req['prixpro'];
             }
 
 
-          
+
             function callback(response, status) {
-			
+
                 //r?cup?ration des champs du formulaire
-				var adr_dep = getURIParameter("depart");
+                var adr_dep = getURIParameter("depart");
                 var adr_arr = getURIParameter("arrivee");
-				
-				//Conditions départ de Paris
-				if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
-				{
-					
-				} else 
-				{
-					alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
-					document.location.href="index.php";
-				}
-				
+
+                //Conditions départ de Paris
+                if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
+                {
+
+                } else
+                {
+                    alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
+                    document.location.href = "index.php";
+                }
+
 
                 var a = checkOrly(adr_dep);
                 var b = checkOrly(adr_arr);
-				
-				var c = checkBeauvais(adr_dep);
-				var d = checkBeauvais(adr_arr);
-				
-				var e = checkCharlle(adr_dep);
-				var f = checkCharlle(adr_arr);
-				
-				var g = checkBourget(adr_dep);
-				var h = checkBourget(adr_arr);
-				
-				// Verifier si le départ est un aeroport et l'arrivée
-				var aero_dep = checkAero(adr_dep);
-				var aero_arr = checkAero(adr_arr);
-				
-				var chkdep = checkParis(adr_dep);
-				var chkarr = checkParis(adr_arr);
-			
-	
-			
+
+                var c = checkBeauvais(adr_dep);
+                var d = checkBeauvais(adr_arr);
+
+                var e = checkCharlle(adr_dep);
+                var f = checkCharlle(adr_arr);
+
+                var g = checkBourget(adr_dep);
+                var h = checkBourget(adr_arr);
+
+                // Verifier si le départ est un aeroport et l'arrivée
+                var aero_dep = checkAero(adr_dep);
+                var aero_arr = checkAero(adr_arr);
+
+                var chkdep = checkParis(adr_dep);
+                var chkarr = checkParis(adr_arr);
+
+
+
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
                 } else {
                     //rponses du serveur 
                     var origins = response.originAddresses;
                     var destinations = response.destinationAddresses;
-                    
+
 
                     for (var i = 0; i < origins.length; i++) {
                         var results = response.rows[i].elements;
@@ -331,52 +331,53 @@ $rr=$req['prixpro'];
                                 if (statut == 'OK') {
                                     var dist = element.distance.value;
                                     var dure = element.duration.text;
-									var mareponse = getURIParameter("offre");
-									if(mareponse == 49)
-									{
-										if(window.pricepro != 0)
-										{
-										price2 = 49+5;
-										document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
-										document.getElementById('amount').value = price2;
-										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-										document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
-										return;
-										}
-										else
-										{
-										price2 = 49;
-										document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
-										document.getElementById('amount').value = price2;
-										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-										+' kilomètres<b> ';
-										document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
-										return;
-										}
-									}
-									if (window.pricepro == 0)
-									{
-										price2 = Math.round(parseInt(dist / 1000) * window.price - window.codepromo);
-										document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
-										document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price - window.codepromo)
-										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-										+' kilomètres<b> ';
-										document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';;
-									} else
-									{
-                                    price2 = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
-									document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
-									document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
-									document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-                                    document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-                                    +' kilomètres<b> ';
-                                    document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
-									}
-                                  
-                                   
+                                    var mareponse = getURIParameter("offre");
+                                    if (mareponse == 49)
+                                    {
+                                        if (window.pricepro != 0)
+                                        {
+                                            price2 = 49 + 5;
+                                            document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
+                                            document.getElementById('amount').value = price2;
+                                            document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+                                            document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                            document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            price2 = 49;
+                                            document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
+                                            document.getElementById('amount').value = price2;
+                                            document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+                                            document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                            +' kilomètres<b> ';
+                                            document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
+                                            return;
+                                        }
+                                    }
+                                    if (window.pricepro == 0)
+                                    {
+                                        price2 = Math.round(parseInt(dist / 1000) * window.price - window.codepromo);
+                                        document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
+                                        document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price - window.codepromo)
+                                        document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+                                        document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                        +' kilomètres<b> ';
+                                        document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
+                                        ;
+                                    } else
+                                    {
+                                        price2 = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
+                                        document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
+                                        document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
+                                        document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+                                        document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                        +' kilomètres<b> ';
+                                        document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
+                                    }
+
+
                                 } else if (statut == 'NOT_FOUND') {
                                     //alert("impossible de localiser l'adresse d'arrivee");
                                 } else if (statut == 'ZERO_RESULTS') {
@@ -593,19 +594,19 @@ $rr=$req['prixpro'];
                                         <a href="javascript:void(0);" class="button big btn btn-success" data-toggle="modal" data-target="#loginModal">Payer</a>
                                         <?php
                                     } else {
-                                        if ($nb == 9 && $marep == true){
-                                        ?>
-                                        <a href="paiementValide.php" class="button big btn btn-success">Confirmer</a>
-                                           <?php
-                                       }else{ 
-                                           ?>
-                                        <a href="#" class="button big btn btn-success" onclick="javascript:reservation(); return false;">Payer</a>
-                                        
-                                       <?php
+                                        if ($nb == 9 && $marep == true) {
+                                            ?>
+                                            <a href="paiementValide.php" class="button big btn btn-success">Confirmer</a>
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <a href="#" class="button big btn btn-success" onclick="javascript:reservation();
+                                                        return false;">Payer</a>
+
+                                            <?php
                                         }
-                                       
                                     }
-                                       ?> <a href="javascript:modifier()" class="button big btn btn-warning">Modifier</a></div>
+                                    ?> <a href="javascript:modifier()" class="button big btn btn-warning">Modifier</a></div>
                             </div>
                         </div>
 
