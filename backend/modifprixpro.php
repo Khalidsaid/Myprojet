@@ -4,7 +4,7 @@ include("config.php");
 $id = $_GET['id'];
 $prix = $_GET['prix'];
 
-$sql = mysql_query("update prixkm set prix_pro='" . $prix . "' where id=" . $id)or die(mysql_error());
+$sql = mysql_query("update prixkm set prixpro='" . $prix . "' where id=" . $id)or die(mysql_error());
 
 $rs = "[";
 

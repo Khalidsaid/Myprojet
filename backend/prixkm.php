@@ -113,7 +113,7 @@ if (!isset($_SESSION['backend']))
                                                         </tr>
                                                         <tr>
                                                             <th>Prix au kilomètre PRO</th>
-                                                            <th><input type="text" id="prix_pro_<?php echo $data['id']; ?>" value="<?php echo $data['prix_pro']; ?>" />€</th>        
+                                                            <th><input type="text" id="prix_pro<?php echo $data['id']; ?>" value="<?php echo $data['prixpro']; ?>" />€</th>        
                                                             <th><button class="btn btn-success btn-sm" type="button" onclick="modifprixpro(<?php echo $data['id']; ?>)">Modifier</button></th>
                                                         </tr>
                                                         <?php
