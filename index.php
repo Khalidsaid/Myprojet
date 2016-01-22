@@ -10,7 +10,9 @@ if (!isset($_SESSION)) {
     <html>
 
     <head>
-        <title>MyVtc</title>
+        <title>Reserver-Un-Cab</title>
+		 <!--Logo en barre de titre-->
+		<link rel="shortcut icon" href="images/logo.png" type="image/png">
         <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -242,7 +244,7 @@ if (!isset($_SESSION)) {
                 }
                 else
                 {
-                    window.location.href = "recapitulatif.php?depart=" + adr_dep + "&arrivee=" + adr_arr + "&totalpers=" + totalpers + "&totalbag=" + totalbag + "&datedep=" + datedep + "&heyres=" + heyres + "&distance=" + distance;
+                    window.location.href = "recapitulatif.php?depart=" + adr_dep + "&arrivee=" + adr_arr + "&totalpers=" + totalpers + "&totalbag=" + totalbag + "&datedep=" + datedep + "&heyres=" + heyres + "&distance=" + distance + "&offre=" +window.prix;
                 }
             }
 			
@@ -915,7 +917,7 @@ if (!isset($_SESSION)) {
                         <section>
                             <header class="major">
                                 <h2>Qui sommes nous?</h2>
-                                <h3>MYVTC EST UNE PLATEFORME PROPOSANT LA RÉSERVATION DE VOITURES AVEC CHAUFFEURS PRIVÉS DE VTC EN ILE-DE-FRANCE</h3>
+                                <h3>ReserverUnCab EST UNE PLATEFORME PROPOSANT LA RÉSERVATION DE VOITURES AVEC CHAUFFEURS PRIVÉS DE VTC EN ILE-DE-FRANCE</h3>
                             </header>
                             <div class="row">
                                 <div class="6u 12u(mobile)">
