@@ -117,13 +117,13 @@ if (!isset($_SESSION['backend']))
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Date de début</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" name="dtdeb" placeholder="YYYY-mm-dd"  class="form-control">
+                                                    <input type="date" name="dtdeb" placeholder="jj-mm-aaaa"  class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Date de fin</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" name="dtfin" placeholder="YYYY-mm-dd"  class="form-control">
+                                                    <input type="date" name="dtfin" placeholder="jj-mm-aaaa"  class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">

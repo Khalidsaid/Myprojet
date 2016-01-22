@@ -110,7 +110,7 @@ include("config.php");
                                                         <div class="col-md-7"><input name="sujet" placeholder="Votre sujet" class="form-control" type="text" id="sujet"/></div>
                                                     </div> 
                                                     <div class="form-group">
-                                                        <div class="col-md-7"><textarea class="form-control" name="msg" placeholder="Votre message *" required=""></textarea></div>
+                                                        <div class="col-md-7"><textarea class="form-control" id="msg" name="msg" placeholder="Votre message *" required=""></textarea></div>
                                                     </div> 
 
                                                     <div class="form-group">

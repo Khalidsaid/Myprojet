@@ -98,8 +98,8 @@ if (!isset($_SESSION['backend']))
                                                 <tr>
                                                     <th>Nom</th>
                                                     <th>Prenom</th>
-                                                    <th>Depart</th>
-                                                    <th>Arrivee</th>
+                                                    <!--<th>Depart</th>
+                                                    <th>Arrivee</th>!-->
                                                     <th>Date</th>
                                                     <th>Total</th>
                                                     <th>Chauffeur</th>
@@ -108,15 +108,15 @@ if (!isset($_SESSION['backend']))
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,reservation_attente.arrivee,reservation_attente.chauffeur,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.prix from myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.etat=1");
+                                                $sql = mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,reservation_attente.arrivee,reservation_attente.chauffeur,reservation_attente.id,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.etat=1");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>
 
                                                         <td><?php echo $data['nom']; ?></td>
                                                         <td><?php echo $data['prenom']; ?></td>
-                                                        <td><?php echo $data['depart']; ?></td>
-                                                        <td><?php echo $data['arrivee']; ?></td>
+                                                        <!--<td>//echo $data['depart'];</td>
+                                                        <td>//echo $data['arrivee']; </td>!-->
                                                         <td><?php echo $data['dtdeb']; ?></td>
                                                         <td><?php echo $data['prix']; ?>€</td>
                                                         <td><?php echo $data['chauffeur']; ?></td>

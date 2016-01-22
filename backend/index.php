@@ -4,12 +4,14 @@ include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
 
-$client_pro=  mysql_query("select count(*) from myvtc_users where type_user='Professionnel'");
+$client_pro=  mysql_query("select * from myvtc_users where type_user='Professionnel'");
 $nb_client_pro=  mysql_num_rows($client_pro);
-$client_part=  mysql_query("select count(*) from myvtc_users where type_user='Particulier'");
+$client_part=  mysql_query("select * from myvtc_users where type_user='Particulier'");
 $nb_client_part=  mysql_num_rows($client_part);
 $commande=  mysql_query("select * from reservation");
 $nb_commande=  mysql_num_rows($commande);
+$mess=  mysql_query("select * from contact");
+$nb_msg=  mysql_num_rows($mess);
 ?>
 
 <!doctype html>
@@ -111,7 +113,7 @@ $nb_commande=  mysql_num_rows($commande);
               <a class="quick-btn" href="contact.php">
                 <i class="fa fa-envelope fa-2x"></i>
                 <span>Contacts</span> 
-                <span class="label label-success">0</span> 
+                <span class="label label-success"><?php echo $nb_msg; ?></span> 
               </a> 
               
             </div>

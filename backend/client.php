@@ -108,7 +108,7 @@ if (!isset($_SESSION['backend']))
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select * from myvtc_users");
+                                                $sql = mysql_query("select prenom, nom, email, adresse, DATE_FORMAT(date_add, '%d/%m/%Y') as date_add, tel, promos, type_user, id, tva, fax, parrain, ville, cp, promos, societe, siren, url, status from myvtc_users");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>

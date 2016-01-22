@@ -167,8 +167,9 @@ class Users {
 		try {
 			global $con;			
 			/* Statement declaration */
-			$sql = 	"SELECT * ".
-					"FROM codepromo ";
+			$sql = 	"SELECT * 
+					FROM codepromo 
+					WHERE datefin > CURDATE() ";
 				
 					
 			/* Statement values & execution */

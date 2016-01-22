@@ -110,7 +110,7 @@ if (!isset($_SESSION['backend']))
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select * from codepromo");
+                                                $sql = mysql_query("select id, montant, code, DATE_FORMAT(datedebut, '%d/%m/%Y') as datedebut, DATE_FORMAT(datefin, '%d/%m/%Y') as datefin from codepromo");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>
