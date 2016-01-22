@@ -26,8 +26,9 @@ $nb == 0;
 if (isset($_SESSION['myvtclogin'])) {
     $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
     if ($user['promos'] == 1) {
-        $sql = mysql_query("select * from reservation_attente where etat=1 and id_user=" . $user['id']);
+        $sql = mysql_query("select * from reservation_attente re, myvtc_users my where my.parrain IS NOT NULL AND re.etat=1 AND re.id_user=" . $user['id']);
         $nb = mysql_num_rows($sql);
+		 echo $nb;
     }
 }
 
@@ -37,7 +38,7 @@ if ($user['type_user'] == 'Professionnel') {
 
 $req = mysql_fetch_array(mysql_query("select prixpro from prixkm"));
 $rr=$req['prixpro'];
-echo $rr;
+
     //prix pro
 	echo "<script>window.pricepro = 2</script>";
     /*echo "<script>window.pricepro = <?php $rr; ?></script>";*/
