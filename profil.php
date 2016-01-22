@@ -104,16 +104,7 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                                             </div>
                                             <div class="col-sm-9">
                                                 <form action="" name="inscription-form" role="form" class="form-horizontal" method="post" accept-charset="utf-8">
-                                                    <div class="form-group" style="text-align: left;">
-                                                        <div class="col-md-6" style="padding-top: 10px;">
-                                                            <div class="input-group">
-                                                                <label style="font-weight: bold;">Vous êtes </label><br>
-                                                                <label class="checkbox-inline registeredv" style="font-weight: bold; font-size: 15px" onclick="show_bloc()"><input type="radio" name="type_user" value="Professionnel" <?php if ($user['type_user'] == "Professionnel") echo "checked=''"; ?> > Professionnel</label>
-                                                                <label class="checkbox-inline noregisteredv" style="font-weight: bold; font-size: 15px" onclick="hide_bloc()"><input type="radio" name="type_user" value="Particulier" <?php if ($user['type_user'] == "Particulier") echo "checked=''"; ?>> Particulier</label>
-                                                            </div>
-                                                        </div>
-
-                                                    </div> 
+                                
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">
                                                             <label style="font-weight: bold;">Prénom</label>

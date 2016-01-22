@@ -15,7 +15,7 @@ $message = "Bonjour " . $user["prenom"] . ",
 
 Fécilitation ! Votre paiement sur le site ReserverUnCab.com a été effectué avec succès.
 
-Votre détail commande est comme suit :\n
+Voici le détail de votre commande :\n
 Départ : ".$commande['depart']."\n\n
 Arrivée : ".$commande['arrivee']."\n\n
 Prix : ".$commande['prix']."\n\n
@@ -80,12 +80,12 @@ mail($_SESSION['myvtclogin'], "Validation de paiement ReserverUnCab.com", $messa
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-11 col-sm-offset-1">
 
-                                            <blockquote style="text-align: left"><h3>Paiement validé</h3></blockquote>
+                                            <blockquote style="text-align: center"><h3>Paiement validé</h3></blockquote>
                                             
                                             <div class="col-sm-12">
 
                                                 <p>Merci pour votre confiance.</p>
-                                                <p>Votre commande a été payée. Vous recevez un mail de confirmation sur votre boite de messagerie.</p>
+                                                <p>Votre commande a été validée. Vous receverez un mail de confirmation sur votre boite de messagerie.</p>
                                                 <p>Cliquer <a href="http://reserveruncab.com/">ici</a> pour retourner à la page d'accueil.</p>
 
                                             </div>
@@ -127,77 +127,7 @@ mail($_SESSION['myvtclogin'], "Validation de paiement ReserverUnCab.com", $messa
         <script src="css/moment-with-locales.js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <script src="css/bootstrap-datetimepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-        <script type="text/javascript">
-            var geocoder = new google.maps.Geocoder();
-            var address = "41, RUE AUGUSTIN HENRY Elbeuf France"; //Add your address here, all on one line.
-            var latitude;
-            var longitude;
-            var color = "#ffffff"; //Set your tint color. Needs to be a hex value.
-
-            function getGeocode() {
-                geocoder.geocode({'address': address}, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        latitude = results[0].geometry.location.lat();
-                        longitude = results[0].geometry.location.lng();
-                        initGoogleMap();
-                    }
-                });
-            }
-
-            function initGoogleMap() {
-                var styles = [
-                    {
-                        stylers: [
-                            {saturation: -100}
-                        ]
-                    }
-                ];
-
-                var options = {
-                    mapTypeControlOptions: {
-                        mapTypeIds: ['Styled']
-                    },
-                    center: new google.maps.LatLng(latitude, longitude),
-                    zoom: 13,
-                    scrollwheel: false,
-                    navigationControl: false,
-                    mapTypeControl: false,
-                    zoomControl: true,
-                    disableDefaultUI: true,
-                    mapTypeId: 'Styled'
-                };
-                var div = document.getElementById('contact-map');
-                var map = new google.maps.Map(div, options);
-                marker = new google.maps.Marker({
-                    map: map,
-                    draggable: false,
-                    animation: google.maps.Animation.DROP,
-                    position: new google.maps.LatLng(latitude, longitude)
-                });
-                var styledMapType = new google.maps.StyledMapType(styles, {name: 'Styled'});
-                map.mapTypes.set('Styled', styledMapType);
-
-                var infowindow = new google.maps.InfoWindow({
-                    content: "<div class='iwContent'>" + address + "</div>"
-                });
-                google.maps.event.addListener(marker, 'click', function () {
-                    infowindow.open(map, marker);
-                });
-
-
-                bounds = new google.maps.LatLngBounds(
-                        new google.maps.LatLng(-49.29104050000001, -1.0055671999999731),
-                        new google.maps.LatLng(49.29104050000001, 1.0055671999999731));
-
-                rect = new google.maps.Rectangle({
-                    bounds: bounds,
-                    fillColor: color,
-                    fillOpacity: 0.2,
-                    strokeWeight: 0,
-                    map: map
-                });
-            }
-            google.maps.event.addDomListener(window, 'load', getGeocode);</script>
+        
     </body>
 
 </html>

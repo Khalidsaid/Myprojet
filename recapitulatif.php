@@ -35,15 +35,12 @@ if (isset($_SESSION['myvtclogin'])) {
 
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
 if ($user['type_user'] == 'Professionnel') {
-
     $req = mysql_fetch_array(mysql_query("select prixpro from prixkm where id=1"));
     $rr = $req['prixpro'];
-
     //prix pro
     echo "<script>window.pricepro = " . $rr . "</script>";
-    /* echo "<script>window.pricepro = <?php $rr; ?></script>"; */
-    //echo "<script>alert(window.pricepro);</script>";
-} else {
+	
+	} else {
     echo "<script>window.pricepro = 0;</script>";
 }
 ?>
