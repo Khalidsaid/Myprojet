@@ -7,8 +7,8 @@ $ll=mysql_query("select reservation_attente.depart,reservation_attente.arrivee,r
 $commande = mysql_fetch_array($ll);
 mysql_query("update reservation_attente set etat=1 where codecommande='" . $commande['codecommande'] . "'")or die(mysql_error());
 
-$headers = 'From: info@reserveruncab.com' . "\r\n" .
-        'Reply-To: info@reserveruncab.com' . "\r\n" .
+$headers = 'From: contact@reserveruncab.com' . "\r\n" .
+        'Reply-To: contact@reserveruncab.com' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
 
 $message = "Bonjour " . $user["prenom"] . ",

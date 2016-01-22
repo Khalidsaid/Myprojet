@@ -105,8 +105,8 @@ function genererMDP($longueur = 8) {
                                                     $sql = mysql_query("select * from myvtc_users where email='" . $email . "'");
                                                     $nb = mysql_num_rows($sql);
                                                     if ($nb > 0) {
-                                                        $headers = 'From: info@reserveruncab.com' . "\r\n" .
-                                                                'Reply-To: info@reserveruncab.com' . "\r\n" .
+                                                        $headers = 'From: contact@reserveruncab.com' . "\r\n" .
+                                                                'Reply-To: contact@reserveruncab.com' . "\r\n" .
                                                                 'X-Mailer: PHP/' . phpversion();
                                                         $new_pwd = genererMDP();
                                                         $pwd = md5($new_pwd);

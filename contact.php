@@ -84,7 +84,7 @@ include("config.php");
                                                 <i class="fa fa-phone"></i> <b>06 59 56 63 83</b><br>
 												
 
-                                                <i class="fa fa-envelope"></i> <a href="mailto:info@reserveruncab.com">info@reserveruncab.com</a><br><br>
+                                                <i class="fa fa-envelope"></i> <a href="mailto:contact@reserveruncab.com">contact@reserveruncab.com</a><br><br>
                                                 <i class="fa fa-home"></i>Horaires :<br><b><span style="font-weight: bold">7j/7</span> <br>24h/24h</b><br>
                                              
 

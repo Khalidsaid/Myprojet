@@ -9,7 +9,7 @@ $arrivee = $_GET['arrivee'];
 $totalpers = $_GET['totalpers'];
 $totalbag = $_GET['totalbag'];
 $datedep_tab = explode("/", $_GET['datedep']);
-$datedep = $datedep_tab[1] . "-" . $datedep_tab[0] . "-" . $datedep_tab[2];
+$datedep = $datedep_tab[2] . "-" . $datedep_tab[0] . "-" . $datedep_tab[1];
 $heyres = $_GET['heyres'];
 $distance = $_GET['distance'];
 date_default_timezone_set('Europe/Paris');
@@ -592,11 +592,18 @@ echo $rr;
                                         <a href="javascript:void(0);" class="button big btn btn-success" data-toggle="modal" data-target="#loginModal">Payer</a>
                                         <?php
                                     } else {
+                                        if ($nb == 9 && $marep == true){
                                         ?>
-                                        <a href="#" class="button big btn btn-success" onclick="javascript:reservation();
-                                                    return false;">Payer</a>
+                                        <a href="paiementValide.php" class="button big btn btn-success">Confirmer</a>
                                            <?php
-                                       }
+                                       }else{ 
+                                           ?>
+                                        <a href="#" class="button big btn btn-success" onclick="javascript:reservation(); return false;">Payer</a>
+                                        
+                                       <?php
+                                        }
+                                       
+                                    }
                                        ?> <a href="javascript:modifier()" class="button big btn btn-warning">Modifier</a></div>
                             </div>
                         </div>

@@ -81,8 +81,8 @@ if (isset($_SESSION['myvtclogin']))
                         $tva = mysql_real_escape_string($_POST["tva"]);
                         $societe = mysql_real_escape_string($_POST["societe"]);
                         $password = md5($pwd);
-                        $headers = 'From: info@reserveruncab.com' . "\r\n" .
-                                'Reply-To: info@reserveruncab.com' . "\r\n" .
+                        $headers = 'From: contact@reserveruncab.com' . "\r\n" .
+                                'Reply-To: contact@reserveruncab.com' . "\r\n" .
                                 'X-Mailer: PHP/' . phpversion();
                         if ($pwd == $pwd2) {
                             $sql_exist = mysql_query("select * from myvtc_users where email='" . $login . "'");
