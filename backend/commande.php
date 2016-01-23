@@ -120,7 +120,7 @@ if (!isset($_SESSION['backend']))
                                                         <td><?php echo $data['dtdeb']; ?></td>
                                                         <td><?php echo $data['prix']; ?>€</td>
                                                         <td><?php echo $data['chauffeur']; ?></td>
-                                                        <td><a class="btn btn-success btn-sm" href="detailcmd.php?id=<?php echo $data['id'] ?>">Notifier le chauffeur</a></td>
+                                                        <td><a class="btn btn-success btn-sm" href="detailcmd.php?id=<?php echo $data['id'] ?>">Ajout chauffeur</a></td>
                                                     </tr>
                                                     <?php
                                                 }

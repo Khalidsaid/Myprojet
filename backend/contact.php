@@ -102,12 +102,12 @@ if (!isset($_SESSION['backend']))
                                                     <th>Date</th>
                                                     <th>Sujet</th>
                                                     <th>Message</th>
-                                                   
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select * from contact");
+                                                $sql = mysql_query("select * from contact where etat=0");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>
@@ -117,6 +117,8 @@ if (!isset($_SESSION['backend']))
                                                         <td><?php echo $data['dt']; ?></td>
                                                         <td><?php echo $data['sujet']; ?></td>
                                                         <td><?php echo $data['msg']; ?></td>
+														<td><a class="btn btn-success btn-sm" onclick="msgread(<?php echo $_GET['id']; ?>)">Archiver</a></td>
+														<input type="hidden" value="<?php echo $data['id'] ?>" id="id"/>
                                                           </tr>
                                                     <?php
                                                 }
@@ -163,6 +165,22 @@ if (!isset($_SESSION['backend']))
 
         <!-- Metis demo scripts -->
         <script src="assets/js/app.js"></script>
+		<script>
+            function msgread(id) {
+
+         
+                var id = document.getElementById("id").value;
+                $.ajax({
+                    url: 'archiver.php?id=' + id,
+                    success: function (data) {
+                        var t = eval(data);
+
+                        alert("Message Archivé !");
+						document.location.href="contact.php";
+                    }
+                });
+            }
+        </script>
         <script>
             $(function () {
                 Metis.MetisTable();
