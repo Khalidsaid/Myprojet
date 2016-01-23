@@ -553,12 +553,11 @@ if ($user['type_user'] == 'Professionnel') {
                                 var rep = getURIParameter("depart");
                                 var bool = checkParis(rep);
 
-<?php $marep = "<script>document.write(bool); alert(bool);</script>" ?>
-
+							<?php $marep= "<script>document.write(bool);</script>";?>
                             </script>
 
                             <?php
-                            echo "nb : ".$nb;
+                           // echo $marep;
                             if ($nb != 9) {
                                 ?>
                                 <hr style="border: 1px dashed ! important;">
@@ -567,7 +566,7 @@ if ($user['type_user'] == 'Professionnel') {
                                     <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p><input type="hidden" id="amounttxt" /><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /></div>
                                 </div>
                                 <?php
-                            } if ($nb == 9 && $marep == true) {
+                            } if ($nb == 9) {
                                 ?>
                                 <hr style="border: 1px dashed ! important;">
                                 <div class="row">
@@ -575,8 +574,10 @@ if ($user['type_user'] == 'Professionnel') {
                                     <div class="col-md-8" style="text-align: left"><input type="hidden" id="amounttxt" /><span id="prix" name="prix" value="0" style="width: 0px; color: rgb(255, 255, 255) ! important; display: none;"></span><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /> <p  style="font-size: 22px;">Gratuit (offre parrainage de la 10e course)</p></div>
                                 </div>
                                 <?php
-                            }
-                            ?>
+                            } 
+							
+							    ?>
+                             
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">Code Promo ?</div>

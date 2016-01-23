@@ -176,7 +176,7 @@ if (!isset($_SESSION['backend']))
                         var t = eval(data);
 
                         alert("Message Archivé !");
-						document.location.href="contact.php";
+						location.reload();
                     }
                 });
             }
