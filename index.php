@@ -335,6 +335,8 @@ if (!isset($_SESSION)) {
             function showMap() {
                 document.getElementById('bannner').style.display = "block";
                 document.getElementById('bannner2').style.display = "none";
+				document.getElementById('mapro').style.display = "none";
+				document.getElementById('mapro2').style.display = "none";
             }
 
             function hideMap() {
@@ -650,6 +652,7 @@ if (!isset($_SESSION)) {
                             <br/>
                             <br/>
                             <form id="form1" name="form1" action="" method="post">
+							
                                 <section id="banner" style="height : 225px; ; z-index: 1; ">
                                     <header>
 
@@ -863,9 +866,23 @@ if (!isset($_SESSION)) {
 
                                 </section>
                             </form>
+							
                             <section id="bannner" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; display: block; opacity: 0.8; "></section>
                             <section id="bannner2" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; opacity: 0.8; "></section>
                 </div>
+				<i id="mapro" style="top: 260px;"><br/><h4>Soyez prévoyant !</h4> 
+Réservez votre cab maintenant
+ORLY
+À PARTIR DE 
+32€ CDG
+À PARTIR DE 
+42€
+En réservant 24h à l’avance
+
+Plus d'infos sur notre page <br/>
+<a href="offreaeroports.php">- Offre Aéroport -</a></i>
+<i id="mapro2" style="top: 250px; right: 16px"><br/><h4>Offre spéciale !</h4> 
+Votre 10 ème réservation est offerte. Profitez-en vite!</i>
                 <br/>
                 <br/>
                 <br/>
@@ -879,7 +896,7 @@ if (!isset($_SESSION)) {
                                 <header>
                                     <h2>Service Aéroport</h2>
                                 </header>
-                                <p>Réservez votre chauffeur en quelques clics, nous assurons notre service de qualité dans tous les aéroports.</p>
+                                <p>Réservez votre chauffeur en quelques clics, nous assurons notre service de qualité dans tous les aéroports. Nos prix sont fixes et bas toutes l'année !</p>
                             </section>
                         </div>
                         <div class="4u 12u(mobile)">
@@ -895,9 +912,10 @@ if (!isset($_SESSION)) {
                             <section class="last">
                                 <i class="icon featured alt fa-star"></i>
                                 <header>
-                                    <h2>Qualité</h2>
+                                    <h2>Qualité & Prix</h2>
                                 </header>
                                 <p>Nos chauffeurs très aimables assureront votre comfort et bien être tout au long de votre voyage.</p>
+								<p>Profitez de votre 10 eme course offerte au départ de Paris pour une personne parrainé .</p>
                             </section>
                         </div>
                     </div>

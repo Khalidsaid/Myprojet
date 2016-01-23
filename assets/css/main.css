@@ -29,6 +29,8 @@
 	ol, ul {
 		list-style: none;
 	}
+	
+	
 
 	blockquote, q {
 		quotes: none;
@@ -508,6 +510,78 @@
 
 	.\-1u {
 		margin-left: 8.33333%;
+	}
+	
+		@media screen and (max-width: 900px)
+	{
+	
+#mapro{
+display: none;
+}
+#mapro2{
+display: none;
+}
+	
+	}
+	
+	@media screen and (min-width: 900px)
+	{
+#mapro{
+color : white;
+height : 216px;
+width: 222px;
+position: absolute;
+text-align: center;
+top: 260;
+margin-left: 30px;	
+background-color: #030101;
+border: 1px solid #0e0e0e;
+-moz-border-radius: 99px;
+-webkit-border-radius: 99px;
+border-radius: 99px;
+/*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/
+-moz-box-shadow: 0px 0px 20px #000000;
+-webkit-box-shadow: 0px 0px 20px #000000;
+box-shadow: 0px 0px 20px #000000;
+/*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+opacity: 0.35;
+-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity = 35);
+/*-ms-filter must come before filter*/
+filter: alpha(opacity = 35);
+/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+/*All filters must be placed together*/
+
+
+}
+#mapro2{
+color : white;
+height : 127px;
+width: 222px;
+position: absolute;
+text-align: center;
+top: 260;
+margin-left: 30px;	
+background-color: #030101;
+border: 1px solid #0e0e0e;
+-moz-border-radius: 99px;
+-webkit-border-radius: 99px;
+border-radius: 99px;
+/*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/
+-moz-box-shadow: 0px 0px 20px #000000;
+-webkit-box-shadow: 0px 0px 20px #000000;
+box-shadow: 0px 0px 20px #000000;
+/*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+opacity: 0.35;
+-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity = 35);
+/*-ms-filter must come before filter*/
+filter: alpha(opacity = 35);
+/*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+/*All filters must be placed together*/
+
+
+}
+
+	
 	}
 
 	@media screen and (min-width: 737px) {
@@ -1772,6 +1846,8 @@
 		text-align: center;
 		
 	}
+	
+
 
 		#banner header {
 			
@@ -2276,6 +2352,8 @@
 			input, textarea, select {
 				font-size: 11pt;
 			}
+			
+
 
 		/* Section/Article */
 
