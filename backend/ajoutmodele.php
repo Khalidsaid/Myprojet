@@ -3,17 +3,12 @@ include("config.php");
 include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
-if (isset($_GET['marque'])) {
-    $ma = $_GET['marque'];
-} else {
-    $ma = "AC";
-}
 ?>
 <!doctype html>
 <html class="no-js">
     <head>
         <meta charset="UTF-8">
-        <title>Gérer les modèles des voitures</title>
+        <title>Ajouter un modèle de voiture</title>
 
         <!--IE Compatibility modes-->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -64,11 +59,11 @@ if (isset($_GET['marque'])) {
                 <!-- .navbar -->
                 <header class="head">
                     <div class="search-bar">
-                        <img src="../images/logo.png" class="img-responsive" style="width: 160px; margin-left: 12px;" alt="">
+                        <img src="../img/mb-logo.png" class="img-responsive" style="width: 160px; margin-left: 12px;" alt="">
                     </div><!-- /.search-bar -->
                     <div class="main-bar">
                         <h3>
-                            <a href="ajoutmodele.php" class="btn btn-success">Ajouter un nouveau modèle</a></h3>
+                            <i class="fa fa-car"></i>&nbsp; Modèle de voiture</h3>
                     </div><!-- /.main-bar -->
                 </header><!-- /.head -->
             </div><!-- /#top -->
@@ -81,7 +76,7 @@ if (isset($_GET['marque'])) {
                 </div>
 
                 <!-- #menu -->
-                <?php include("menu.php"); ?><!-- /#menu -->
+                <?php include("menu.php");  ?><!-- /#menu -->
             </div><!-- /#left -->
             <div id="content">
                 <div class="outer">
@@ -93,66 +88,46 @@ if (isset($_GET['marque'])) {
                             <div class="box">
                                 <header>
                                     <div class="icons" style="color: #000">
-                                        <i class="fa fa-user"></i>
+                                        <i class="fa fa-car"></i>
                                     </div>
-                                    <h5 style="color: #000">Gérer les modèles des voitures</h5>
+                                    <h5 style="color: #000">Modèle de voiture</h5>
                                 </header>
                                 <div id="collapse4" class="body">
                                     <div class="row">
                                         <?php
-                                        if (isset($_GET['id'])) {
-                                            mysql_query("delete from vehicule where id=".$_GET['id']);
-                                            
-                                            echo '<script>window.location="vehicule.php";</script>';
+                                        if (isset($_POST['marque'])) {
+                                            mysql_query("insert into vehicule(marque,modele)values('" . addslashes($_POST['marque']) . "','" . addslashes($_POST['modele']) . "');");
+                                            echo '<script>alert("Modèle ajouté !")</script>';
+                                            echo '<script>window.location="vehicule.php"</script>';
                                         }
                                         ?>
-                                        <form method="get" action="">
-                                            <div class="col-md-12">
-                                                <div class="col-md-3">Marque</div>
-                                                <div class="col-md-4">
-                                                    <select name="marque" class="form-control">
-                                                      <?php
-                                                        $sql_marque = mysql_query("select distinct marque from vehicule");
-                                                        while ($data_marque = mysql_fetch_array($sql_marque)) {
-                                                            ?>
-                                                            <option value="<?php echo $data_marque['marque']; ?>"><?php echo $data_marque['marque']; ?></option>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </select>
+                                        <form method="post" action="">
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Marque</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" name="marque" placeholder="Marque"  class="form-control">
                                                 </div>
-                                                <div class="col-md-1"></div>
-                                                <div class="col-md-4"><button type="submit" class="btn btn-primary" name="modif">Modifier</button></div>
-                                            </div>
+                                            </div><!-- /.form-group -->
+                                            <hr>
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Modèle</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" name="modele" placeholder="Modèle"  class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                            
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4"></label>
+                                                <div class="col-lg-8">
+                                                    <button type="submit" class="btn btn-primary" name="modif">Ajouter</button>
+                                                </div>
+                                            </div><!-- /.form-group -->
                                         </form>
                                     </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Modèle</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $sql = mysql_query("select * from vehicule")or die(mysql_error());
-                                                    while ($data = mysql_fetch_array($sql)) {
-                                                        ?>
-                                                        <tr>
-                                                            <td><?php echo $data['modele']; ?></td>
-                                                            <td><a href="" class="btn btn-warning btn-xs">Supprimer</a></td>
-                                                        </tr>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>              
+
+
+
                             </div>
                         </div>
                     </div><!-- /.row -->
@@ -221,7 +196,7 @@ if (isset($_GET['marque'])) {
             </div><!-- /#right -->
         </div><!-- /#wrap -->
         <footer class="Footer bg-dark dker">
-            <p>2015 &copy; Reserveruncab</p>
+            <p>2015 &copy; Ad-prestiges</p>
         </footer><!-- /#footer -->
 
         <!-- #helpModal -->
