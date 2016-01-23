@@ -117,10 +117,10 @@ if (!isset($_SESSION)) {
 				var desti = document.getElementById("depart").value;
 				if (checkParis(desti) == true)
 				{
-                var result = currentTime.setMinutes(currentTime.getMinutes() + 30);
+                var result = currentTime.setMinutes(currentTime.getMinutes() + 45);
 				} else
 				{
-				var result = currentTime.setMinutes(currentTime.getMinutes() + 45);
+				var result = currentTime.setMinutes(currentTime.getMinutes() + 75);
 				}
                 var h = currentTime.getHours();
                 var m = currentTime.getMinutes();
