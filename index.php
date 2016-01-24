@@ -94,6 +94,53 @@ $menu=1;
 
 
             }
+			
+			 function checkDateToday() {
+
+                var now = new Date();
+
+                var annee = now.getFullYear();
+                var mois = ('0' + now.getMonth() + 1).slice(-2);
+                var jour = ('0' + now.getDate()).slice(-2);
+                var heure = ('0' + now.getHours()).slice(-2);
+                var minute = ('0' + now.getMinutes()).slice(-2);
+                var seconde = ('0' + now.getSeconds()).slice(-2);
+
+
+                var EnteredDate = document.getElementById("datedep").value; //for javascript
+
+                var EnteredDate = $("#datedep").val(); // For JQuery
+
+                var month = EnteredDate.substring(0, 2);
+                var date = EnteredDate.substring(3, 5);
+                var year = EnteredDate.substring(6, 10);
+
+
+                var myDate = new Date(month - 1, date, year);
+
+
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+
+
+
+
+                if (dd <= date || year < yyyy || month < mm)
+                {
+					if((dd == date || year == yyyy || month == mm))
+					{
+						return true;
+					}
+
+                } else
+                {
+                    return false;
+                }
+
+
+            }
 
             function checkonlytime()
             {
@@ -135,7 +182,7 @@ $menu=1;
 				//
 				
 		
-                if (heurecourante < heureselection && mois >= month && year >= annee && jour >= date)
+                if ((heurecourante < heureselection && mois >= month && year >= annee && jour >= date) || (heurecourante > heureselection && mois >= month && year >= annee && jour < date) )
                 {
 					 return false;
                 }
@@ -241,7 +288,7 @@ $menu=1;
                 var heyres = document.getElementById('heyres').value + ":" + document.getElementById('minutes').value;
 
 
-                if (totalpers > 4 || totalbag > 4)
+                if (totalpers > 4 || totalbag > 3)
                 {
                     document.getElementById('more_passengers').style.display = "block";
 
@@ -267,7 +314,16 @@ $menu=1;
 
             function checkOrly(aero)
             {
-                var aeroports = "Aéroport de Paris-Orly, Orly";
+                var aeroports = "Aéroport de Orly, Orly";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+			   function checkGare(aero)
+            {
+                var aeroports = "Gare";
                 if (aero.indexOf(aeroports) >= 0) {
                     return true;
                 } else {
@@ -321,7 +377,7 @@ $menu=1;
                 var totalpers = document.getElementById('nbpers').value;
                 var totalbag = document.getElementById('nbbag').value;
 
-                if (totalpers > 4 || totalbag > 4) {
+                if (totalpers > 4 || totalbag > 3) {
                     document.getElementById('more_passengers').style.display = "block";
                     document.getElementById('mybuton').style.display = "none";
                     document.getElementById('mybuton2').style.display = "none";
@@ -467,14 +523,14 @@ $menu=1;
                 var adr_arr = document.getElementById('arrivee').value;
 				
 				//Conditions départ de Paris
-				if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
+				/*if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
 				{
 					
 				} else 
 				{
 					alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
 					document.location.href="index.php";
-				}
+				}*/
 				
 				// Prix fixe aéroports
 				
@@ -497,17 +553,54 @@ $menu=1;
 				var chkdep = checkParis(adr_dep);
 				var chkarr = checkParis(adr_arr);
 			
+				var mavar = checkGare(adr_dep);
+				var mavar2= checkParis(adr_dep);
+				var mavar3= checkParis(adr_arr);
+				var mavar4= checkParis(adr_dep);
+				var mavar5= checkGare(adr_arr);
+				//alert(mavar);
+				
+				if((mavar == true && mavar2 == true && mavar3==true) || (mavar4 == true && mavar5 == true && mavar3 == true))
+				{
+					window.prixtotal=19;
+					rep=true;
+				} else
+				{
 				
 				var rep = false;
+				}
 				
-				if( (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true) || (aero_dep == true && aero_arr == true))
+				if( rep == false && (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
 				{ 
 					window.prixtotal = 0;
 					rep=true;
-				} else if ( rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true))
+				} else if ( rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true)  || (aero_dep == true && aero_arr == true))
 				{
+					if (rep == false && (a == true && chkarr == true) || (b == true && chkdep == true))
+					{
+					window.prixtotal = 39;
+					rep=true;
+					} else if ( rep == false && (c == true && chkarr == true) || (d == true && chkdep == true))
+					{
+					window.prixtotal = 110;
+					rep=true;
+					} else if ( rep == false && (e == true && chkarr == true) || (f == true && chkdep == true))
+					{
 					window.prixtotal = 49;
 					rep=true;
+					} else if ( rep == false && (g == true && chkarr == true) || (h == true && chkdep == true))
+					{
+					window.prixtotal = 59;
+					rep=true;
+					} else if ( rep == false && (b == true && e == true) || (a == true && f == true))
+					{
+					window.prixtotal = 69;
+					rep=true;
+					} else if ( rep == false )
+					{
+					window.prixtotal = 0;
+					rep=true;
+					}
 				}
 				
 
@@ -538,7 +631,7 @@ $menu=1;
                                         prix = Math.round(parseInt(dist / 1000) * window.price);
                                     }
 
-                                    if (prix < 8)
+                                  if (prix < 8)
                                     {
                                         document.getElementById('more_passengers').innerHTML = '<b style="color : red;">Le minimum pour une course est de 8€, <a href="index.php">cliquez ici pour reinitialiser</a><b>';
                                         document.getElementById('more_passengers').style.display = "block";
@@ -669,7 +762,7 @@ $menu=1;
                                                             <li role="separator" class="divider"></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
             showMap()">Charles De Gaulle - Roissy</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Paris-Orly, Orly, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Orly, Orly, France';
                                                             showMap()">Orly</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Beauvais';
                                                             showMap()">Beauvais</a></li>
@@ -715,7 +808,7 @@ $menu=1;
                                                             <li role="separator" class="divider"></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
                                                             showMap()">Charles De Gaulle - Roissy</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Paris-Orly, Orly, France';
+                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Orly, Orly, France';
                                                             showMap()">Orly</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Beauvais';
                                                             showMap()">Beauvais</a></li>
