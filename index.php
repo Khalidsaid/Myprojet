@@ -32,8 +32,7 @@ $menu=1;
         <link rel="stylesheet" href="css/datepicker3.css" />
 
         <script type="text/javascript" async>
-            //En attendant le webservice, le prix est statique
-
+        
             var price = "undefined";
 			var avanceoufutur = 0;
 
@@ -48,13 +47,10 @@ $menu=1;
             function hidelogin()
             {
                 document.getElementById('loginModal').style.display = "none";
-
             }
 
             function checkDate() {
 			
-				
-
                 var now = new Date();
 
                 var annee = now.getFullYear();
@@ -156,8 +152,7 @@ $menu=1;
 		
                 if ((heurecourante < heureselection && mois >= month && year >= annee && jour >= date) || (heurecourante > heureselection && mois >= month && year >= annee && jour < date) )
                 {
-					 return false;
-					 
+					 return false;					 
                 }
                 else 
                 {
@@ -185,7 +180,6 @@ $menu=1;
             {
 			
 				// Destination
-				
 				var desti = document.getElementById("depart").value;
 				
 				if (desti == "")
@@ -202,10 +196,6 @@ $menu=1;
 				
 				}
 				
-
-				
-				
-
                 //Heure courante.
                 var now = new Date();
                 var annee = now.getFullYear();
@@ -229,9 +219,6 @@ $menu=1;
                     document.getElementById("heyres").selectedIndex = 0;
 					document.getElementById("minutes").selectedIndex = 0;
                 }
-				
-			
-			
 				
             }
 
@@ -407,9 +394,6 @@ $menu=1;
 
                 var origin_input = document.getElementById('depart');
                 var destination_input = document.getElementById('arrivee');
-
-                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin_input);
-                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
 
                 var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
                 origin_autocomplete.bindTo('bounds', map);
@@ -640,20 +624,15 @@ $menu=1;
 
             function calculDistance() {
 
-				
 
                 //initMap();
                 document.getElementById("distance").style.display = "block";
                 document.getElementById("prix").style.display = "block";
 
 
-
                 //r?cup?ration des champs du formulaire
                 var adr_dep = document.getElementById('depart').value;
                 var adr_arr = document.getElementById('arrivee').value;
-
-				
-
 
                 var origine = adr_dep;
                 var destination = adr_arr;
@@ -688,7 +667,7 @@ $menu=1;
 
 
             }
-            ;
+            
         </script>
         <style>
             form input {

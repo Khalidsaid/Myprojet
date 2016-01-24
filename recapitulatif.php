@@ -77,7 +77,8 @@ if ($user['type_user'] == 'Professionnel') {
             var price2 = "undefined";
             var pricepro;
             var codepromo = 0;
-
+			var avanceoufutur = 0;
+			
             function onload() {
                 calculDistance();
                 getPrix();
@@ -269,8 +270,49 @@ if ($user['type_user'] == 'Professionnel') {
 
 
             }
+			
+			 function checkAdvanceorAsap() {
 
+              //Heure courante.
+			  
+				var EnteredDate = getURIParameter("datedep");
+			
+                var now = new Date();
 
+                var annee = now.getFullYear();
+                var mois = ('0' + now.getMonth() + 1).slice(-2);
+                var jour = ('0' + now.getDate()).slice(-2);
+
+                //var EnteredDate = document.getElementById("datedep").value; //for javascript
+                //var EnteredDate = $("#datedep").val(); // For JQuery
+
+                var month = EnteredDate.substring(0, 2);
+                var date = EnteredDate.substring(3, 5);
+                var year = EnteredDate.substring(6, 10);
+		
+
+				//Test date courante et date séléctionné
+                if ( date == jour && year == annee && month == mois)
+                {
+				   window.avanceoufutur = 15;
+				   return true;
+                } else
+                {
+                   window.avanceoufutur = 8;
+				   return false;
+                }
+
+            }
+
+			 function checkGare(aero)
+            {
+                var aeroports = "Gare";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 
             function callback(response, status) {
 
@@ -278,37 +320,81 @@ if ($user['type_user'] == 'Professionnel') {
                 var adr_dep = getURIParameter("depart");
                 var adr_arr = getURIParameter("arrivee");
 
-                //Conditions départ de Paris
-                if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
-                {
-
-                } else
-                {
-                    alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
-                    document.location.href = "index.php";
-                }
+                
 
 
                 var a = checkOrly(adr_dep);
                 var b = checkOrly(adr_arr);
-
-                var c = checkBeauvais(adr_dep);
-                var d = checkBeauvais(adr_arr);
-
-                var e = checkCharlle(adr_dep);
-                var f = checkCharlle(adr_arr);
-
-                var g = checkBourget(adr_dep);
-                var h = checkBourget(adr_arr);
-
-                // Verifier si le départ est un aeroport et l'arrivée
-                var aero_dep = checkAero(adr_dep);
-                var aero_arr = checkAero(adr_arr);
-
-                var chkdep = checkParis(adr_dep);
-                var chkarr = checkParis(adr_arr);
-
-
+				
+				var c = checkBeauvais(adr_dep);
+				var d = checkBeauvais(adr_arr);
+				
+				var e = checkCharlle(adr_dep);
+				var f = checkCharlle(adr_arr);
+				
+				var g = checkBourget(adr_dep);
+				var h = checkBourget(adr_arr);
+				
+				// Verifier si le départ est un aeroport et l'arrivée
+				var aero_dep = checkAero(adr_dep);
+				var aero_arr = checkAero(adr_arr);
+				
+				var chkdep = checkParis(adr_dep);
+				var chkarr = checkParis(adr_arr);
+			
+				var mavar = checkGare(adr_dep);
+				var mavar2= checkParis(adr_dep);
+				var mavar3= checkParis(adr_arr);
+				var mavar4= checkParis(adr_dep);
+				var mavar5= checkGare(adr_arr);
+				
+//Vérifier si la réservation est le jour même
+				var todayoradvance = checkAdvanceorAsap();
+				
+				
+				if((mavar == true && mavar2 == true && mavar3==true) || (mavar4 == true && mavar5 == true && mavar3 == true))
+				{
+					window.prixtotal=19;
+					rep=true;
+				} else
+				{
+				
+				var rep = false;
+				}
+				
+				if( rep == false && (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
+				{ 
+					window.prixtotal = 0;
+					rep=true;
+				} else if ( rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true)  || (aero_dep == true && aero_arr == true))
+				{
+					if (rep == false && (a == true && chkarr == true) || (b == true && chkdep == true))
+					{
+					window.prixtotal = 39;
+					rep=true;
+					} else if ( rep == false && (c == true && chkarr == true) || (d == true && chkdep == true))
+					{
+					window.prixtotal = 110;
+					rep=true;
+					} else if ( rep == false && (e == true && chkarr == true) || (f == true && chkdep == true))
+					{
+					window.prixtotal = 49;
+					rep=true;
+					} else if ( rep == false && (g == true && chkarr == true) || (h == true && chkdep == true))
+					{
+					window.prixtotal = 59;
+					rep=true;
+					} else if ( rep == false && (b == true && e == true) || (a == true && f == true))
+					{
+					window.prixtotal = 69;
+					rep=true;
+					} else if ( rep == false )
+					{
+					window.prixtotal = 0;
+					rep=true;
+					}
+				}
+				
 
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
@@ -329,67 +415,48 @@ if ($user['type_user'] == 'Professionnel') {
                                 if (statut == 'OK') {
                                     var dist = element.distance.value;
                                     var dure = element.duration.text;
-                                    var mareponse = getURIParameter("offre");
-                                    if (mareponse == 49)
+                                    if (window.prixtotal > 0)
                                     {
-                                        if (window.pricepro != 0)
-                                        {
-                                            price2 = 49 + 5;
-                                            document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
-                                            document.getElementById('amount').value = price2;
-                                            document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-                                            document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-                                            document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
-                                            return;
-                                        }
-                                        else
-                                        {
-                                            price2 = 49;
-                                            document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
-                                            document.getElementById('amount').value = price2;
-                                            document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-                                            document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-                                            +' kilomètres<b> ';
-                                            document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
-                                            return;
-                                        }
-                                    }
-                                    if (window.pricepro == 0)
-                                    {
-                                        price2 = Math.round(parseInt(dist / 1000) * window.price - window.codepromo);
-                                        document.getElementById('prix').innerHTML = '<b>' + price2 + ' €<b>';
-                                        document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price - window.codepromo)
-                                        document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-                                        document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-                                        +' kilomètres<b> ';
-                                        document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
-                                        ;
+                                        prix = window.prixtotal;
                                     } else
                                     {
-                                        price2 = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
-                                        document.getElementById('prix').innerHTML = '<b>' + price2 + ' € (Tarif Professionnel)<b>';
-                                        document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.pricepro - window.codepromo);
-                                        document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-                                        document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-                                        +' kilomètres<b> ';
-                                        document.getElementById('duree').innerHTML = '<b> ' + dure + '<b>';
+                                        prix = Math.round(parseInt(dist / 1000) * window.price);
                                     }
 
+                                  if ((prix < 15 && todayoradvance == true) || (prix < 8 && todayoradvance == false))
+                                    {
+										prix = (window.avanceoufutur - window.codepromo);
+                                        document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
+                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
+										document.getElementById('amount').value = window.avanceoufutur - window.codepromo;
+										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                    } else
+                                    {
+										
+                                        document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
+                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
+										document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price - window.codepromo)
+										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                    }
+                                    window.prixtotal = 0;
 
                                 } else if (statut == 'NOT_FOUND') {
-                                    //alert("impossible de localiser l'adresse d'arrivee");
+                                    alert("impossible de localiser l'adresse d'arrivée");
                                 } else if (statut == 'ZERO_RESULTS') {
-                                    //alert("impossible de calculer cette distance");
+                                    alert("impossible de calculer cette distance");
                                 }
                             }
                         } else {
-                            //alert("impossible de localiser l'adresse de depart");
+                            alert("impossible de localiser l'adresse de depart");
                         }
                     }
                 }
 
 
             }
+
 
 
             function checkParis(aero)
