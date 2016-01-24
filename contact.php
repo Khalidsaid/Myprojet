@@ -1,5 +1,6 @@
 <?php
 include("config.php");
+$menu=4;
 ?>
 <!DOCTYPE HTML>
 <!--

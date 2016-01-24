@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-
+$menu=5;
 function genererMDP($longueur = 8) {
     // initialiser la variable $mdp
     $mdp = "";

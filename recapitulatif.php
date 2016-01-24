@@ -1,5 +1,6 @@
 <?php
 include("config.php");
+$menu=1;
 $chaine_cmd = "Reservation sur ReserverUnCab";
 // Identifiant unique
 $identifiant = uniqid();

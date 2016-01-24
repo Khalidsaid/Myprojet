@@ -15,12 +15,15 @@
                 </section>
             </div>
             <div class="4u 12u(mobile)">
-                <section>
-                    <ul class="divided">
-                        <li> <img src="images/logo_paypal.jpg" alt="" class="img-responsive" /></li>
-
-                    </ul>
-                </section>
+                <div class="col-md-12">
+                    <h3>Licence</h3>
+                </div>
+                <div class="col-md-12"> 
+                    <img src="images/ministere.jpg" alt="">
+                </div>
+                <div class="col-md-12"> 
+                    <p style="padding-top: 10px; color: rgb(255, 255, 255);">Licence n° 2009/12/0000121 délivrée par la Direction Régionale de l'Équipement d'Île de France</p>
+                </div>
             </div>
             <div class="4u 12u(mobile)">
                 <section>
@@ -34,9 +37,12 @@
                         <li><a class="icon fa-linkedin" href="#"><span class="label">LinkedIn</span></a></li>
                         <li><a class="icon fa-google-plus" href="#"><span class="label">Google+</span></a></li>
                     </ul>
+                </section>
+                <section>
+                    <ul class="divided">
+                        <li> <img src="images/logo_paypal.jpg" alt="" class="img-responsive" /></li>
 
-
-
+                    </ul>
                 </section>
             </div>
         </div>

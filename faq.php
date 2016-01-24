@@ -1,5 +1,6 @@
 <?php
 include("config.php");
+$menu=3;
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -63,7 +64,7 @@ include("config.php");
                                         <div class="col-xs-12 col-sm-11 col-sm-offset-1">
 
                                             <blockquote style="text-align: left"><h3>FAQ</h3></blockquote>
-                                            
+
                                             <div class="col-sm-12" style="text-align: left; margin-left: 0px; padding-left: 35px;">
                                                 <div id="accordion">
                                                     <h4 class="accordion-toggle" style="background-color: rgb(238, 238, 238); padding: 10px; color: #1E4F93"> <i class="fa fa-question-circle"></i> Etes-vous un taxi?</h4>
@@ -80,11 +81,12 @@ include("config.php");
                                                     </div>
                                                     <h4 class="accordion-toggle" style="background-color: rgb(238, 238, 238); padding: 10px; color: #1E4F93"> <i class="fa fa-question-circle"></i> Comment est calculé le prix des courses?</h4>
                                                     <div class="accordion-content">
-                                                        <p style="padding-left: 25px; text-align: justify;">Nos prix sont basés sur un forfait kilométrique très avantageux. ParisVTC fixe le prix de chaque course à l'avance, celui-ci ne change pas, contrairement aux taxis qui vous facturent en fonction du temps et de la distance. Nous ne facturons pas le temps et la distance d'approche contrairement aux taxis.</p>
+                                                        <p style="padding-left: 25px; text-align: justify;">Nos prix sont basés sur un forfait kilométrique très avantageux. ReserverUnCab fixe le prix de chaque course à l'avance, celui-ci ne change pas, contrairement aux taxis qui vous facturent en fonction du temps et de la distance. Nous ne facturons pas le temps et la distance d'approche contrairement aux taxis.</p>
                                                     </div>
                                                 </div>
 
                                             </div>
+                                            
 
                                         </div> 
                                     </div>

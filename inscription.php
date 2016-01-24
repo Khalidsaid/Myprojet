@@ -2,6 +2,7 @@
 include("config.php");
 if (isset($_SESSION['myvtclogin']))
     header("location:profil.php");
+$menu=5;
 ?>
 <!DOCTYPE HTML>
 <!--

@@ -6,6 +6,7 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+$menu=1;
 ?>
     <html>
 
