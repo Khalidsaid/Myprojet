@@ -9,7 +9,7 @@
                         <li><a href="faq.php">FAQ</a></li>
                         <li><a href="avantage.php">Avantages</a></li>
                         <li><a href="fonctionnement.php">Fonctionnement</a></li>
-                        <li><a href="condition.php">Conditions générales</a></li>
+                        <li><a href="mention.php">Mentions légales</a></li>
                         <li><a href="contact.php">Nous contacter</a></li>
                     </ul>
                 </section>
