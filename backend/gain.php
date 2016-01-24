@@ -9,7 +9,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
 <html class="no-js">
     <head>
         <meta charset="UTF-8">
-        <title>Détail Commande</title>
+        <title>Gain</title>
 
         <!--IE Compatibility modes-->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,7 +73,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                     </div><!-- /.search-bar -->
                     <div class="main-bar">
                         <h3>
-                            <i class="fa fa-money"></i>&nbsp; Commande</h3>
+                            <i class="fa fa-money"></i>&nbsp; Gain</h3>
                     </div><!-- /.main-bar -->
                 </header><!-- /.head -->
             </div><!-- /#top -->
@@ -100,7 +100,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                         <div class="icons">
                                             <i class="fa fa-edit"></i>
                                         </div>
-                                        <h5>Détail Commande</h5>
+                                        <h5>Gain</h5>
 
                                         <!-- .toolbar -->
                                         <div class="toolbar">
@@ -114,41 +114,35 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                         </div><!-- /.toolbar -->
                                     </header>
                                     <div id="div-1" class="body">
-
-                                        <table border="1" style="width: 100%">
-                                            <tr>
-                                                <td>Départ</td>
-                                                <td><?php  echo $client['depart']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Arrivée</td>
-                                                <td><?php  echo $client['arrivee']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Chauffeur</td>
-                                                <td><?php  echo $client['chauffeur']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date</td>
-                                                <td><?php  echo $client['dtdeb']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Heure</td>
-                                                <td><?php  echo $client['heure']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Prix Total</td>
-                                                <td><?php  echo $client['prix']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Part Société</td>
-                                                <td><?php  echo $p= ($client['prix']*20)/100; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Part Chauffeur</td>
-                                                <td><?php  echo $p= ($client['prix']*80)/100; ?></td>
-                                            </tr>
-                                        </table>
+                                        <form method="post" action="">
+                                            <select class="form-control"name="chauffeur" name="chauffeur">
+                                                <option></option>
+                                                <?php
+                                                $sql_chauffeur = mysql_query("select * from chauffeur");
+                                                while ($data_chauffeur = mysql_fetch_array($sql_chauffeur)) {
+                                                    ?>
+                                                    <option value="<?php echo $data_chauffeur['id_chauffeur']; ?>"><?php echo $data_chauffeur['prenom'] . " " . $data_chauffeur['nom']; ?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                            <button type="submit" class="btn btn-success">Chercher</button>
+                                        </form>
+                                        <?php
+                                        if (isset($_POST['chauffeur'])) {
+//echo "select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and week(dtdeb)='" . date("W", strtotime(date('Y-m-d'))) . "' and month(dtdeb)='" . date('m') . "' and year(dtdeb)='" . date('Y') . "'";
+                                            $gain_jour = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and dtdeb='" . date('Y-m-d') . "' "));
+                                          //  $gain_week = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and week(dtdeb)='" . date("W", strtotime(date('Y-m-d'))) . "' and month(dtdeb)='" . date('m') . "' and year(dtdeb)='" . date('Y') . "'"));
+                                            $gain_month = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and month(dtdeb)='" . date('m') . "' and year(dtdeb)='" . date('Y') . "' "));
+                                            $gain_year = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and year(dtdeb)='" . date('Y') . "' "));
+                                            ?>
+                                            <div class="col-md-12">Gain journalier : <?php echo $gain_jour['somme'] . " €"; ?></div>
+                                           
+                                            <div class="col-md-12">Gain du mois : <?php echo $gain_month['somme'] . " €"; ?></div>
+                                            <div class="col-md-12">Gain annuel : <?php echo $gain_year['somme'] . " €"; ?></div>
+                                            <?php
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +210,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                 var heure = document.getElementById("heure").value;
                 var prix = document.getElementById("prix").value;
                 $.ajax({
-                    url: 'notifchauffeur.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&date=' + date + '&heure=' + heure + '&id=' + id+ '&prix=' + prix,
+                    url: 'notifchauffeur.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&date=' + date + '&heure=' + heure + '&id=' + id + '&prix=' + prix,
                     success: function (data) {
                         var t = eval(data);
 

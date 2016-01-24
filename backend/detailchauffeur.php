@@ -3,13 +3,13 @@ include("../config.php");
 include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
-$client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,myvtc_users.tel,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.prix from myvtc_users, reservation_attente where reservation_attente.id_user = myvtc_users.id and reservation_attente.id=" . $_GET['id']));
+$client = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur=" . $_GET['id']));
 ?>
 <!doctype html>
 <html class="no-js">
     <head>
         <meta charset="UTF-8">
-        <title>Détail Commande</title>
+        <title>Détail Chauffeur</title>
 
         <!--IE Compatibility modes-->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,7 +73,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                     </div><!-- /.search-bar -->
                     <div class="main-bar">
                         <h3>
-                            <i class="fa fa-money"></i>&nbsp; Commande</h3>
+                            <i class="fa fa-user"></i>&nbsp; Chauffeurs</h3>
                     </div><!-- /.main-bar -->
                 </header><!-- /.head -->
             </div><!-- /#top -->
@@ -100,7 +100,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                         <div class="icons">
                                             <i class="fa fa-edit"></i>
                                         </div>
-                                        <h5>Détail Commande</h5>
+                                        <h5>Détail Chauffeur</h5>
 
                                         <!-- .toolbar -->
                                         <div class="toolbar">
@@ -115,40 +115,60 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                     </header>
                                     <div id="div-1" class="body">
 
-                                        <table border="1" style="width: 100%">
-                                            <tr>
-                                                <td>Départ</td>
-                                                <td><?php  echo $client['depart']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Arrivée</td>
-                                                <td><?php  echo $client['arrivee']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Chauffeur</td>
-                                                <td><?php  echo $client['chauffeur']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date</td>
-                                                <td><?php  echo $client['dtdeb']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Heure</td>
-                                                <td><?php  echo $client['heure']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Prix Total</td>
-                                                <td><?php  echo $client['prix']; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Part Société</td>
-                                                <td><?php  echo $p= ($client['prix']*20)/100; ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Part Chauffeur</td>
-                                                <td><?php  echo $p= ($client['prix']*80)/100; ?></td>
-                                            </tr>
-                                        </table>
+                                        <form class="form-horizontal" method="post" action="">
+
+                                            <div class="form-group center">
+
+                                                <div class="col-lg-8">
+                                                    <button type="button" class="btn btn-primary" onclick="modifchauffeur(<?php echo $_GET['id']; ?>)">Modifier</button>
+                                                </div>
+                                            </div><!-- /.form-group -->
+
+
+
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Prénom</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="prenom" placeholder="Prénom" value="<?php echo $client['prenom']; ?>" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Nom</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="nom" placeholder="Nom" value="<?php echo $client['nom']; ?>" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Email</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="email" name="email" placeholder="Email" value="<?php echo $client['email']; ?>" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Adresse</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="adresse" placeholder="Adresse" value="<?php echo $client['adresse']; ?>" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Téléphone</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="tel" placeholder="Téléphone" value="<?php echo $client['tel']; ?>" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Vihécule</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="typevehicule" placeholder="Vihécule" value="<?php echo $client['typevehicule']; ?>" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+
+
+
+
+
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +184,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
 
         </div><!-- /#wrap -->
         <footer class="Footer bg-dark dker">
-            <p>2016 &copy; ReserverUnCab.com</p>
+            <p>2014 &copy; Metis Bootstrap Admin Template</p>
         </footer><!-- /#footer -->
 
         <!--jQuery -->
@@ -204,23 +224,20 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
         </script>
 
         <script>
-            function notifchauffeur(id) {
+            function modifchauffeur(id) {
 
-                var chauffeur = document.getElementById("chauffeur").value;
                 var prenom = document.getElementById("prenom").value;
                 var nom = document.getElementById("nom").value;
+                var adresse = document.getElementById("adresse").value;
+                var typevehicule = document.getElementById("typevehicule").value;
+                var email = document.getElementById("email").value;
                 var tel = document.getElementById("tel").value;
-                var depart = document.getElementById("depart").value;
-                var arrivee = document.getElementById("arrivee").value;
-                var date = document.getElementById("date11").value;
-                var heure = document.getElementById("heure").value;
-                var prix = document.getElementById("prix").value;
                 $.ajax({
-                    url: 'notifchauffeur.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&date=' + date + '&heure=' + heure + '&id=' + id+ '&prix=' + prix,
+                    url: 'modifchauffeur.php?prenom=' + prenom + '&nom=' + nom + '&typevehicule=' + typevehicule + '&email=' + email + '&tel=' + tel + '&id=' + id+ '&adresse=' + adresse,
                     success: function (data) {
                         var t = eval(data);
 
-                        alert("Chauffeur Notifié !");
+                        alert("Infos changé !");
                     }
                 });
             }
