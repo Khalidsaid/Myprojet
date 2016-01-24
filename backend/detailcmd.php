@@ -4,6 +4,7 @@ include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
 $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,myvtc_users.tel,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.prix from myvtc_users, reservation_attente where reservation_attente.id_user = myvtc_users.id and reservation_attente.id=" . $_GET['id']));
+$pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id=1"));
 ?>
 <!doctype html>
 <html class="no-js">
@@ -142,11 +143,11 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                             </tr>
                                             <tr>
                                                 <td>Part Société</td>
-                                                <td><?php  echo $p= ($client['prix']*20)/100; ?></td>
+                                                <td><?php  echo $p= ($client['prix']*$pourcentage['part_societe'])/100; ?></td>
                                             </tr>
                                             <tr>
                                                 <td>Part Chauffeur</td>
-                                                <td><?php  echo $p= ($client['prix']*80)/100; ?></td>
+                                                <td><?php  echo $p= ($client['prix']*$pourcentage['part_chauffeur'])/100; ?></td>
                                             </tr>
                                         </table>
                                     </div>

@@ -10,5 +10,6 @@
     <li><a href="commande.php"><i class="fa fa-file"></i><span class="link-title"> Commandes</span></a></li>
     <li><a href="contact.php"><i class="fa fa-file"></i><span class="link-title"> Contact</span></a></li>
     <li><a href="gain.php"><i class="fa fa-file"></i><span class="link-title"> Gain</span></a></li>
+    <li><a href="pourcentage.php"><i class="fa fa-file"></i><span class="link-title"> Pourcentage</span></a></li>
     <li><a href="deconnect.php"><i class="fa fa-sign-out"></i><span class="link-title"> Déconnexion</span></a></li> 
 </ul>
