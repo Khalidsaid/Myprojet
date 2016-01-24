@@ -35,6 +35,7 @@ $menu=1;
             //En attendant le webservice, le prix est statique
 
             var price = "undefined";
+			var avanceoufutur = 0;
 
             function onload() {
                 getprix();
@@ -51,38 +52,25 @@ $menu=1;
             }
 
             function checkDate() {
+			
+				
 
                 var now = new Date();
 
                 var annee = now.getFullYear();
                 var mois = ('0' + now.getMonth() + 1).slice(-2);
                 var jour = ('0' + now.getDate()).slice(-2);
-                var heure = ('0' + now.getHours()).slice(-2);
-                var minute = ('0' + now.getMinutes()).slice(-2);
-                var seconde = ('0' + now.getSeconds()).slice(-2);
-
 
                 var EnteredDate = document.getElementById("datedep").value; //for javascript
-
                 var EnteredDate = $("#datedep").val(); // For JQuery
 
                 var month = EnteredDate.substring(0, 2);
                 var date = EnteredDate.substring(3, 5);
                 var year = EnteredDate.substring(6, 10);
+		
 
-
-                var myDate = new Date(month - 1, date, year);
-
-
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth() + 1; //January is 0!
-                var yyyy = today.getFullYear();
-
-
-
-
-                if (dd <= date || year < yyyy || month < mm)
+				//Test date courante et date séléctionné
+                if (( date >= jour && year >= annee && month >= mois) || ( year >= annee && month > mois))
                 {
 
                 } else
@@ -95,50 +83,34 @@ $menu=1;
 
             }
 			
-			 function checkDateToday() {
+			 function checkAdvanceorAsap() {
 
+              //Heure courante.
+         
                 var now = new Date();
 
                 var annee = now.getFullYear();
                 var mois = ('0' + now.getMonth() + 1).slice(-2);
                 var jour = ('0' + now.getDate()).slice(-2);
-                var heure = ('0' + now.getHours()).slice(-2);
-                var minute = ('0' + now.getMinutes()).slice(-2);
-                var seconde = ('0' + now.getSeconds()).slice(-2);
-
 
                 var EnteredDate = document.getElementById("datedep").value; //for javascript
-
                 var EnteredDate = $("#datedep").val(); // For JQuery
 
                 var month = EnteredDate.substring(0, 2);
                 var date = EnteredDate.substring(3, 5);
                 var year = EnteredDate.substring(6, 10);
+		
 
-
-                var myDate = new Date(month - 1, date, year);
-
-
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth() + 1; //January is 0!
-                var yyyy = today.getFullYear();
-
-
-
-
-                if (dd <= date || year < yyyy || month < mm)
+				//Test date courante et date séléctionné
+                if ( date == jour && year == annee && month == mois)
                 {
-					if((dd == date || year == yyyy || month == mm))
-					{
-						return true;
-					}
-
+				   window.avanceoufutur = 15;
+				   return true;
                 } else
                 {
-                    return false;
+                   window.avanceoufutur = 8;
+				   return false;
                 }
-
 
             }
 
@@ -185,6 +157,7 @@ $menu=1;
                 if ((heurecourante < heureselection && mois >= month && year >= annee && jour >= date) || (heurecourante > heureselection && mois >= month && year >= annee && jour < date) )
                 {
 					 return false;
+					 
                 }
                 else 
                 {
@@ -558,7 +531,10 @@ $menu=1;
 				var mavar3= checkParis(adr_arr);
 				var mavar4= checkParis(adr_dep);
 				var mavar5= checkGare(adr_arr);
-				//alert(mavar);
+				
+				//Vérifier si la réservation est le jour même
+				var todayoradvance = checkAdvanceorAsap();
+				alert(todayoradvance);
 				
 				if((mavar == true && mavar2 == true && mavar3==true) || (mavar4 == true && mavar5 == true && mavar3 == true))
 				{
@@ -631,19 +607,16 @@ $menu=1;
                                         prix = Math.round(parseInt(dist / 1000) * window.price);
                                     }
 
-                                  if (prix < 8)
+                                  if ((prix < 15 && todayoradvance == true) || (prix < 8 && todayoradvance == false))
                                     {
-                                        document.getElementById('more_passengers').innerHTML = '<b style="color : red;">Le minimum pour une course est de 8€, <a href="index.php">cliquez ici pour reinitialiser</a><b>';
-                                        document.getElementById('more_passengers').style.display = "block";
-                                        document.getElementById('mybuton').style.display = "none";
-                                        document.getElementById('mybuton2').style.display = "none";
-										// Hide price and booking infos
-										document.getElementById('distance').style.display = "none";
-										document.getElementById('duree').style.display = "none";
-										document.getElementById('prix').style.display = "none";
-                                        //document.getElementById('mybuton').setAttribute('type', 'reset');
+										window.prixtotal = window.avanceoufutur;
+										prix = window.prixtotal;
+										document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
+                                        document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
+                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
                                     } else
                                     {
+										
                                         document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
