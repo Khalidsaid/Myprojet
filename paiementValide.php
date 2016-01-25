@@ -1,28 +1,124 @@
 <?php
 include("config.php");
+require_once 'autoload.inc.php';
+require 'phpmailer/PHPMailerAutoload.php';
+
+
 
 $reference = $_SESSION['reference'];
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
-$ll=mysql_query("select reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.codecommande,reservation_attente.prix from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  myvtc_users.id=" .$user['id']. " order by reservation_attente.id desc limit 1")or die(mysql_error());
+$ll = mysql_query("select reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.codecommande,reservation_attente.prix from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  myvtc_users.id=" . $user['id'] . " order by reservation_attente.id desc limit 1")or die(mysql_error());
 $commande = mysql_fetch_array($ll);
 mysql_query("update reservation_attente set etat=1 where codecommande='" . $commande['codecommande'] . "'")or die(mysql_error());
 
-$headers = 'From: contact@reserveruncab.com' . "\r\n" .
-        'Reply-To: contact@reserveruncab.com' . "\r\n" .
-        'X-Mailer: PHP/' . phpversion();
+// reference the Dompdf namespace
+use Dompdf\Dompdf;
 
-$message = "Bonjour " . $user["prenom"] . ",
+// instantiate and use the dompdf class
+$dompdf = new Dompdf();
+$chaine = utf8_encode('<table border="0" style="width:100%">
+            <tr>
+                <td colspan="2" style="text-align: center"><img src="http://www.reserveruncab.com/images/logo.png" alt="" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center"><h2>Facture N°</h2></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: left"><br><br><br><br>Bonjour XXX,<br><br>Ci-dessous, vous trouvez le détail de votre commande : <br><br><br></td>
+            </tr>
+             <tr>
+                 <td colspan="2" >
+                     <table border="1" style="width:600px">
+                         <tr>
+                             <td style="height:25px; width:200px">Départ</td>
+                             <td> Paris</td>
+                         </tr>
+                         <tr style="height:35px">
+                             <td style="height:25px">Arrivé</td>
+                             <td> Paris</td>
+                         </tr>
+                         <tr style="height:35px">
+                             <td style="height:25px">Date</td>
+                             <td> Paris</td>
+                         </tr>
+                         <tr style="height:35px">
+                             <td style="height:25px">Heure</td>
+                             <td> Paris</td>
+                         </tr>
+                         <tr style="height:35px">
+                             <td style="height:25px">Prix</td>
+                             <td> Paris</td>
+                         </tr>
+                     </table>
+                 </td>
+               
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; padding-top:200px">L\'équipe ReserverUnCab.com</td>
+            </tr>
+        </table>');
+$dompdf->loadHtml($chaine, 'UTF-8');
+
+
+// (Optional) Setup the paper size and orientation
+$dompdf->setPaper('A4', 'paysage');
+
+// Render the HTML as PDF
+$dompdf->render();
+
+// Get the generated PDF file contents
+//$pdf = $dompdf->output();
+ file_put_contents('Brochure.pdf', $dompdf->output());
+
+// Output the generated PDF to Browser
+$dompdf->stream();
+
+
+
+
+
+
+
+$mail = new PHPMailer;
+
+//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+$mail->isSMTP();                                      // Set mailer to use SMTP
+$mail->Host = 'SSL0.OVH.NET';  // Specify main and backup SMTP servers
+$mail->SMTPAuth = true;                               // Enable SMTP authentication
+$mail->Username = 'contact@reserveruncab.com';                 // SMTP username
+$mail->Password = 'secret';                           // SMTP password
+$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+$mail->Port = 465;                                    // TCP port to connect to
+
+$mail->setFrom('contact@reserveruncab.com', 'ReserverUnCab');
+$mail->addAddress($_SESSION['myvtclogin'], $user["prenom"]);     // Add a recipient
+
+
+$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+
+$mail->isHTML(true);                                  // Set email format to HTML
+
+$mail->Subject = 'Validation de paiement ReserverUnCab.com';
+$mail->Body = "Bonjour " . $user["prenom"] . ",
 
 Fécilitation ! Votre paiement sur le site ReserverUnCab.com a été effectué avec succès.
 
 Voici le détail de votre commande :\n
-Départ : ".$commande['depart']."\n\n
-Arrivée : ".$commande['arrivee']."\n\n
-Prix : ".$commande['prix']."\n\n
-Date : ".$commande['dtdeb']."\n\n
+Départ : " . $commande['depart'] . "\n\n
+Arrivée : " . $commande['arrivee'] . "\n\n
+Prix : " . $commande['prix'] . "\n\n
+Date : " . $commande['dtdeb'] . "\n\n
 
 L'équipe ReserverUnCab.com.";
-mail($_SESSION['myvtclogin'], "Validation de paiement ReserverUnCab.com", $message, $headers);
+$mail->AltBody = '';
+
+if (!$mail->send()) {
+    echo 'Message could not be sent.';
+    echo 'Mailer Error: ' . $mail->ErrorInfo;
+} else {
+    echo 'Message has been sent';
+}
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -66,9 +162,9 @@ mail($_SESSION['myvtclogin'], "Validation de paiement ReserverUnCab.com", $messa
                     <h3><img src="images/logo.png"/></h3>
 
                     <!-- Nav -->
-                    <?php include("module/menu.php"); ?>
+<?php include("module/menu.php"); ?>
 
-                    <?php include("module/connexion.php"); ?>
+<?php include("module/connexion.php"); ?>
                     <!-- Banner -->
                     <hr>
                     <div class="container">
@@ -81,7 +177,7 @@ mail($_SESSION['myvtclogin'], "Validation de paiement ReserverUnCab.com", $messa
                                         <div class="col-xs-12 col-sm-11 col-sm-offset-1">
 
                                             <blockquote style="text-align: center"><h3>Paiement validé</h3></blockquote>
-                                            
+
                                             <div class="col-sm-12">
 
                                                 <p>Merci pour votre confiance.</p>
@@ -112,7 +208,7 @@ mail($_SESSION['myvtclogin'], "Validation de paiement ReserverUnCab.com", $messa
 
 
             <!-- Footer -->
-            <?php include("module/footer.php"); ?>
+<?php include("module/footer.php"); ?>
 
         </div>
 
@@ -127,7 +223,7 @@ mail($_SESSION['myvtclogin'], "Validation de paiement ReserverUnCab.com", $messa
         <script src="css/moment-with-locales.js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <script src="css/bootstrap-datetimepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-        
+
     </body>
 
 </html>
