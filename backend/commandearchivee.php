@@ -94,7 +94,7 @@ mysql_query("update reservation_attente set archive=1 where reservation_attente.
                                         <h5>Commande archivees</h5>
                                     </header>
                                     <div id="collapse4" class="body">
-                                        <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
+                                        <table id="dataTable" class="table table-bordered table-responsive table-condensed table-hover table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Nom</th>
@@ -109,7 +109,7 @@ mysql_query("update reservation_attente set archive=1 where reservation_attente.
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,reservation_attente.arrivee,reservation_attente.chauffeur,reservation_attente.id,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.etat=1 and reservation_attente.dtdeb<='" . date("Y-m-d") . "' and archive=1");
+                                                $sql = mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,reservation_attente.arrivee,reservation_attente.chauffeur,reservation_attente.id,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb, reservation_attente.heure, reservation_attente.prix from myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.etat=1 and reservation_attente.dtdeb<='" . date("Y-m-d") . "' and archive=1");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $data['chauffeur']));
                                                     $nom_complet = $nom_chauffeur['prenom'] . " " . $nom_chauffeur['nom'];
@@ -176,9 +176,7 @@ mysql_query("update reservation_attente set archive=1 where reservation_attente.
                 Metis.MetisTable();
                 Metis.metisSortable();
             });
-			$('#myTable').DataTable( {
-				responsive: true
-			} );
+	
         </script>
         <script src="assets/js/style-switcher.min.js"></script>
        

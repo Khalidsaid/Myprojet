@@ -3,8 +3,9 @@ include("../config.php");
 include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
-$client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,myvtc_users.tel,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.prix from myvtc_users, reservation_attente where reservation_attente.id_user = myvtc_users.id and reservation_attente.id=" . $_GET['id']));
+$client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.prenom, chauffeur.nom, chauffeur.prenom as chauff, chauffeur.nom as name, reservation_attente.heure,reservation_attente.depart,myvtc_users.tel,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.prix from chauffeur, myvtc_users, reservation_attente where  reservation_attente.id_user = myvtc_users.id and chauffeur.id_chauffeur=reservation_attente.chauffeur and reservation_attente.id=" . $_GET['id']));
 $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id=1"));
+$nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $data['chauffeur']));
 ?>
 <!doctype html>
 <html class="no-js">
@@ -127,7 +128,7 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                             </tr>
                                             <tr>
                                                 <td>Chauffeur</td>
-                                                <td><?php  echo $client['chauffeur']; ?></td>
+                                                <td><?php  echo $client['chauff']; echo " ";  echo $client['name'];?></td>
                                             </tr>
                                             <tr>
                                                 <td>Date</td>
