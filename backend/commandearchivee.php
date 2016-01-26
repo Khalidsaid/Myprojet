@@ -9,7 +9,7 @@ mysql_query("update reservation_attente set archive=1 where reservation_attente.
 <html class="no-js">
     <head>
         <meta charset="UTF-8">
-        <title>Commandes validées</title>
+        <title>Commandes validees</title>
 
         <!--IE Compatibility modes-->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -64,7 +64,7 @@ mysql_query("update reservation_attente set archive=1 where reservation_attente.
                     </div><!-- /.search-bar -->
                     <div class="main-bar">
                         <h3>
-                            <i class="fa fa-user"></i>&nbsp; Commande</h3>
+                            <i class="fa fa-user"></i>&nbsp; Commande archivees</h3>
                     </div><!-- /.main-bar -->
                 </header><!-- /.head -->
             </div><!-- /#top -->
@@ -91,7 +91,7 @@ mysql_query("update reservation_attente set archive=1 where reservation_attente.
                                         <div class="icons">
                                             <i class="fa fa-user"></i>
                                         </div>
-                                        <h5>Commande</h5>
+                                        <h5>Commande archivees</h5>
                                     </header>
                                     <div id="collapse4" class="body">
                                         <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
@@ -99,17 +99,17 @@ mysql_query("update reservation_attente set archive=1 where reservation_attente.
                                                 <tr>
                                                     <th>Nom</th>
                                                     <th>Prenom</th>
-                                                    <!--<th>Depart</th>
-                                                    <th>Arrivee</th>!-->
+                                                    <th>Depart</th>
+                                                    <th>Arrivee</th>
                                                     <th>Date</th>
                                                     <th>Total</th>
                                                     <th>Chauffeur</th>
-                                                    <th>Action</th>
+                                                 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,reservation_attente.arrivee,reservation_attente.chauffeur,reservation_attente.id,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.etat=1 and reservation_attente.dtdeb>='" . date("Y-m-d") . "' and archive=0");
+                                                $sql = mysql_query("select myvtc_users.nom,myvtc_users.prenom,reservation_attente.depart,reservation_attente.arrivee,reservation_attente.chauffeur,reservation_attente.id,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.etat=1 and reservation_attente.dtdeb<='" . date("Y-m-d") . "' and archive=1");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $data['chauffeur']));
                                                     $nom_complet = $nom_chauffeur['prenom'] . " " . $nom_chauffeur['nom'];
@@ -118,16 +118,12 @@ mysql_query("update reservation_attente set archive=1 where reservation_attente.
 
                                                         <td><?php echo $data['nom']; ?></td>
                                                         <td><?php echo $data['prenom']; ?></td>
-                                                        <!--<td>//echo $data['depart'];</td>
-                                                        <td>//echo $data['arrivee']; </td>!-->
+                                                        <td><?php echo $data['depart'];?></td>
+                                                        <td><?php echo $data['arrivee']; ?></td>
                                                         <td><?php echo $data['dtdeb']; ?></td>
-                                                        <td><?php echo $data['prix']; ?>€</td>
+                                                        <td><?php echo $data['prix']; ?> euros</td>
                                                         <td><?php echo $nom_complet; ?></td>
-                                                        <td>
-                                                            <a class="btn btn-success btn-sm" href="detailcmd.php?id=<?php echo $data['id'] ?>">Détail</a>
-                                                            <a class="btn btn-success btn-sm" href="notifier.php?id=<?php echo $data['id'] ?>">Ajout chauffeur</a>
-                                                            <a class="btn btn-success btn-sm" onclick="archive(<?php echo$data['id']; ?>)">Archiver</a>
-                                                        </td>
+                                                     
                                                     </tr>
                                                     <?php
                                                 }
@@ -180,22 +176,10 @@ mysql_query("update reservation_attente set archive=1 where reservation_attente.
                 Metis.MetisTable();
                 Metis.metisSortable();
             });
+			$('#myTable').DataTable( {
+				responsive: true
+			} );
         </script>
         <script src="assets/js/style-switcher.min.js"></script>
-        <script>
-            function archive(id) {
-
-
-
-                $.ajax({
-                    url: 'archiverCmd.php?id=' + id,
-                    success: function (data) {
-                        var t = eval(data);
-
-                        alert("Commande Archivée !");
-                        location.reload();
-                    }
-                });
-            }
-        </script>
+       
     </body>
