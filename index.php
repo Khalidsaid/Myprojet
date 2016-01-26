@@ -518,7 +518,6 @@ $menu=1;
 				
 				//Vérifier si la réservation est le jour même
 				var todayoradvance = checkAdvanceorAsap();
-				alert(todayoradvance);
 				
 				if((mavar == true && mavar2 == true && mavar3==true) || (mavar4 == true && mavar5 == true && mavar3 == true))
 				{

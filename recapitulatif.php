@@ -137,7 +137,7 @@ if ($user['type_user'] == 'Professionnel') {
                             {
                                 codepromo = response[i].montant;
                                 var mareponse = getURIParameter("offre");
-                                if (mareponse == 49)
+                                if (mareponse == 39)
                                 {
                                     alert("Les codes promos ne sont pas valable sur les offres aéroports");
                                 }
@@ -322,7 +322,8 @@ if ($user['type_user'] == 'Professionnel') {
 
                 
 
-
+				// Prix fixe aéroports
+				
                 var a = checkOrly(adr_dep);
                 var b = checkOrly(adr_arr);
 				
@@ -348,9 +349,9 @@ if ($user['type_user'] == 'Professionnel') {
 				var mavar4= checkParis(adr_dep);
 				var mavar5= checkGare(adr_arr);
 				
-//Vérifier si la réservation est le jour même
+				//Vérifier si la réservation est le jour même
 				var todayoradvance = checkAdvanceorAsap();
-				
+				//alert(todayoradvance);
 				
 				if((mavar == true && mavar2 == true && mavar3==true) || (mavar4 == true && mavar5 == true && mavar3 == true))
 				{
@@ -425,7 +426,9 @@ if ($user['type_user'] == 'Professionnel') {
 
                                   if ((prix < 15 && todayoradvance == true) || (prix < 8 && todayoradvance == false))
                                     {
-										prix = (window.avanceoufutur - window.codepromo);
+										//window.prixtotal = window.avanceoufutur;
+										//prix = window.prixtotal;
+										prix = (window.prixtotal - window.codepromo);
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
 										document.getElementById('amount').value = window.avanceoufutur - window.codepromo;
@@ -434,9 +437,10 @@ if ($user['type_user'] == 'Professionnel') {
                                     } else
                                     {
 										
+                                       //	prix = (window.prixtotal - window.codepromo);
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
-                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
-										document.getElementById('amount').value = Math.round(parseInt(dist / 1000) * window.price - window.codepromo)
+                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
+										document.getElementById('amount').value = window.avanceoufutur - window.codepromo;
 										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
 										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
                                     }
