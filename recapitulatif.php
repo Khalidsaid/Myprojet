@@ -10,7 +10,7 @@ $arrivee = $_GET['arrivee'];
 $totalpers = $_GET['totalpers'];
 $totalbag = $_GET['totalbag'];
 $datedep_tab = explode("/", $_GET['datedep']);
-$datedep = $datedep_tab[1] . "-" . $datedep_tab[0] . "-" . $datedep_tab[2];
+$datedep = $datedep_tab[2] . "-" . $datedep_tab[0] . "-" . $datedep_tab[1];
 $heyres = $_GET['heyres'];
 $distance = $_GET['distance'];
 date_default_timezone_set('Europe/Paris');
@@ -434,6 +434,7 @@ if ($user['type_user'] == 'Professionnel') {
 										document.getElementById('amount').value = window.avanceoufutur - window.codepromo;
 										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
 										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                                                                document.getElementById('amounttxt').value = prix;
                                     } else
                                     {
 										
@@ -443,6 +444,7 @@ if ($user['type_user'] == 'Professionnel') {
 										document.getElementById('amount').value = window.avanceoufutur - window.codepromo;
 										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
 										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+										document.getElementById('amounttxt').value = prix;
                                     }
                                     window.prixtotal = 0;
 

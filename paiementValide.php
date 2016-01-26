@@ -7,7 +7,7 @@ require 'phpmailer/PHPMailerAutoload.php';
 
 $reference = $_SESSION['reference'];
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
-$ll = mysql_query("select reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.codecommande,reservation_attente.prix from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  myvtc_users.id=" . $user['id'] . " order by reservation_attente.id desc limit 1")or die(mysql_error());
+$ll = mysql_query("select reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.codecommande,reservation_attente.prix,reservation_attente.dtdeb,reservation_attente.heure from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  myvtc_users.id=" . $user['id'] . " order by reservation_attente.id desc limit 1")or die(mysql_error());
 $commande = mysql_fetch_array($ll);
 mysql_query("update reservation_attente set etat=1 where codecommande='" . $commande['codecommande'] . "'")or die(mysql_error());
 
@@ -21,40 +21,40 @@ $chaine = utf8_encode('<table border="0" style="width:100%">
                 <td colspan="2" style="text-align: center"><img src="http://www.reserveruncab.com/images/logo.png" alt="" /></td>
             </tr>
             <tr>
-                <td colspan="2" style="text-align: center"><h2>Facture N°</h2></td>
+                <td colspan="2" style="text-align: center"><h2>Facture N&deg; ' . $commande['codecommande'] . '</h2></td>
             </tr>
             <tr>
-                <td colspan="2" style="text-align: left"><br><br><br><br>Bonjour XXX,<br><br>Ci-dessous, vous trouvez le détail de votre commande : <br><br><br></td>
+                <td colspan="2" style="text-align: left"><br><br><br><br>Bonjour ' . $user["prenom"] . ',<br><br>Ci-dessous, vous trouvez le d&eacute;tail de votre commande : <br><br><br></td>
             </tr>
              <tr>
                  <td colspan="2" >
                      <table border="1" style="width:600px">
                          <tr>
-                             <td style="height:25px; width:200px">Départ</td>
-                             <td> Paris</td>
+                             <td style="height:25px; width:200px">D&eacute;part</td>
+                             <td> ' . $commande['depart'] . '</td>
                          </tr>
                          <tr style="height:35px">
-                             <td style="height:25px">Arrivé</td>
-                             <td> Paris</td>
+                             <td style="height:25px">Arriv&eacute;</td>
+                             <td> ' . $commande['arrivee'] . '</td>
                          </tr>
                          <tr style="height:35px">
                              <td style="height:25px">Date</td>
-                             <td> Paris</td>
+                             <td> ' . $commande['dtdeb'] . '</td>
                          </tr>
                          <tr style="height:35px">
                              <td style="height:25px">Heure</td>
-                             <td> Paris</td>
+                             <td> ' . $commande['heure'] . '</td>
                          </tr>
                          <tr style="height:35px">
                              <td style="height:25px">Prix</td>
-                             <td> Paris</td>
+                             <td> ' . $commande['prix'] . ' €</td>
                          </tr>
                      </table>
                  </td>
                
             </tr>
             <tr>
-                <td colspan="2" style="text-align: center; padding-top:200px">L\'équipe ReserverUnCab.com</td>
+                <td colspan="2" style="text-align: center; padding-top:200px">L\'&eacute;quipe ReserverUnCab.com</td>
             </tr>
         </table>');
 $dompdf->loadHtml($chaine, 'UTF-8');
@@ -68,39 +68,45 @@ $dompdf->render();
 
 // Get the generated PDF file contents
 //$pdf = $dompdf->output();
- file_put_contents('Brochure.pdf', $dompdf->output());
+file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $dompdf->output());
 
-// Output the generated PDF to Browser
-$dompdf->stream();
+function mail_attachment($filename, $path, $mailto, $from_mail, $from_name, $replyto, $subject, $message) {
+    $file = $path . $filename;
+    $file_size = filesize($file);
+    $handle = fopen($file, "r");
+    $content = fread($handle, $file_size);
+    fclose($handle);
+    $content = chunk_split(base64_encode($content));
+    $uid = md5(uniqid(time()));
+    $header = "From: " . $from_name . " <" . $from_mail . ">\r\n";
+    $header .= "Reply-To: " . $replyto . "\r\n";
+    $header .= "MIME-Version: 1.0\r\n";
+    $header .= "Content-Type: multipart/mixed; boundary=\"" . $uid . "\"\r\n\r\n";
+    $header .= "This is a multi-part message in MIME format.\r\n";
+    $header .= "--" . $uid . "\r\n";
+    $header .= "Content-type:text/plain; charset=iso-8859-1\r\n";
+    $header .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+    $header .= $message . "\r\n\r\n";
+    $header .= "--" . $uid . "\r\n";
+    $header .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"\r\n"; // use different content types here
+    $header .= "Content-Transfer-Encoding: base64\r\n";
+    $header .= "Content-Disposition: attachment; filename=\"" . $filename . "\"\r\n\r\n";
+    $header .= $content . "\r\n\r\n";
+    $header .= "--" . $uid . "--";
+    if (mail($mailto, $subject, "", $header)) {
+        echo "mail send ... OK"; // or use booleans here
+    } else {
+        echo "mail send ... ERROR!";
+    }
+}
 
-
-
-
-
-
-
-$mail = new PHPMailer;
-
-//$mail->SMTPDebug = 3;                               // Enable verbose debug output
-
-$mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'SSL0.OVH.NET';  // Specify main and backup SMTP servers
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'contact@reserveruncab.com';                 // SMTP username
-$mail->Password = 'secret';                           // SMTP password
-$mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-$mail->Port = 465;                                    // TCP port to connect to
-
-$mail->setFrom('contact@reserveruncab.com', 'ReserverUnCab');
-$mail->addAddress($_SESSION['myvtclogin'], $user["prenom"]);     // Add a recipient
-
-
-$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-
-$mail->isHTML(true);                                  // Set email format to HTML
-
-$mail->Subject = 'Validation de paiement ReserverUnCab.com';
-$mail->Body = "Bonjour " . $user["prenom"] . ",
+$my_file = "Facture_" . $commande['codecommande'] . ".pdf";
+$my_path = "/home/reserverrz/www/";
+$my_name = "ReserverUnCab";
+$my_mail = "contact@reserveruncab.com";
+$my_replyto = "contact@reserveruncab.com";
+$my_subject = "Validation de paiement ReserverUnCab.com‏";
+$my_message = "Bonjour " . $user["prenom"] . ",
 
 Fécilitation ! Votre paiement sur le site ReserverUnCab.com a été effectué avec succès.
 
@@ -111,14 +117,7 @@ Prix : " . $commande['prix'] . "\n\n
 Date : " . $commande['dtdeb'] . "\n\n
 
 L'équipe ReserverUnCab.com.";
-$mail->AltBody = '';
-
-if (!$mail->send()) {
-    echo 'Message could not be sent.';
-    echo 'Mailer Error: ' . $mail->ErrorInfo;
-} else {
-    echo 'Message has been sent';
-}
+mail_attachment($my_file, $my_path, $_SESSION['myvtclogin'], $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -162,9 +161,9 @@ if (!$mail->send()) {
                     <h3><img src="images/logo.png"/></h3>
 
                     <!-- Nav -->
-<?php include("module/menu.php"); ?>
+                    <?php include("module/menu.php"); ?>
 
-<?php include("module/connexion.php"); ?>
+                    <?php include("module/connexion.php"); ?>
                     <!-- Banner -->
                     <hr>
                     <div class="container">
@@ -208,7 +207,7 @@ if (!$mail->send()) {
 
 
             <!-- Footer -->
-<?php include("module/footer.php"); ?>
+            <?php include("module/footer.php"); ?>
 
         </div>
 
