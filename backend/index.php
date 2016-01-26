@@ -8,9 +8,9 @@ $client_pro=  mysql_query("select * from myvtc_users where type_user='Profession
 $nb_client_pro=  mysql_num_rows($client_pro);
 $client_part=  mysql_query("select * from myvtc_users where type_user='Particulier'");
 $nb_client_part=  mysql_num_rows($client_part);
-$commande=  mysql_query("select * from reservation");
+$commande=  mysql_query("select * from reservation_attente where date_add = curdate() AND archive = 0 AND etat = 1");
 $nb_commande=  mysql_num_rows($commande);
-$mess=  mysql_query("select * from contact");
+$mess=  mysql_query("select * from contact where etat=0");
 $nb_msg=  mysql_num_rows($mess);
 ?>
 
