@@ -1,7 +1,7 @@
 <?php
 include("config.php");
-require_once 'autoload.inc.php';
-require 'phpmailer/PHPMailerAutoload.php';
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+require 'phpmailer/class.phpmailer.php';
 
 
 
@@ -70,7 +70,44 @@ $dompdf->render();
 //$pdf = $dompdf->output();
 file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $dompdf->output());
 
-function mail_attachment($filename, $path, $mailto, $from_mail, $from_name, $replyto, $subject, $message) {
+
+$mail = new PHPMailer;
+
+$mail->IsSMTP();                                // Set mailer to use SMTP
+$mail->Host = 'SSL0.OVH.NET';                 // Specify main and backup server
+$mail->Port = 465;                                    // Set the SMTP port
+$mail->SMTPAuth = true;                               // Enable SMTP authentication
+$mail->Username = 'contact@reserveruncab.com';                // SMTP username
+$mail->Password = 'Balloo94';                  // SMTP password
+$mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl' also accepted
+
+$mail->From = 'contact@reserveruncab.com';
+$mail->FromName = 'ReserverUnCab';
+$mail->AddAddress($_SESSION['myvtclogin'], $user["prenom"]);  // Add a recipient
+
+$mail->IsHTML(true);                                  // Set email format to HTML
+
+$mail->Subject = 'Validation de paiement ReserverUnCab.com';
+$mail->Body    = "Bonjour " . $user["prenom"] . ",
+
+Fécilitation ! Votre paiement sur le site ReserverUnCab.com a été effectué avec succès.
+
+Voici le détail de votre commande :\n
+Départ : " . $commande['depart'] . "\n\n
+Arrivée : " . $commande['arrivee'] . "\n\n
+Prix : " . $commande['prix'] . "\n\n
+Date : " . $commande['dtdeb'] . "\n\n
+
+L'équipe ReserverUnCab.com.";
+$mail->AltBody = '';
+$mail->AddAttachment("Facture_" . $commande['codecommande'] . ".pdf");  
+if(!$mail->Send()) {
+   echo 'Message could not be sent.';
+   echo 'Mailer Error: ' . $mail->ErrorInfo;
+   exit;
+}
+
+/*function mail_attachment($filename, $path, $mailto, $from_mail, $from_name, $replyto, $subject, $message) {
     $file = $path . $filename;
     $file_size = filesize($file);
     $handle = fopen($file, "r");
@@ -101,7 +138,7 @@ function mail_attachment($filename, $path, $mailto, $from_mail, $from_name, $rep
 }
 
 $my_file = "Facture_" . $commande['codecommande'] . ".pdf";
-$my_path = "/home/reserverrz/www/";
+$my_path = "http://reserveruncab.com/";
 $my_name = "ReserverUnCab";
 $my_mail = "contact@reserveruncab.com";
 $my_replyto = "contact@reserveruncab.com";
@@ -117,7 +154,7 @@ Prix : " . $commande['prix'] . "\n\n
 Date : " . $commande['dtdeb'] . "\n\n
 
 L'équipe ReserverUnCab.com.";
-mail_attachment($my_file, $my_path, $_SESSION['myvtclogin'], $my_mail, $my_name, $my_replyto, $my_subject, $my_message);
+mail_attachment($my_file, $my_path, $_SESSION['myvtclogin'], $my_mail, $my_name, $my_replyto, $my_subject, $my_message);*/
 ?>
 <!DOCTYPE HTML>
 <!--
