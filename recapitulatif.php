@@ -78,6 +78,7 @@ if ($user['type_user'] == 'Professionnel') {
             var pricepro;
             var codepromo = 0;
 			var avanceoufutur = 0;
+			var prixtotal = 0;
 			
             function onload() {
                 calculDistance();
@@ -418,30 +419,50 @@ if ($user['type_user'] == 'Professionnel') {
                                     var dure = element.duration.text;
                                     if (window.prixtotal > 0)
                                     {
+										
                                         prix = window.prixtotal;
-                                    } else
-                                    {
+                                    }  
+									
+									if (window.prixtotal == 0 && window.pricepro > 0)
+									{
+										
+										prix = Math.round(parseInt(dist / 1000) * window.pricepro);
+                                    } else if ( window.prixtotal == 0 && window.pricepro == 0)
+									{
+										
                                         prix = Math.round(parseInt(dist / 1000) * window.price);
-                                    }
-
-                                  if ((prix < 15 && todayoradvance == true) || (prix < 8 && todayoradvance == false))
+									}
+									
+										
+                                  if ((prix < 15 && todayoradvance == true) )
                                     {
 										//window.prixtotal = window.avanceoufutur;
 										//prix = window.prixtotal;
-										prix = (window.prixtotal - window.codepromo);
+										prix = 15;
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
-										document.getElementById('amount').value = window.avanceoufutur - window.codepromo;
+										document.getElementById('amount').value = prix;
 										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
 										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
                                                                                 document.getElementById('amounttxt').value = prix;
-                                    } else
-                                    {
-										
-                                       //	prix = (window.prixtotal - window.codepromo);
+                                    } else if ((prix < 8 && todayoradvance == false))
+									{
+										prix = 8;
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
-										document.getElementById('amount').value = window.avanceoufutur - window.codepromo;
+										document.getElementById('amount').value = prix;
+										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+										document.getElementById('amounttxt').value = prix;
+                                    
+									} 
+									
+									if( prix > 15 )
+									{
+                                        prix = (prix - window.codepromo);
+                                        document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
+                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
+										document.getElementById('amount').value = prix - window.codepromo;
 										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
 										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
 										document.getElementById('amounttxt').value = prix;
