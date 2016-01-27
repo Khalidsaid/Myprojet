@@ -244,7 +244,7 @@ $menu=1;
                 var adr_dep = document.getElementById('depart').value;
                 var adr_arr = document.getElementById('arrivee').value;
                 var datedep = document.getElementById('datedep').value;
-                var distance = document.getElementById('distance').value;
+                var distance = document.getElementById('distance').innerHTML;
                 var heyres = document.getElementById('heyres').value + ":" + document.getElementById('minutes').value;
 
 
