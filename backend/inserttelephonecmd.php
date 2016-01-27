@@ -40,9 +40,8 @@ Heure : " . $heure . "\n
 mail($nom_chauffeur['email'], "Notification sur ReserverUnCab.com", $message, $headers);
 
 
-$sql = mysql_query("update reservation_attente set notif=1,chauffeur=" . $nom_chauffeur['id_chauffeur'] . ",part_societe='".$part_societe."',part_chauffeur='".$part_chauffeur."' where id=" . $id)or die(mysql_error());
 
-$sql = mysql_query("Insert into reservation_tel(notif, chauffeur, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, passager, valise, dtdeb, heure, distance) values('".$notif."', '".$chauffeur_id."', '".$part_societe."', '".$part_chauffeur."' , '".$depart."', '".$arrivee."', '".$prix."', '".$date_add."', '".$passager."','".$valise."', '".$dtdeb."', '".$heure."','".$distance."';"))or die(mysql_error());
+$sql = mysql_query("Insert into reservation_attente(notif, chauffeur, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, passager, valise, dtdeb, heure, distance) values('".$notif."', '".$chauffeur_id."', '".$part_societe."', '".$part_chauffeur."' , '".$depart."', '".$arrivee."', '".$prix."', '".$date_add."', '".$passager."','".$valise."', '".$dtdeb."', '".$heure."','".$distance."';"))or die(mysql_error());
 
 }
 $rs = "[";
