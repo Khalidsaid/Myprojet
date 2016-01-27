@@ -152,10 +152,21 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                 </div>
                                             </div><!-- /.form-group -->
 
-                                            <div class="form-group">
+                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Chauffeur</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="chauffeur" placeholder="Chauffeur"  class="form-control">
+
+                                                    <select class="form-control"name="chauffeur" id="chauffeur">
+                                                        <option></option>
+                                                        <?php
+                                                        $sql_chauffeur = mysql_query("select * from chauffeur");
+                                                        while ($data_chauffeur = mysql_fetch_array($sql_chauffeur)) {
+                                                            ?>
+                                                            <option value="<?php echo $data_chauffeur['id_chauffeur']; ?>"><?php echo $data_chauffeur['prenom'] . " " . $data_chauffeur['nom']; ?></option>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
