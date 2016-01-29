@@ -11,7 +11,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 <html class="no-js">
     <head>
         <meta charset="UTF-8">
-        <title>Détail Commande</title>
+        <title>Detail Commande</title>
 
         <!--IE Compatibility modes-->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -139,6 +139,29 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <input type="text" id="arrivee" placeholder="Prenom" value="<?php echo $client['prenom']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
+											 <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Client</label>
+                                                  <div class="col-lg-8">
+
+                                                    <select class="form-control"name="chauffeur" id="chauffeur">
+                                                        <option></option>
+                                                        <?php
+                                                        $sql_chauffeur = mysql_query("select * from myvtc_users");
+                                                        while ($data_chauffeur = mysql_fetch_array($sql_chauffeur)) {
+                                                            ?>
+                                                            <option value="<?php echo $data_chauffeur['tel']; ?>"><?php echo $data_chauffeur['prenom'] . " " . $data_chauffeur['nom']; ?></option>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div><!-- /.form-group -->
+											   <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">ou Mobile client</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="tel" placeholder="Tel" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Nom</label>
                                                 <div class="col-lg-8">
@@ -188,12 +211,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                 </div>
                                             </div><!-- /.form-group -->
 
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Mobile</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="tel" placeholder="Tel" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
+                                         
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Part chauffeur</label>
                                                 <div class="col-lg-8">
