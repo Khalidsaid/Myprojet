@@ -150,7 +150,7 @@ $menu=1;
 				//
 				
 		
-                if ((heurecourante < heureselection && mois >= month && year >= annee && jour >= date) || (heurecourante > heureselection && mois >= month && year >= annee && jour < date) )
+                if ((heurecourante < heureselection && mois >= month && year >= annee && jour >= date) || (heurecourante > heureselection && mois < month && year <= annee) ||(heurecourante > heureselection && mois >= month && year >= annee && jour < date) )
                 {
 					 return false;					 
                 }

@@ -249,7 +249,12 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <input type="text" id="siren" placeholder="SIREN" value="<?php echo $client['siren']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-                                       
+											 <div class="form-group center">
+
+                                                <div class="col-lg-8">
+                                                    <button type="button" class="btn btn-primary" onclick="addCommande()">Ajouter la commande</button>
+                                                </div>
+                                            </div><!-- /.form-group -->
 
 
 
