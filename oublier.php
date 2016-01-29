@@ -113,7 +113,7 @@ function genererMDP($longueur = 8) {
                                                         mysql_query("update myvtc_users set pwd='" . $pwd . "' where email='" . $email . "'");
                                                         $msg = "Bonjour,\n\nVous avez demandé de ré-initialiser votre mot de passe.\n\nVotre nouvelle mot de passe est : " . $new_pwd . "\n\nCordialement,\nReserverUnCab.com Team. ";
                                                         mail($email, "Re-initialisation de mot de passe ReserverUnCab.com", $msg, $headers);
-                                                        echo "<div style='clear: both; margin-bottom: 10px; color: rgb(68, 147, 186); font-style: italic;'>Un email vient d'être envoyer à votre boite de réception.</div>";
+                                                        echo "<div style='clear: both; margin-bottom: 10px; color: rgb(68, 147, 186); font-style: italic;'>Un email vient d'être envoyé sur votre boite de réception.</div>";
                                                     } else {
                                                         echo '<script>alert("Veuillez vérifier votre adresse mail ! ");</script>';
                                                     }
