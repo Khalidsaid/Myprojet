@@ -249,6 +249,70 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <input type="text" id="siren" placeholder="SIREN" value="<?php echo $client['siren']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
+							
+							
+									<div class="row-flex" id="select_vehicle">
+									  <div class="col" >
+										<div class="vehicle_selected" >
+										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id1" value="1" name="vehicle_type" checked="">
+										  <label for="vehicle_type_id1" style="border-style : ridge;">
+											<div class="row">
+											  <div class="col-xs-12">
+												<i></i>
+											  </div>
+											</div>
+											<div class="row">
+											  <div class="col-xs-6 nopadding-right info_vehicle">4 x <i class="fa fa-user"></i></div>
+											  <div class="col-xs-6 nopadding-left info_vehicle">2 x <i class="fa fa-suitcase"></i></div>
+											</div>
+											<div class="row">
+											  <div class="col-xs-12">
+												<p>Berline</p>
+											  </div>
+											</div>
+										  </label>
+									
+									 
+										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id2" value="2" name="vehicle_type">
+										  <label for="vehicle_type_id2" style="border-style : ridge;">
+											<div class="row">
+											  <div class="col-xs-12">
+												<i></i>
+											  </div>
+											</div>
+											<div class="row">
+											  <div class="col-xs-6 nopadding-right info_vehicle">4 x <i class="fa fa-user"></i></div>
+											  <div class="col-xs-6 nopadding-left info_vehicle">2 x <i class="fa fa-suitcase"></i></div>
+											</div>
+											<div class="row">
+											  <div class="col-xs-12">
+												<p>Berline luxe</p>
+											  </div>
+											</div>
+										  </label>
+										
+									
+										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id3" value="3" name="vehicle_type">
+										  <label for="vehicle_type_id3" style="border-style : ridge;">
+											<div class="row">
+											  <div class="col-xs-12">
+												<i></i>
+											  </div>
+											</div>
+											<div class="row">
+											  <div class="col-xs-6 nopadding-right info_vehicle">7 x <i class="fa fa-user"></i></div>
+											  <div class="col-xs-6 nopadding-left info_vehicle">7 x <i class="fa fa-suitcase"></i></div>
+											</div>
+											<div class="row">
+											  <div class="col-xs-12">
+												<p>Van</p>
+											  </div>
+											</div>
+										  </label>
+										</div>
+									  </div>
+									
+							  </div>
 											 <div class="form-group center">
 
                                                 <div class="col-lg-8">

@@ -674,6 +674,8 @@ if ($user['type_user'] == 'Professionnel') {
 							    ?>
                              
                             <hr style="border: 1px dashed ! important;">
+							
+
                             <div class="row">
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">Code Promo ?</div>
                                 <div class="col-md-3" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">
