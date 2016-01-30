@@ -64,7 +64,7 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                         $login = mysql_real_escape_string($_POST["email"]);
                         $pwd = mysql_real_escape_string($_POST["pwd"]);
                         $prenom = mysql_real_escape_string($_POST["prenom"]);
-                        $nom = mysql_real_escape_string($_POST["nom"]);
+                        $nom = mysql_real_escape_string($_POST["nom_user"]);
                         $adresse = mysql_real_escape_string($_POST["adresse"]);
                         $cp = mysql_real_escape_string($_POST["cp"]);
                         $ville = mysql_real_escape_string($_POST["ville"]);
@@ -77,8 +77,7 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                         $tva = mysql_real_escape_string($_POST["tva"]);
                         $societe = mysql_real_escape_string($_POST["societe"]);
                         $password = md5($pwd);
-
-                        mysql_query("update myvtc_users set nom='" . $nom . "',prenom='" . $prenom . "',adresse='" . $adresse . "',ville='" . $ville . "',cp='" . $tel . "',nom='" . $tel . "',pwd='" . $password . "',parrain='" . $parrain . "',type_user='" . $type_user . "',societe='" . $societe . "',fax='" . $fax . "',url='" . $url . "',siren='" . $siren . "',tva='" . $tva . "' where email='" . $_SESSION['myvtclogin'] . "'")or die(mysql_error());
+                        mysql_query("update myvtc_users set nom='" . $nom . "',prenom='" . $prenom . "',adresse='" . $adresse . "',ville='" . $ville . "',cp='" . $cp . "',tel='" . $tel . "',pwd='" . $password . "',parrain='" . $parrain . "',type_user='" . $type_user . "',societe='" . $societe . "',fax='" . $fax . "',url='" . $url . "',siren='" . $siren . "',tva='" . $tva . "' where email='" . $_SESSION['myvtclogin'] . "'")or die(mysql_error());
 
                        
                         echo '<script>alert("Modification effectuée avec succès !");</script>';
@@ -107,33 +106,33 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                                 
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Prénom</label>
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Prénom</label>
                                                             <input name="prenom" placeholder="Prénom" class="form-control" type="text" id="prenom" value="<?php echo $user['prenom']; ?>" required="" />
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Nom</label>
-                                                            <input name="nom" placeholder="Nom" class="form-control" value="<?php echo $user['nom']; ?>" type="text" id="nom" required="" />
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Nom</label>
+                                                            <input name="nom_user" placeholder="Nom" class="form-control" value="<?php echo $user['nom']; ?>" type="text" id="nom" required="" />
                                                         </div>
                                                     </div> 
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-12" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Adresse postale</label>
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Adresse postale</label>
                                                             <textarea name="adresse" placeholder="Adresse postale" class="form-control" type="text" id="adresse"><?php echo $user['adresse']; ?></textarea>
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Ville</label>
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Ville</label>
                                                             <input name="ville" placeholder="Ville" class="form-control" value="<?php echo $user['ville']; ?>" type="text" id="ville" />
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Code postal</label>
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Code postal</label>
                                                             <input name="cp" placeholder="Code postal" class="form-control" value="<?php echo $user['cp']; ?>" type="text" id="cp" />
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Téléphone</label>
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Téléphone</label>
                                                             <input name="tel" placeholder="Téléphone" value="<?php echo $user['tel']; ?>" class="form-control" type="text" id="tel" />                                                       
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Parrain</label>
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Parrain</label>
                                                             <input name="parrain" placeholder="Parrain" value="<?php echo $user['parrain']; ?>" class="form-control" type="text" id="tel" />                                                       
                                                         </div>
                                                     </div>
@@ -141,43 +140,43 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                                                         <div id="bloc_pro" <?php if ($user['type_user'] == "Particulier") echo "style=display:none"; ?>>
                                                             <div class="col-md-6" style="padding-top: 10px;">
 
-                                                                <label style="font-weight: bold;">Société</label>
+                                                                <label style="font-weight: bold; color: rgb(0, 0, 0);">Société</label>
                                                                 <input type="text" name="societe" class="form-control" placeholder="Société" value="<?php echo $user['societe']; ?>">
                                                             </div>
                                                             <div class="col-md-6" style="padding-top: 10px;">
-                                                                <label style="font-weight: bold;">Fax</label>
+                                                                <label style="font-weight: bold; color: rgb(0, 0, 0);">Fax</label>
                                                                 <input type="text" name="fax" class="form-control" placeholder="Fax" value="<?php echo $user['fax']; ?>">
                                                             </div>
 
                                                             <div class="col-md-6" style="padding-top: 10px;">
-                                                                <label style="font-weight: bold;">Site web</label>
+                                                                <label style="font-weight: bold; color: rgb(0, 0, 0);">Site web</label>
                                                                 <input type="text" name="url" class="form-control" placeholder="Site web" value="<?php echo $user['url']; ?>">
                                                             </div>
 
 
                                                             <div class="col-md-6" style="padding-top: 10px;">
-                                                                <label style="font-weight: bold;">SIREN</label>
+                                                                <label style="font-weight: bold; color: rgb(0, 0, 0);">SIREN</label>
                                                                 <input type="text" name="siren" class="form-control" placeholder="SIREN" value="<?php echo $user['siren']; ?>">
                                                             </div>
                                                             <div class="col-md-6" style="padding-top: 10px;">
-                                                                <label style="font-weight: bold;">Numéro TVA</label>
+                                                                <label style="font-weight: bold; color: rgb(0, 0, 0);">Numéro TVA</label>
                                                                 <input type="text" name="tva" class="form-control" placeholder="Numéro TVA" value="<?php echo $user['tva']; ?>">
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Email</label>
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Email</label>
                                                             <input name="email" placeholder="Email" value="<?php echo $user['email']; ?>" class="form-control" type="email" id="email" disabled=""/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group" style="text-align: left;">
                                                         <div class="col-md-6" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Mot de passe</label>
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Mot de passe</label>
                                                             <input name="pwd" placeholder="Mot de passe" class="form-control" type="password" id="pwd" required="" />
                                                         </div>
                                                         <div class="col-md-6" style="padding-top: 10px;">
-                                                            <label style="font-weight: bold;">Confirmer mot de passe</label>
+                                                            <label style="font-weight: bold; color: rgb(0, 0, 0);">Confirmer mot de passe</label>
                                                             <input name="pwd2" placeholder="Confirmer mot de passe" class="form-control" type="password" id="pwd1" required="" />
                                                         </div>
                                                     </div> 
