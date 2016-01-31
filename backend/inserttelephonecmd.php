@@ -21,18 +21,19 @@ $part_chauffeur = $_GET['part_chauffeur'];
 $client = $_GET['client'];
 $siren = $_GET['siren'];
 $societe = $_GET['societe'];
-$type_vehicule = $_GET['box'];
+$type_vehicule = $_GET['type_vehicule'];
 $paiement = $_GET['paiement'];
 
 
-//Ajout du client à la base si il n'a jamais commandé par tel
-if ($nom !="" or $tel !="" or $prenom!="")
-{
-	$new_client = mysql_fetch_array(mysql_query("insert into client_tel (nom, prenom, email, tel) values('".$nom."','".$prenom."','".$email."','".$tel."')");
-	$client = mysql_insert_id();
-	$nom ="";
-	$tel =""; 
-	$prenom="";
+//Ajout du client Ã  la base si il n'a jamais commandï¿½ par tel
+if ($nom != "" or $tel != "" or $prenom != "") {
+    
+    $new_client = mysql_fetch_array(mysql_query("insert into client_tel (nom, prenom, email, tel) values('" . $nom . "','" . $prenom . "','" . $email . "','" . $tel . "')"));
+
+    $client = mysql_insert_id();
+    $nom = "";
+    $tel = "";
+    $prenom = "";
 }
 
 $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $chauffeur));
@@ -41,27 +42,28 @@ $nom_complet = $nom_chauffeur['prenom'] . " " . $nom_chauffeur['nom'];
 $headers = 'From: info@reserveruncab.com' . "\r\n" .
         'Reply-To: info@reserveruncab.com' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
-$message = "Notification de réservation :\n
+$message = "Notification de rÃ©servation :\n
 
 
 Nom : " . $nom . "\n
-Prénom : " . $prenom . "\n
-Téléphone: " . $tel . "\n
-Départ : " . $depart . "\n
-Arrivée : " . $arrivee . "\n
+PrÃ©nom : " . $prenom . "\n
+TÃ©lÃ©phone: " . $tel . "\n
+DÃ©part : " . $depart . "\n
+ArrivÃ©e : " . $arrivee . "\n
 Prix : " . $prix . "\n
 Date : " . $date . "\n
 Heure : " . $heure . "\n
 ";
 mail($nom_chauffeur['email'], "Notification sur ReserverUnCab.com", $message, $headers);
 
-if ($client != "" or $client > 0)
-{
-$sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe, type_vehicule, etat, notif, archive, paiement) values('".$chauffeur."','".$tel."', '".$part_societe."', '".$part_chauffeur."' , '".$depart."', '".$arrivee."', '".$prix."','" . date('d-m-Y') . "', '".$dtdeb."', '".$heure."', '".$valise."', '".$passager."','".$client."','".$siren."','".$societe."','".$type_vehicule."', 0, 1, 0,'".$paiement."';")) or die(mysql_error());
-} else
-{
-$sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe, type_vehicule, etat, notif, archive, paiement) values('".$chauffeur."','".$tel."', '".$part_societe."', '".$part_chauffeur."' , '".$depart."', '".$arrivee."', '".$prix."','" . date('d-m-Y') . "', '".$dtdeb."', '".$heure."', '".$valise."', '".$passager."',0,'".$siren."','".$societe."','".$type_vehicule."', 0, 1, 0,'".$paiement."';"))or die(mysql_error());
-$sql2 = mysql_query("Insert into client_tel(nom, prenom, tel, email) values('".$nom."','".$prenom."','".$tel."','".$email."';"))or die(mysql_error());
+if ($client != "" or $client > 0) {
+    
+    $sql = mysql_query("INSERT INTO `reserverrzad`.`reservation_tel` ( `depart`, `arrivee`, `tel`, `prix`, `part_chauffeur`, `part_societe`, `dtdeb`, `date_add`, `heure`, `societe`, `siren`, `id_chauffeur`, `passager`, `valise`, `type_vehicule`, `client`, `etat`, `notif`, `archive`, `paiement`) VALUES ( '".$depart."', '".$arrivee."', '".$tel."', '".$prix."', '".$part_chauffeur."', '".$part_societe."', '".$dtdeb."', '". date('Y-m-d')."', '".$heure."', '".$societe."', '".$siren."', ".$chauffeur.", ".$passager.", ".$valise.", ".$type_vehicule.", '".$client."', 0, 1, 0, '".$paiement."');") or die(mysql_error());
+} else {
+    
+    $sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe, type_vehicule, etat, notif, archive, paiement) values('" . $chauffeur . "','" . $tel . "', '" . $part_societe . "', '" . $part_chauffeur . "' , '" . $depart . "', '" . $arrivee . "', '" . $prix . "','" . date('d-m-Y') . "', '" . $dtdeb . "', '" . $heure . "', '" . $valise . "', '" . $passager . "',0,'" . $siren . "','" . $societe . "','" . $type_vehicule . "', 0, 1, 0,'" . $paiement . "';")or die(mysql_error());
+  
+    $sql2 = mysql_query("Insert into client_tel(nom, prenom, tel, email) values('" . $nom . "','" . $prenom . "','" . $tel . "','" . $email . "';")or die(mysql_error());
 }
 
 

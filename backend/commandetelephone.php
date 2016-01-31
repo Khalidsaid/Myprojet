@@ -57,24 +57,24 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                 relativeUrls: false,
                 rootpath: "../assets/"
             };
-			
-				function hideInput() 
-			{
-				
-				if ( document.getElementById('client').value != "")
-				{
-				document.getElementById('nom').disabled = true;
-				document.getElementById('prenom').disabled = true;
-				document.getElementById('tel').disabled = true;
-				document.getElementById('email').disabled = true;
-				} else 
-				{
-				document.getElementById('nom').disabled = false;
-				document.getElementById('prenom').disabled = false;
-				document.getElementById('tel').disabled = false;
-				document.getElementById('email').disabled = false;
-				}
-			}
+
+            function hideInput()
+            {
+
+                if (document.getElementById('client').value != "")
+                {
+                    document.getElementById('nom').disabled = true;
+                    document.getElementById('prenom').disabled = true;
+                    document.getElementById('tel').disabled = true;
+                    document.getElementById('email').disabled = true;
+                } else
+                {
+                    document.getElementById('nom').disabled = false;
+                    document.getElementById('prenom').disabled = false;
+                    document.getElementById('tel').disabled = false;
+                    document.getElementById('email').disabled = false;
+                }
+            }
         </script>
         <link rel="stylesheet" href="assets/css/style-switcher.css">
         <link rel="stylesheet/less" type="text/css" href="assets/less/theme.less">
@@ -133,7 +133,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                             </nav>
                                         </div><!-- /.toolbar -->
                                     </header>
-									     <div id="div-1" class="body">
+                                    <div id="div-1" class="body">
 
                                         <form class="form-horizontal" method="post" action="">
 
@@ -141,7 +141,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 
                                                 <div class="col-lg-8">
                                                     <button type="button" class="btn btn-primary" onclick="addCommande()">Ajouter la commande</button>
-													
+
                                                 </div>
                                             </div><!-- /.form-group -->
 
@@ -158,9 +158,9 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <input type="text" id="arrivee" placeholder="Prenom" value="<?php echo $client['prenom']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-											 <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Client</label>
-                                                  <div class="col-lg-8">
+                                                <div class="col-lg-8">
 
                                                     <select class="form-control" name="client" id="client"  onChange="javascript:hideInput();">
                                                         <option></option>
@@ -175,20 +175,20 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     </select>
                                                 </div>
                                             </div><!-- /.form-group -->
-													 <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Paiement</label>
-                                                  <div class="col-lg-8">
+                                                <div class="col-lg-8">
 
                                                     <select class="form-control" name="paiement" id="paiement">
                                                         <option></option>
-                                                     
-                                                            <option value="CB">CB</option>
-															<option value="ESPECE">Especes</option>
+
+                                                        <option value="CB">CB</option>
+                                                        <option value="ESPECE">Especes</option>
 
                                                     </select>
                                                 </div>
                                             </div><!-- /.form-group -->
-											   <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">ou Mobile client</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="tel" placeholder="Tel" class="form-control">
@@ -206,13 +206,13 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <input type="text" id="prenom" name="prenom" placeholder="Prenom" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-											         <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Email</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="email" name="email" placeholder="Email" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-											    <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Valises</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="valise" name="valise" placeholder="Valises" class="form-control">
@@ -224,7 +224,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                 </div>
                                             </div><!-- /.form-group -->
 
-                                             <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Chauffeur</label>
                                                 <div class="col-lg-8">
 
@@ -253,105 +253,105 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <input type="text" id="prix" placeholder="Prix" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-											    <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Heure</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="heure" placeholder="Heure" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
 
-                                         
+
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Part chauffeur</label>
                                                 <div class="col-lg-8">
-                                            <input type="text" id="part_chauffeur" placeholder="Part chauffeur" class="form-control">
+                                                    <input type="text" id="part_chauffeur" placeholder="Part chauffeur" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-											   <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Part societe</label>
                                                 <div class="col-lg-8">
-                                            <input type="text" id="part_societe" placeholder="Part societe" class="form-control">
+                                                    <input type="text" id="part_societe" placeholder="Part societe" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-                                           
+
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Si societe :</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="societe" placeholder="Nom Societe" value="<?php echo $client['societe']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-                                          
+
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">SIREN</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="siren" placeholder="SIREN" value="<?php echo $client['siren']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-							
-							
-									<div class="row-flex" id="select_vehicle">
-									  <div class="col" >
-										<div class="vehicle_selected" >
-										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id1" value="1" name="vehicle_type[]" checked="">
-										  <label for="vehicle_type_id1" style="border-style : ridge;">
-											<div class="row">
-											  <div class="col-xs-12">
-												<i></i>
-											  </div>
-											</div>
-											<div class="row">
-											  <div class="col-xs-6 nopadding-right info_vehicle">4 x <i class="fa fa-user"></i></div>
-											  <div class="col-xs-6 nopadding-left info_vehicle">2 x <i class="fa fa-suitcase"></i></div>
-											</div>
-											<div class="row">
-											  <div class="col-xs-12">
-												<p>Berline</p>
-											  </div>
-											</div>
-										  </label>
-									
-									 
-										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id2" value="2" name="vehicle_type[]">
-										  <label for="vehicle_type_id2" style="border-style : ridge;">
-											<div class="row">
-											  <div class="col-xs-12">
-												<i></i>
-											  </div>
-											</div>
-											<div class="row">
-											  <div class="col-xs-6 nopadding-right info_vehicle">4 x <i class="fa fa-user"></i></div>
-											  <div class="col-xs-6 nopadding-left info_vehicle">2 x <i class="fa fa-suitcase"></i></div>
-											</div>
-											<div class="row">
-											  <div class="col-xs-12">
-												<p>Berline luxe</p>
-											  </div>
-											</div>
-										  </label>
-										
-									
-										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id3" value="3" name="vehicle_type[]">
-										  <label for="vehicle_type_id3" style="border-style : ridge;">
-											<div class="row">
-											  <div class="col-xs-12">
-												<i></i>
-											  </div>
-											</div>
-											<div class="row">
-											  <div class="col-xs-6 nopadding-right info_vehicle">7 x <i class="fa fa-user"></i></div>
-											  <div class="col-xs-6 nopadding-left info_vehicle">7 x <i class="fa fa-suitcase"></i></div>
-											</div>
-											<div class="row">
-											  <div class="col-xs-12">
-												<p>Van</p>
-											  </div>
-											</div>
-										  </label>
-										</div>
-									  </div>
-									
-							  </div>
-											 <div class="form-group center">
+
+
+                                            <div class="row-flex" id="select_vehicle">
+                                                <div class="col" >
+                                                    <div class="vehicle_selected" >
+                                                        <input class="vehicle_select_now" type="radio" id="vehicle_type_id1" value="1" name="vehicle_type[]" checked="">
+                                                        <label for="vehicle_type_id1" style="border-style : ridge;">
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <i></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-6 nopadding-right info_vehicle">4 x <i class="fa fa-user"></i></div>
+                                                                <div class="col-xs-6 nopadding-left info_vehicle">2 x <i class="fa fa-suitcase"></i></div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <p>Berline</p>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+
+
+                                                        <input class="vehicle_select_now" type="radio" id="vehicle_type_id2" value="2" name="vehicle_type[]">
+                                                        <label for="vehicle_type_id2" style="border-style : ridge;">
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <i></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-6 nopadding-right info_vehicle">4 x <i class="fa fa-user"></i></div>
+                                                                <div class="col-xs-6 nopadding-left info_vehicle">2 x <i class="fa fa-suitcase"></i></div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <p>Berline luxe</p>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+
+
+                                                        <input class="vehicle_select_now" type="radio" id="vehicle_type_id3" value="3" name="vehicle_type[]">
+                                                        <label for="vehicle_type_id3" style="border-style : ridge;">
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <i></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-6 nopadding-right info_vehicle">7 x <i class="fa fa-user"></i></div>
+                                                                <div class="col-xs-6 nopadding-left info_vehicle">7 x <i class="fa fa-suitcase"></i></div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <p>Van</p>
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group center">
 
                                                 <div class="col-lg-8">
                                                     <button type="button" class="btn btn-primary" onclick="addCommande()">Ajouter la commande</button>
@@ -362,7 +362,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 
                                         </form>
                                     </div>
-                                   
+
                                 </div>
                             </div>
 
@@ -411,24 +411,24 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
         <!-- Metis demo scripts -->
         <script src="assets/js/app.js"></script>
         <script>
-            $(function () {
-                Metis.formGeneral();
-            });
+                                                        $(function () {
+                                                            Metis.formGeneral();
+                                                        });
         </script>
 
         <script>
             function addCommande() {
-			
-				if (document.getElementById('vehicle_type_id1').checked)
-				{
-					var box = document.getElementById('vehicle_type_id1').value;
-				} else if (document.getElementById('vehicle_type_id2').checked)
-				{
-					var box = document.getElementById('vehicle_type_id2').value;
-				} else if (document.getElementById('vehicle_type_id3').checked)
-				{
-					var box = document.getElementById('vehicle_type_id3').value;
-				}
+
+                if (document.getElementById('vehicle_type_id1').checked)
+                {
+                    var box = document.getElementById('vehicle_type_id1').value;
+                } else if (document.getElementById('vehicle_type_id2').checked)
+                {
+                    var box = document.getElementById('vehicle_type_id2').value;
+                } else if (document.getElementById('vehicle_type_id3').checked)
+                {
+                    var box = document.getElementById('vehicle_type_id3').value;
+                }
 
                 var chauffeur = document.getElementById("chauffeur").value;
                 var prenom = document.getElementById("prenom").value;
@@ -440,31 +440,33 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                 var heure = document.getElementById("heure").value;
                 var prix = document.getElementById("prix").value;
                 var societe = document.getElementById("societe").value;
-				var siren = document.getElementById("siren").value;
-				var part_societe = document.getElementById("part_societe").value;
-				var part_chauffeur = document.getElementById("part_chauffeur").value;
-				var client = document.getElementById("client").value;
-				var paiement = document.getElementById("paiement").value;
-				
-				if (client == "" || client== "undefined")
-				{
-					 var client = "0";
-				}
-				
+                var siren = document.getElementById("siren").value;
+                var part_societe = document.getElementById("part_societe").value;
+                var part_chauffeur = document.getElementById("part_chauffeur").value;
+                var client = document.getElementById("client").value;
+                var paiement = document.getElementById("paiement").value;
+                var valise = document.getElementById("valise").value;
+                var passager = document.getElementById("passager").value;
+
+                if (client == "" || client == "undefined")
+                {
+                    var client = "0";
+                }
+
                 $.ajax({
-                    url: 'inserttelephonecmd.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&dtdeb=' + date + '&heure=' + heure +  '&prix=' + prix+ '&societe=' + societe+ '&siren=' + siren+ '&part_chauffeur=' + part_chauffeur+ '&part_societe=' + part_societe+ '&client=' + client + '&type_vehicule=' + box + '&paiement=' + paiement,
+                    url: 'inserttelephonecmd.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&dtdeb=' + date + '&heure=' + heure + '&prix=' + prix + '&societe=' + societe + '&siren=' + siren + '&part_chauffeur=' + part_chauffeur + '&part_societe=' + part_societe + '&client=' + client + '&type_vehicule=' + box + '&paiement=' + paiement+ '&valise=' + valise+ '&passager=' + passager,
                     success: function (data) {
                         var t = eval(data);
 
-                        alert("Commande ajouté !");
-						document.location.href="paiementValide.php";
+                        alert("Commande ajoutÃ© !");
+                        document.location.href = "http://reserveruncab.com/paiementValide.php";
                     }
                 });
             }
-			
-			
-		
-			
+
+
+
+
         </script>
 
 
