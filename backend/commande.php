@@ -3,7 +3,7 @@ include("config.php");
 include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
-mysql_query("update reservation_attente set archive=1 where reservation_attente.dtdeb<'" . date("Y-m-d") . "'");
+mysql_query("update reservation_attente, reservation_tel set archive=1 where reservation_attente.dtdeb<'" . date("Y-m-d") . "' AND reservation_tel.dtdeb<'" . date("Y-m-d") . "'");
 ?>
 <!doctype html>
 <html class="no-js">

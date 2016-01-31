@@ -57,6 +57,24 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                 relativeUrls: false,
                 rootpath: "../assets/"
             };
+			
+				function hideInput() 
+			{
+				
+				if ( document.getElementById('client').value != "")
+				{
+				document.getElementById('nom').disabled = true;
+				document.getElementById('prenom').disabled = true;
+				document.getElementById('tel').disabled = true;
+				document.getElementById('email').disabled = true;
+				} else 
+				{
+				document.getElementById('nom').disabled = false;
+				document.getElementById('prenom').disabled = false;
+				document.getElementById('tel').disabled = false;
+				document.getElementById('email').disabled = false;
+				}
+			}
         </script>
         <link rel="stylesheet" href="assets/css/style-switcher.css">
         <link rel="stylesheet/less" type="text/css" href="assets/less/theme.less">
@@ -143,16 +161,29 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                 <label for="text1" class="control-label col-lg-4">Client</label>
                                                   <div class="col-lg-8">
 
-                                                    <select class="form-control" name="client" id="client">
+                                                    <select class="form-control" name="client" id="client"  onChange="javascript:hideInput();">
                                                         <option></option>
                                                         <?php
-                                                        $sql_chauffeur = mysql_query("select * from myvtc_users");
+                                                        $sql_chauffeur = mysql_query("select * from client_tel");
                                                         while ($data_chauffeur = mysql_fetch_array($sql_chauffeur)) {
                                                             ?>
                                                             <option value="<?php echo $data_chauffeur['tel']; ?>"><?php echo $data_chauffeur['prenom'] . " " . $data_chauffeur['nom']; ?></option>
                                                             <?php
                                                         }
                                                         ?>
+                                                    </select>
+                                                </div>
+                                            </div><!-- /.form-group -->
+													 <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Paiement</label>
+                                                  <div class="col-lg-8">
+
+                                                    <select class="form-control" name="paiement" id="paiement">
+                                                        <option></option>
+                                                     
+                                                            <option value="0">CB</option>
+															<option value="1">Especes</option>
+
                                                     </select>
                                                 </div>
                                             </div><!-- /.form-group -->
@@ -172,6 +203,12 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                 <label for="text1" class="control-label col-lg-4">Prenom</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="prenom" name="prenom" placeholder="Prenom" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+											         <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Email</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="email" name="email" placeholder="Email" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
 											    <div class="form-group">
@@ -417,6 +454,10 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                     }
                 });
             }
+			
+			
+		
+			
         </script>
 
 

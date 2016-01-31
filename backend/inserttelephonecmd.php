@@ -23,6 +23,16 @@ $siren = $_GET['siren'];
 $societe = $_GET['societe'];
 $type_vehicule = $_GET['box'];
 
+
+//Ajout du client à la base si il n'a jamais commandé par tel
+if ($nom !="" or $tel !="" or $prenom!="")
+{
+	$new_client = mysql_fetch_array(mysql_query("insert into client_tel (nom, prenom, email, tel) values('".$nom."','".$prenom."','".$email."','".$tel."')");
+	$nom ="";
+	$tel =""; 
+	$prenom="";
+}
+
 $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $chauffeur));
 $nom_complet = $nom_chauffeur['prenom'] . " " . $nom_chauffeur['nom'];
 
