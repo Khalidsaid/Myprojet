@@ -128,6 +128,26 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                                     <?php
                                                 }
                                                 ?>
+												  <?php
+                                                $sql = mysql_query("select chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_tel.id, client_tel.nom, client_tel.prenom, DATE_FORMAT(reservation_tel.dtdeb, '%d/%m/%Y') as dtdeb, prix  from reservation_tel, client_tel, chauffeur WHERE client_tel.id = reservation_tel.client AND reservation_tel.id_chauffeur=chauffeur.id_chauffeur AND reservation_tel.archive=1 AND reservation_tel.dtdeb<'" . date("Y-m-d") . "'");
+                                                while ($data = mysql_fetch_array($sql)) {
+                                                    
+                                                    $nom_complet = $data['chauffeurnom'] . " " . $data['chauffeurprenom'];
+                                                    ?>
+                                                    <tr>
+
+                                                        <td><?php echo $data['nom']; ?></td>
+                                                        <td><?php echo $data['prenom']; ?></td>
+                                                        <td><?php echo $data['depart'];?></td>
+                                                        <td><?php echo $data['arrivee']; ?></td>
+                                                        <td><?php echo $data['dtdeb']; ?></td>
+                                                        <td><?php echo $data['prix']; ?> euros</td>
+                                                        <td><?php echo $nom_complet; ?></td>
+                                                     
+                                                    </tr>
+                                                    <?php
+                                                }
+                                                ?>
                                             </tbody>
                                         </table>
                                     </div>

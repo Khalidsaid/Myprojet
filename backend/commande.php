@@ -109,7 +109,7 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select reservation_attente.id, myvtc_users.nom, myvtc_users.prenom, chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_attente.heure, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from chauffeur, myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.dtdeb>='" . date("Y-m-d") . "' AND chauffeur.id_chauffeur = reservation_attente.chauffeur AND reservation_attente.etat=1 and  reservation_attente.archive=0  UNION SELECT reservation_tel.id, client_tel.nom, client_tel.prenom,  chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_tel.heure, reservation_tel.depart, reservation_tel.arrivee, reservation_tel.dtdeb, reservation_tel.prix from reservation_tel INNER JOIN client_tel, chauffeur WHERE  reservation_tel.dtdeb>='" . date("Y-m-d") . "' AND reservation_tel.archive=0  AND chauffeur.id_chauffeur=reservation_tel.id_chauffeur;");
+                                                $sql = mysql_query("select reservation_attente.id, myvtc_users.nom, myvtc_users.prenom, chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_attente.heure, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from chauffeur, myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.dtdeb>='" . date("Y-m-d") . "' AND chauffeur.id_chauffeur = reservation_attente.chauffeur AND reservation_attente.etat=1 and  reservation_attente.archive=0");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                 
                                                     $nom_complet = $data['chauffeurnom'] . " " . $data['chauffeurprenom'];
@@ -127,6 +127,30 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                                             <a class="btn btn-success btn-sm" href="detailcmd.php?id=<?php echo $data['id'] ?>">Détail</a>
                                                             <a class="btn btn-success btn-sm" href="notifier.php?id=<?php echo $data['id'] ?>">Ajout chauffeur</a>
                                                             <a class="btn btn-success btn-sm" onclick="archive(<?php echo$data['id']; ?>)">Archiver</a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                                ?>
+												          <?php
+                                                $sql = mysql_query("select chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_tel.id, client_tel.nom, client_tel.prenom, DATE_FORMAT(reservation_tel.dtdeb, '%d/%m/%Y') as dtdeb, prix  from reservation_tel, client_tel, chauffeur WHERE client_tel.id = reservation_tel.client AND reservation_tel.id_chauffeur=chauffeur.id_chauffeur AND reservation_tel.archive=0 AND reservation_tel.dtdeb>='" . date("Y-m-d") . "'");
+                                                while ($data = mysql_fetch_array($sql)) {
+                                                
+                                                    $nom_complet = $data['chauffeurnom'] . " " . $data['chauffeurprenom'];
+                                                    ?>
+                                                    <tr>
+
+                                                        <td><?php echo $data['nom']; ?></td>
+                                                        <td><?php echo $data['prenom']; ?></td>
+                                                        <!--<td>//echo $data['depart'];</td>
+                                                        <td>//echo $data['arrivee']; </td>!-->
+                                                        <td><?php echo $data['dtdeb']; ?></td>
+                                                        <td><?php echo $data['prix']; ?>€</td>
+                                                        <td><?php echo $nom_complet; ?></td>
+                                                        <td>
+															<a class="btn btn-warning btn-sm">Commande telephone</a>
+                                                            <a class="btn btn-success btn-sm" href="detailcmdtel.php?id=<?php echo $data['id'] ?>">Détail</a>
+                                                            <a class="btn btn-success btn-sm" onclick="archivetel(<?php echo $data['id']; ?>)">Archiver</a>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -189,6 +213,21 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
 
                 $.ajax({
                     url: 'archiverCmd.php?id=' + id,
+                    success: function (data) {
+                        var t = eval(data);
+
+                        alert("Commande Archivée !");
+                        location.reload();
+                    }
+                });
+            }
+			
+			function archivetel(id) {
+
+
+
+                $.ajax({
+                    url: 'archiverCmdtel.php?id=' + id,
                     success: function (data) {
                         var t = eval(data);
 
