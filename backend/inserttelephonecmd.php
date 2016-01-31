@@ -21,6 +21,7 @@ $part_chauffeur = $_GET['part_chauffeur'];
 $client = $_GET['client'];
 $siren = $_GET['siren'];
 $societe = $_GET['societe'];
+$type_vehicule = $_GET['box'];
 
 $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $chauffeur));
 $nom_complet = $nom_chauffeur['prenom'] . " " . $nom_chauffeur['nom'];
@@ -44,8 +45,8 @@ mail($nom_chauffeur['email'], "Notification sur ReserverUnCab.com", $message, $h
 
 
 
-$sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe) values('".$chauffeur."','".$tel."', '".$part_societe."', '".$part_chauffeur."' , '".$depart."', '".$arrivee."', '".$prix."','" . date('d-m-Y H:i:s') . "' ,'".$date_add."', '".$dtdeb."', '".$heure."', '".$valise."', '".$passager."','".$client."','".$siren."','".$societe."';"))or die(mysql_error());
-
+$sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe, type_vehicule) values('".$chauffeur."','".$tel."', '".$part_societe."', '".$part_chauffeur."' , '".$depart."', '".$arrivee."', '".$prix."','" . date('d-m-Y') . "', '".$dtdeb."', '".$heure."', '".$valise."', '".$passager."','".$client."','".$siren."','".$societe."','".$type_vehicule."';"))or die(mysql_error());
+echo $sql;
 }
 $rs = "[";
 

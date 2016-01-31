@@ -254,7 +254,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 									<div class="row-flex" id="select_vehicle">
 									  <div class="col" >
 										<div class="vehicle_selected" >
-										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id1" value="1" name="vehicle_type" checked="">
+										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id1" value="1" name="vehicle_type[]" checked="">
 										  <label for="vehicle_type_id1" style="border-style : ridge;">
 											<div class="row">
 											  <div class="col-xs-12">
@@ -273,7 +273,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 										  </label>
 									
 									 
-										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id2" value="2" name="vehicle_type">
+										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id2" value="2" name="vehicle_type[]">
 										  <label for="vehicle_type_id2" style="border-style : ridge;">
 											<div class="row">
 											  <div class="col-xs-12">
@@ -292,7 +292,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 										  </label>
 										
 									
-										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id3" value="3" name="vehicle_type">
+										  <input class="vehicle_select_now" type="radio" id="vehicle_type_id3" value="3" name="vehicle_type[]">
 										  <label for="vehicle_type_id3" style="border-style : ridge;">
 											<div class="row">
 											  <div class="col-xs-12">
@@ -380,6 +380,17 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 
         <script>
             function addCommande() {
+			
+				if (document.getElementById('vehicle_type_id1').checked)
+				{
+					var box = document.getElementById('vehicle_type_id1').value;
+				} else if (document.getElementById('vehicle_type_id2').checked)
+				{
+					var box = document.getElementById('vehicle_type_id2').value;
+				} else if (document.getElementById('vehicle_type_id3').checked)
+				{
+					var box = document.getElementById('vehicle_type_id3').value;
+				}
 
                 var chauffeur = document.getElementById("chauffeur").value;
                 var prenom = document.getElementById("prenom").value;
@@ -396,12 +407,13 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 				var part_chauffeur = document.getElementById("part_chauffeur").value;
 				var client = document.getElementById("client").value;
 				
+				
                 $.ajax({
-                    url: 'inserttelephonecmd.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&dtdeb=' + date + '&heure=' + heure +  '&prix=' + prix+ '&societe=' + societe+ '&siren=' + siren+ '&part_chauffeur=' + part_chauffeur+ '&part_societe=' + part_societe+ '&client=' + client,
+                    url: 'inserttelephonecmd.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&dtdeb=' + date + '&heure=' + heure +  '&prix=' + prix+ '&societe=' + societe+ '&siren=' + siren+ '&part_chauffeur=' + part_chauffeur+ '&part_societe=' + part_societe+ '&client=' + client + '&type_vehicule=' + box,
                     success: function (data) {
                         var t = eval(data);
 
-                        alert("Chauffeur Notifié !");
+                        alert("Commande ajouté !");
                     }
                 });
             }
