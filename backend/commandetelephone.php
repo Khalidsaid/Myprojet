@@ -167,7 +167,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                         $sql_chauffeur = mysql_query("select * from client_tel");
                                                         while ($data_chauffeur = mysql_fetch_array($sql_chauffeur)) {
                                                             ?>
-                                                            <option value="<?php echo $data_chauffeur['tel']; ?>"><?php echo $data_chauffeur['prenom'] . " " . $data_chauffeur['nom']; ?></option>
+                                                            <option value="<?php echo $data_chauffeur['id']; ?>"><?php echo $data_chauffeur['prenom'] . " " . $data_chauffeur['nom']; ?></option>
                                                             <?php
                                                         }
                                                         ?>
@@ -181,8 +181,8 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <select class="form-control" name="paiement" id="paiement">
                                                         <option></option>
                                                      
-                                                            <option value="0">CB</option>
-															<option value="1">Especes</option>
+                                                            <option value="CB">CB</option>
+															<option value="ESPECE">Especes</option>
 
                                                     </select>
                                                 </div>
@@ -443,10 +443,10 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 				var part_societe = document.getElementById("part_societe").value;
 				var part_chauffeur = document.getElementById("part_chauffeur").value;
 				var client = document.getElementById("client").value;
-				
+				var paiement = document.getElementById("paiement").value;
 				
                 $.ajax({
-                    url: 'inserttelephonecmd.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&dtdeb=' + date + '&heure=' + heure +  '&prix=' + prix+ '&societe=' + societe+ '&siren=' + siren+ '&part_chauffeur=' + part_chauffeur+ '&part_societe=' + part_societe+ '&client=' + client + '&type_vehicule=' + box,
+                    url: 'inserttelephonecmd.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&dtdeb=' + date + '&heure=' + heure +  '&prix=' + prix+ '&societe=' + societe+ '&siren=' + siren+ '&part_chauffeur=' + part_chauffeur+ '&part_societe=' + part_societe+ '&client=' + client + '&type_vehicule=' + box + '&paiement=' + paiement,
                     success: function (data) {
                         var t = eval(data);
 
