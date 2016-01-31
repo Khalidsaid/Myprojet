@@ -39,8 +39,8 @@ if ($nom != "" or $tel != "" or $prenom != "") {
 $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $chauffeur));
 $nom_complet = $nom_chauffeur['prenom'] . " " . $nom_chauffeur['nom'];
 
-$headers = 'From: info@reserveruncab.com' . "\r\n" .
-        'Reply-To: info@reserveruncab.com' . "\r\n" .
+$headers = 'From: contact@reserveruncab.com' . "\r\n" .
+        'Reply-To: contact@reserveruncab.com' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
 $message = "Notification de réservation :\n
 

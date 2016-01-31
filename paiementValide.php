@@ -20,7 +20,7 @@ $mail->Password = 'Balloo94';                  // SMTP password
 
 $mail->From = 'contact@reserveruncab.com';
 $mail->FromName = 'ReserverUnCab';
-$mail->AddAddress("contact@reserveruncab.com", "Confirmation"); // Add address
+$mail->AddAddress($_SESSION['myvtclogin'], "Confirmation"); // Add address
 
 
 $mail->Subject = 'Validation de paiement ReserverUnCab.com';
