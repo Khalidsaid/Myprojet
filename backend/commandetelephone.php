@@ -446,6 +446,11 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 				var client = document.getElementById("client").value;
 				var paiement = document.getElementById("paiement").value;
 				
+				if (client == "" || client== "undefined")
+				{
+					 var client = "0";
+				}
+				
                 $.ajax({
                     url: 'inserttelephonecmd.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&dtdeb=' + date + '&heure=' + heure +  '&prix=' + prix+ '&societe=' + societe+ '&siren=' + siren+ '&part_chauffeur=' + part_chauffeur+ '&part_societe=' + part_societe+ '&client=' + client + '&type_vehicule=' + box + '&paiement=' + paiement,
                     success: function (data) {
