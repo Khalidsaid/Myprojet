@@ -141,6 +141,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
 
                                                 <div class="col-lg-8">
                                                     <button type="button" class="btn btn-primary" onclick="addCommande()">Ajouter la commande</button>
+													
                                                 </div>
                                             </div><!-- /.form-group -->
 
@@ -451,6 +452,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                         var t = eval(data);
 
                         alert("Commande ajouté !");
+						document.location.href="paiementValide.php";
                     }
                 });
             }

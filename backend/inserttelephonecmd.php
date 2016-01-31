@@ -55,11 +55,16 @@ Heure : " . $heure . "\n
 ";
 mail($nom_chauffeur['email'], "Notification sur ReserverUnCab.com", $message, $headers);
 
-
-
+if ($client != "" or $client > 0)
+{
 $sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe, type_vehicule, etat, notif, archive, paiement) values('".$chauffeur."','".$tel."', '".$part_societe."', '".$part_chauffeur."' , '".$depart."', '".$arrivee."', '".$prix."','" . date('d-m-Y') . "', '".$dtdeb."', '".$heure."', '".$valise."', '".$passager."','".$client."','".$siren."','".$societe."','".$type_vehicule."', 0, 1, 0,'".$paiement."';"))or die(mysql_error());
-echo $sql;
+} else
+{
+$sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe, type_vehicule, etat, notif, archive, paiement) values('".$chauffeur."','".$tel."', '".$part_societe."', '".$part_chauffeur."' , '".$depart."', '".$arrivee."', '".$prix."','" . date('d-m-Y') . "', '".$dtdeb."', '".$heure."', '".$valise."', '".$passager."',0,'".$siren."','".$societe."','".$type_vehicule."', 0, 1, 0,'".$paiement."';"))or die(mysql_error());
+$sql2 = mysql_query("Insert into client_tel(nom, prenom, tel, email) values('".$nom."','".$prenom."','".$tel."','".$email."';"))or die(mysql_error());
 }
+
+
 $rs = "[";
 
 $rs.="{message:'ok'},";
