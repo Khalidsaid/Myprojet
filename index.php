@@ -485,6 +485,7 @@ $menu=1;
 									if (results[0]['address_components'][component]['types'][i] == "postal_code") {
 										var state = results[0]['address_components'][component]['long_name'];
 										res = state.substring(0,2);
+										alert(res);
 										if ( res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78')
 										{
 											alert("Depart d'ile de france : OK");
@@ -496,9 +497,11 @@ $menu=1;
 								}
 							}                                           
 						} else {
-							alert('Invalid Zipcode');
-							
+						alert('veuillez saisir une adresse complète');
+						document.getElementById('depart').value = "";
+						location.reload();
 						}
+					
 					});
 					}
 				
@@ -662,7 +665,9 @@ $menu=1;
 
             function calculDistance() {
 
-					codeAddress();
+				codeAddress();
+				
+				
                 //initMap();
                 document.getElementById("distance").style.display = "block";
                 document.getElementById("prix").style.display = "block";
