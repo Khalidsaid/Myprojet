@@ -26,10 +26,16 @@ $exec = mysql_query($requete)or die(mysql_error());
 $nb == 0;
 if (isset($_SESSION['myvtclogin'])) {
     $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
-    if ($user['promos'] == 1) {
+	$check = mysql_fetch_array(mysql_query("select COUNT(*) as total from myvtc_users where parrain= '" . $_SESSION['myvtclogin'] . "'"));
+	
+    if ($user['promos'] == 1) 
+	{
+		if ($check['total'] >= 1 ) 
+		{
+		
         $sql = mysql_query("select * from reservation_attente inner join myvtc_users on reservation_attente.id_user= myvtc_users.id where parrain IS NOT NULL AND etat=1 AND id_user=" . $user['id']);
         $nb = mysql_num_rows($sql);
-        
+		}
     }
 }
 
