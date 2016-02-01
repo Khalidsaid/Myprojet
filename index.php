@@ -467,13 +467,49 @@ $menu=1;
                     });
                 }
             }
+			
+			
+			
+				// Obtenir le code postale de départ
+				var geocoder;
+				var map;        
+				function codeAddress() {
+				
+					geocoder = new google.maps.Geocoder();
+					var address = document.getElementById('depart').value;
+					geocoder.geocode({ 'address': address }, function (results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {                       
 
+							for (var component in results[0]['address_components']) {
+								for (var i in results[0]['address_components'][component]['types']) {
+									if (results[0]['address_components'][component]['types'][i] == "postal_code") {
+										var state = results[0]['address_components'][component]['long_name'];
+										res = state.substring(0,2);
+										if ( res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78')
+										{
+											alert("Depart d'ile de france : OK");
+										} else
+										{
+											alert("Depart d'ile de france : NON");
+										}
+									}
+								}
+							}                                           
+						} else {
+							alert('Invalid Zipcode');
+							
+						}
+					});
+					}
+				
+			
 
 
 
             function callback(response, status) {
 
-			
+				
+				
                 var prixtotal = 0;
                 //r?cup?ration des champs du formulaire
                 var adr_dep = document.getElementById('depart').value;
@@ -562,7 +598,8 @@ $menu=1;
 					}
 				}
 				
-
+		
+       
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
                 } else {
@@ -579,6 +616,8 @@ $menu=1;
                                 var element = results[j];
                                 var statut = element.status;
                                 var arr = destinations[j];
+								
+								
                                 if (statut == 'OK') {
                                     var dist = element.distance.value;
                                     var dure = element.duration.text;
@@ -623,7 +662,7 @@ $menu=1;
 
             function calculDistance() {
 
-
+					codeAddress();
                 //initMap();
                 document.getElementById("distance").style.display = "block";
                 document.getElementById("prix").style.display = "block";
@@ -666,7 +705,8 @@ $menu=1;
 
 
             }
-            
+			
+  
         </script>
         <style>
             form input {
@@ -681,7 +721,7 @@ $menu=1;
 
 
         <div id="page-wrapper">
-
+	
             <!-- Header -->
             <div id="header-wrapper">
                 <div id="header">
