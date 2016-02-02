@@ -54,8 +54,9 @@ $menu=1;
                 var now = new Date();
 
                 var annee = now.getFullYear();
-                var mois = ('0' + now.getMonth() + 1).slice(-2);
-                var jour = ('0' + now.getDate()).slice(-2);
+               
+				var jour = ("0" + now.getDate()).slice(-2);
+				var mois = ("0" + (now.getMonth() + 1)).slice(-2);
 
                 var EnteredDate = document.getElementById("datedep").value; //for javascript
                 var EnteredDate = $("#datedep").val(); // For JQuery
@@ -63,18 +64,20 @@ $menu=1;
                 var month = EnteredDate.substring(0, 2);
                 var date = EnteredDate.substring(3, 5);
                 var year = EnteredDate.substring(6, 10);
+				
 		
-
+				
 				//Test date courante et date séléctionné
-                if (( date >= jour && year >= annee && month >= mois) || ( year >= annee && month > mois))
+                if (( date >= jour && year >= annee && month >= mois))
                 {
-
+			
                 } else
                 {
                     alert("La date ne peux etre dans le passé !");
                      document.getElementById("datedep").value="";
                     //document.location.href = "index.php";
                 }
+
 
 
             }
@@ -477,15 +480,19 @@ $menu=1;
 				
 					geocoder = new google.maps.Geocoder();
 					var address = document.getElementById('depart').value;
+					
 					geocoder.geocode({ 'address': address }, function (results, status) {
+					
 						if (status == google.maps.GeocoderStatus.OK) {                       
-
+						
 							for (var component in results[0]['address_components']) {
+							
 								for (var i in results[0]['address_components'][component]['types']) {
+								
 									if (results[0]['address_components'][component]['types'][i] == "postal_code") {
+									
 										var state = results[0]['address_components'][component]['long_name'];
 										res = state.substring(0,2);
-										alert(res);
 										if ( res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78')
 										{
 											alert("Depart d'ile de france : OK");
@@ -495,6 +502,7 @@ $menu=1;
 										}
 									}
 								}
+								
 							}                                           
 						} else {
 						alert('veuillez saisir une adresse complète');
