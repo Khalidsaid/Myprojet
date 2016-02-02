@@ -10,9 +10,8 @@ $arrivee = $_GET['arrivee'];
 $totalpers = $_GET['totalpers'];
 $totalbag = $_GET['totalbag'];
 $datedep_tab = explode("/", $_GET['datedep']);
-$datedep = $datedep_tab[2] . "-" . $datedep_tab[0] . "-" . $datedep_tab[1];
+$datedep = $datedep_tab[1] . "-" . $datedep_tab[0] . "-" . $datedep_tab[2];
 $heyres = $_GET['heyres'];
-$distance = $_GET['distance'];
 date_default_timezone_set('Europe/Paris');
 $date = date('Y-m-d H:i:s');
 
@@ -433,6 +432,7 @@ if ($user['type_user'] == 'Professionnel') {
 									{
 										
 										prix = Math.round(parseInt(dist / 1000) * window.pricepro);
+										
                                     } else if ( window.prixtotal == 0 && window.pricepro == 0)
 									{
 										
@@ -448,6 +448,7 @@ if ($user['type_user'] == 'Professionnel') {
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
 										document.getElementById('amount').value = prix;
+										document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
 										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
 										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
                                                                                 document.getElementById('amounttxt').value = prix;
@@ -456,6 +457,7 @@ if ($user['type_user'] == 'Professionnel') {
 										prix = 8;
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
+										document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
 										document.getElementById('amount').value = prix;
 										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
 										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
@@ -468,6 +470,7 @@ if ($user['type_user'] == 'Professionnel') {
                                         prix = (prix - window.codepromo);
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
+										document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
 										document.getElementById('amount').value = prix - window.codepromo;
 										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
 										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
@@ -632,17 +635,13 @@ if ($user['type_user'] == 'Professionnel') {
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Durée</div>
                                 <div class="col-md-8" style="text-align: left">  <p id="duree" style="font-size: 22px;"></p></div>
                             </div>
-                            <?php
-                            if ($distance != 'undefined') {
-                                ?>
+                        
                                 <hr style="border: 1px dashed ! important;">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Distance</div>
-                                    <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $distance; ?></b></p></div>
+                                    <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b id="distance"></b></p></div>
                                 </div>
-                                <?php
-                            }
-                            ?>
+                            
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
 

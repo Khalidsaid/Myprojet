@@ -261,7 +261,7 @@ $menu=1;
                 }
                 else
                 {
-                    window.location.href = "recapitulatif.php?depart=" + adr_dep + "&arrivee=" + adr_arr + "&totalpers=" + totalpers + "&totalbag=" + totalbag + "&datedep=" + datedep + "&heyres=" + heyres + "&distance=" + distance + "&offre=" +window.prix;
+                    window.location.href = "recapitulatif.php?depart=" + adr_dep + "&arrivee=" + adr_arr + "&totalpers=" + totalpers + "&totalbag=" + totalbag + "&datedep=" + datedep + "&heyres=" + heyres +  "&offre=" +window.prix;
                 }
             }
 			
