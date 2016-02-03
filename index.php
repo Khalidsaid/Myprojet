@@ -115,6 +115,7 @@ $menu=1;
 
             function checkonlytime()
             {
+			
 
                 //Heure courante.
                 var now = new Date();
@@ -224,6 +225,8 @@ $menu=1;
                 }
 				
             }
+			
+			
 
             function checkAndgo()
             {
@@ -241,7 +244,16 @@ $menu=1;
 						alert("Veuillez saisir une date");
 						return;
 				}
-
+				
+				//Filtre départ d'ile de france
+		
+				if (!window.mavar)
+				{
+					alert("Veuillez saisir une adresse de départ complète");
+					return;
+				}
+				
+				
                 var totalpers = document.getElementById('nbpers').value;
                 var totalbag = document.getElementById('nbbag').value;
                 var adr_dep = document.getElementById('depart').value;
@@ -418,6 +430,7 @@ $menu=1;
                 }
 
                 origin_autocomplete.addListener('place_changed', function () {
+					codeAddress();
                     var place = origin_autocomplete.getPlace();
                     if (!place.geometry) {
                         window.alert("Autocomplete's returned place contains no geometry");
@@ -433,6 +446,7 @@ $menu=1;
                 });
 
                 destination_autocomplete.addListener('place_changed', function () {
+					codeAddress();
                     var place = destination_autocomplete.getPlace();
                     if (!place.geometry) {
                         window.alert("Autocomplete's returned place contains no geometry");
@@ -475,11 +489,14 @@ $menu=1;
 			
 				// Obtenir le code postale de départ
 				var geocoder;
+				var mavar;
 				var map;        
 				function codeAddress() {
 				
 					geocoder = new google.maps.Geocoder();
 					var address = document.getElementById('depart').value;
+					var aero_dep = checkAero(address);
+					
 					
 					geocoder.geocode({ 'address': address }, function (results, status) {
 					
@@ -493,21 +510,23 @@ $menu=1;
 									
 										var state = results[0]['address_components'][component]['long_name'];
 										res = state.substring(0,2);
-										if ( res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78')
+											
+				
+										if ( res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78' || aero_dep)
 										{
-											alert("Depart d'ile de france : OK");
+											//alert("Depart d'ile de france : OK");
+											window.mavar = true;
 										} else
 										{
-											alert("Depart d'ile de france : NON");
+											//alert("Depart d'ile de france : NON");
+											window.mavar = false;
 										}
 									}
 								}
 								
 							}                                           
 						} else {
-						alert('veuillez saisir une adresse complète');
-						document.getElementById('depart').value = "";
-						location.reload();
+						
 						}
 					
 					});
@@ -553,6 +572,8 @@ $menu=1;
 				// Verifier si le départ est un aeroport et l'arrivée
 				var aero_dep = checkAero(adr_dep);
 				var aero_arr = checkAero(adr_arr);
+				
+			
 				
 				var chkdep = checkParis(adr_dep);
 				var chkarr = checkParis(adr_arr);
@@ -673,9 +694,7 @@ $menu=1;
 
             function calculDistance() {
 
-				codeAddress();
-				
-				
+			
                 //initMap();
                 document.getElementById("distance").style.display = "block";
                 document.getElementById("prix").style.display = "block";
@@ -765,13 +784,13 @@ $menu=1;
                                                             <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
                                                             <li role="separator" class="divider"></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
-            showMap()">Charles De Gaulle - Roissy</a></li>
+            showMap();codeAddress()">Charles De Gaulle - Roissy</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Orly, Orly, France';
-                                                            showMap()">Orly</a></li>
+                                                            showMap();codeAddress()">Orly</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Beauvais';
-                                                            showMap()">Beauvais</a></li>
+                                                            showMap();codeAddress()">Beauvais</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Paris - Le Bourget, Le Bourget, France';
-                                                            showMap()">Le Bourget</a></li>
+                                                            showMap();codeAddress()">Le Bourget</a></li>
 
                                                         </ul>
                                                     </div>
@@ -797,7 +816,7 @@ $menu=1;
                                                         </ul>
                                                     </div>
                                                     <!-- /btn-group -->
-                                                    <input step="border-left-width: 0px;" type="text" id="depart" size="35" name="depart" class="form-control" placeholder="Adressse de départ" onkeypress="javascript:showMap()" />
+                                                    <input step="border-left-width: 0px;" type="text" id="depart" size="35" name="depart" class="form-control" placeholder="Adressse de départ" onkeypress="javascript:showMap()"/>
 
                                                 </div>
                                                 <!-- /input-group -->
@@ -843,7 +862,7 @@ $menu=1;
                                                         </ul>
                                                     </div>
                                                     <!-- /btn-group -->
-                                                    <input type="text" id="arrivee" size="35" name="arrivee" class="form-control" placeholder="Adresse d'arrivée" />
+                                                    <input type="text" id="arrivee" size="35" name="arrivee" class="form-control" placeholder="Adresse d'arrivée"/>
                                                 </div>
                                                 <!-- /input-group -->
                                             </div>
@@ -978,7 +997,7 @@ ORLY
 En réservant 24h à l’avance
 
 Plus d'infos sur notre page <br/>
-<a href="offreaeroports.php">- Offre Aéroport -</a></i>
+<a href="tarifs.php">- Offre Aéroport -</a></i>
 <i id="mapro2" style="top: 250px; right: 16px"><br/><h4>Offre spéciale !</h4> 
 Votre 10 ème réservation est offerte. Profitez-en vite!</i>
                 <br/>
@@ -1020,7 +1039,7 @@ Votre 10 ème réservation est offerte. Profitez-en vite!</i>
                     <footer>
                         <ul class="actions">
                             <li><a href="#" class="button big btn btn-danger">Réservez maintenant</a></li>
-                            <li><a href="#" class="button big btn btn-primary">Plus d'informations</a></li>
+                            <li><a href="faq.php" class="button big btn btn-primary">Plus d'informations</a></li>
                         </ul>
                     </footer>
                 </section>
