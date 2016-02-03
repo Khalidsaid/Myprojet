@@ -134,9 +134,9 @@ if (!isset($_SESSION['backend']))
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Type Vihécule</label>
+                                                <label for="text1" class="control-label col-lg-4">Type Véhicule</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" name="typevehicule" placeholder="Type Vihécule"  class="form-control" required="">
+                                                    <input type="text" name="typevehicule" placeholder="Type Véhicule"  class="form-control" required="">
                                                 </div>
                                             </div><!-- /.form-group -->
                                             

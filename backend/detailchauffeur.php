@@ -158,9 +158,9 @@ $client = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauff
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Vihécule</label>
+                                                <label for="text1" class="control-label col-lg-4">Véhicule</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="typevehicule" placeholder="Vihécule" value="<?php echo $client['typevehicule']; ?>" class="form-control">
+                                                    <input type="text" id="typevehicule" placeholder="Véhicule" value="<?php echo $client['typevehicule']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
 

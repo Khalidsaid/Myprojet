@@ -101,7 +101,7 @@ if (!isset($_SESSION['backend']))
                                                     <th>Email</th>
                                                     <th>Adresse</th>
                                                     <th>Tel</th>
-                                                    <th>Vihécule</th>    
+                                                    <th>Véhicule</th>    
                                                     <th>Détails</th>
                                                 </tr>
                                             </thead>
