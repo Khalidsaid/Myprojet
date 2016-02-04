@@ -496,6 +496,7 @@ $menu=1;
 					geocoder = new google.maps.Geocoder();
 					var address = document.getElementById('depart').value;
 					var aero_dep = checkAero(address);
+					var garedep = checkGare(address);
 					
 					
 					geocoder.geocode({ 'address': address }, function (results, status) {
@@ -512,7 +513,7 @@ $menu=1;
 										res = state.substring(0,2);
 											
 				
-										if ( res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78' || aero_dep)
+										if ( res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78' || aero_dep || garedep)
 										{
 											//alert("Depart d'ile de france : OK");
 											window.mavar = true;
@@ -800,19 +801,19 @@ $menu=1;
                                                             <li><b style="padding-left: 5px;">Gares à Paris</b></li>
                                                             <li role="separator" class="divider"></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Saint-Lazare, Paris, France';
-                                                            showMap()">Saint-Lazare</a></li>
+                                                            showMap();codeAddress()">Saint-Lazare</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Montparnasse, Boulevard de Vaugirard, Paris, France';
-                                                            showMap()">Montparnasse</a></li>
+                                                            showMap();codeAddress()">Montparnasse</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Lyon, Place Louis Armand, Paris, France';
-                                                            showMap()">Lyon</a></li>
+                                                            showMap();codeAddress()">Lyon</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Paris Gare de le Est, Paris, France';
-                                                            showMap()">Est</a></li>
+                                                            showMap();codeAddress()">Est</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare du Nord, Rue de Dunkerque, Paris, France';
-                                                            showMap()">Nord</a></li>
+                                                            showMap();codeAddress()">Nord</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Quai de Austerlitz, Quartier de la Gare, Paris, France';
-                                                            showMap()">Austerlitz</a></li>
+                                                            showMap();codeAddress()">Austerlitz</a></li>
                                                             <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Paris-Bercy, Boulevard de Bercy, Paris, France';
-                                                            showMap()">Bercy</a></li>
+                                                            showMap();codeAddress()">Bercy</a></li>
                                                         </ul>
                                                     </div>
                                                     <!-- /btn-group -->
