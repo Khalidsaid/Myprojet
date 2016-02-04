@@ -6,14 +6,14 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-$menu=1;
+$menu = 1;
 ?>
-    <html>
+<html>
 
     <head>
         <title>Reserver-Un-Cab</title>
-		 <!--Logo en barre de titre-->
-		<link rel="shortcut icon" href="images/logo.png" type="image/png">
+        <!--Logo en barre de titre-->
+        <link rel="shortcut icon" href="images/logo.png" type="image/png">
         <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -32,9 +32,9 @@ $menu=1;
         <link rel="stylesheet" href="css/datepicker3.css" />
 
         <script type="text/javascript" async>
-        
+
             var price = "undefined";
-			var avanceoufutur = 0;
+            var avanceoufutur = 0;
 
             function onload() {
                 getprix();
@@ -50,13 +50,13 @@ $menu=1;
             }
 
             function checkDate() {
-			
+
                 var now = new Date();
 
                 var annee = now.getFullYear();
-               
-				var jour = ("0" + now.getDate()).slice(-2);
-				var mois = ("0" + (now.getMonth() + 1)).slice(-2);
+
+                var jour = ("0" + now.getDate()).slice(-2);
+                var mois = ("0" + (now.getMonth() + 1)).slice(-2);
 
                 var EnteredDate = document.getElementById("datedep").value; //for javascript
                 var EnteredDate = $("#datedep").val(); // For JQuery
@@ -64,28 +64,28 @@ $menu=1;
                 var month = EnteredDate.substring(0, 2);
                 var date = EnteredDate.substring(3, 5);
                 var year = EnteredDate.substring(6, 10);
-				
-		
-				
-				//Test date courante et date séléctionné
-                if (( date >= jour && year >= annee && month >= mois))
+
+
+
+                //Test date courante et date séléctionné
+                if ((date >= jour && year >= annee && month >= mois))
                 {
-			
+
                 } else
                 {
                     alert("La date ne peux etre dans le passé !");
-                     document.getElementById("datedep").value="";
+                    document.getElementById("datedep").value = "";
                     //document.location.href = "index.php";
                 }
 
 
 
             }
-			
-			 function checkAdvanceorAsap() {
 
-              //Heure courante.
-         
+            function checkAdvanceorAsap() {
+
+                //Heure courante.
+
                 var now = new Date();
 
                 var annee = now.getFullYear();
@@ -98,24 +98,24 @@ $menu=1;
                 var month = EnteredDate.substring(0, 2);
                 var date = EnteredDate.substring(3, 5);
                 var year = EnteredDate.substring(6, 10);
-		
 
-				//Test date courante et date séléctionné
-                if ( date == jour && year == annee && month == mois)
+
+                //Test date courante et date séléctionné
+                if (date == jour && year == annee && month == mois)
                 {
-				   window.avanceoufutur = 15;
-				   return true;
+                    window.avanceoufutur = 15;
+                    return true;
                 } else
                 {
-                   window.avanceoufutur = 8;
-				   return false;
+                    window.avanceoufutur = 8;
+                    return false;
                 }
 
             }
 
             function checkonlytime()
             {
-			
+
 
                 //Heure courante.
                 var now = new Date();
@@ -134,72 +134,72 @@ $menu=1;
                 var year = EnteredDate.substring(6, 10);
 
                 var currentTime = new Date();
-				var desti = document.getElementById("depart").value;
-				if (checkParis(desti) == true)
-				{
-                var result = currentTime.setMinutes(currentTime.getMinutes() + 45);
-				} else
-				{
-				var result = currentTime.setMinutes(currentTime.getMinutes() + 75);
-				}
+                var desti = document.getElementById("depart").value;
+                if (checkParis(desti) == true)
+                {
+                    var result = currentTime.setMinutes(currentTime.getMinutes() + 45);
+                } else
+                {
+                    var result = currentTime.setMinutes(currentTime.getMinutes() + 75);
+                }
                 var h = currentTime.getHours();
                 var m = currentTime.getMinutes();
-				
-				//
-				var hdep = document.getElementById("heyres").value;
-				var mdep= document.getElementById("minutes").value;
-				
-				var heurecourante= hmsToSecondsOnly(h+":"+m);
-				var heureselection = hmsToSecondsOnly(hdep+":"+mdep);
-				//
-				
-		
-                if ((heurecourante < heureselection && mois >= month && year >= annee && jour >= date) || (heurecourante > heureselection && mois < month && year <= annee) ||(heurecourante > heureselection && mois >= month && year >= annee && jour < date) )
+
+                //
+                var hdep = document.getElementById("heyres").value;
+                var mdep = document.getElementById("minutes").value;
+
+                var heurecourante = hmsToSecondsOnly(h + ":" + m);
+                var heureselection = hmsToSecondsOnly(hdep + ":" + mdep);
+                //
+
+
+                if ((heurecourante < heureselection && mois >= month && year >= annee && jour >= date) || (heurecourante > heureselection && mois < month && year <= annee) || (heurecourante > heureselection && mois >= month && year >= annee && jour < date))
                 {
-					 return false;					 
+                    return false;
                 }
-                else 
+                else
                 {
                     alert("Vous pouvez choisir un départ à partir de : " + h + " heures " + m + " minutes ");
 
-					document.getElementById("minutes").selectedIndex = 0;
-					return true;
+                    document.getElementById("minutes").selectedIndex = 0;
+                    return true;
                 }
 
             }
-			
-		function hmsToSecondsOnly(str) {
-			var p = str.split(':'),
-				s = 0, m = 1;
 
-			while (p.length > 0) {
-				s += m * parseInt(p.pop(), 10);
-				m *= 60;
-			}
+            function hmsToSecondsOnly(str) {
+                var p = str.split(':'),
+                        s = 0, m = 1;
 
-			return s;
-		}
+                while (p.length > 0) {
+                    s += m * parseInt(p.pop(), 10);
+                    m *= 60;
+                }
+
+                return s;
+            }
 
             function checkMytime()
             {
-			
-				// Destination
-				var desti = document.getElementById("depart").value;
-				
-				if (desti == "")
-				{
-					alert('Veuillez selectionner une adresse de depart');
-					document.getElementById("heyres").selectedIndex = 0;
-					document.getElementById("minutes").selectedIndex = 0;
-				} else if ( document.getElementById("datedep").value == "")
-				{
-					
-					alert('Veuillez selectionner une date');
-					document.getElementById("heyres").selectedIndex = 0;
-					document.getElementById("minutes").selectedIndex = 0;
-				
-				}
-				
+
+                // Destination
+                var desti = document.getElementById("depart").value;
+
+                if (desti == "")
+                {
+                    alert('Veuillez selectionner une adresse de depart');
+                    document.getElementById("heyres").selectedIndex = 0;
+                    document.getElementById("minutes").selectedIndex = 0;
+                } else if (document.getElementById("datedep").value == "")
+                {
+
+                    alert('Veuillez selectionner une date');
+                    document.getElementById("heyres").selectedIndex = 0;
+                    document.getElementById("minutes").selectedIndex = 0;
+
+                }
+
                 //Heure courante.
                 var now = new Date();
                 var annee = now.getFullYear();
@@ -221,39 +221,39 @@ $menu=1;
 
                     alert("L'heure ne peux etre dans le passé !");
                     document.getElementById("heyres").selectedIndex = 0;
-					document.getElementById("minutes").selectedIndex = 0;
+                    document.getElementById("minutes").selectedIndex = 0;
                 }
-				
+
             }
-			
-			
+
+
 
             function checkAndgo()
             {
-				
-				var response = checkonlytime();
-				
-				if ( response == true)
-				{
-					return;
-				}
-				var mydate = document.getElementById('datedep').value;
-				
-					if (mydate == "")
-				{
-						alert("Veuillez saisir une date");
-						return;
-				}
-				
-				//Filtre départ d'ile de france
-		
-				if (!window.mavar)
-				{
-					alert("Veuillez saisir une adresse de départ complète");
-					return;
-				}
-				
-				
+
+                var response = checkonlytime();
+
+                if (response == true)
+                {
+                    return;
+                }
+                var mydate = document.getElementById('datedep').value;
+
+                if (mydate == "")
+                {
+                    alert("Veuillez saisir une date");
+                    return;
+                }
+
+                //Filtre départ d'ile de france
+
+                if (!window.mavar)
+                {
+                    alert("Veuillez saisir une adresse de départ complète");
+                    return;
+                }
+
+
                 var totalpers = document.getElementById('nbpers').value;
                 var totalbag = document.getElementById('nbbag').value;
                 var adr_dep = document.getElementById('depart').value;
@@ -273,11 +273,11 @@ $menu=1;
                 }
                 else
                 {
-                    window.location.href = "recapitulatif.php?depart=" + adr_dep + "&arrivee=" + adr_arr + "&totalpers=" + totalpers + "&totalbag=" + totalbag + "&datedep=" + datedep + "&heyres=" + heyres +  "&offre=" +window.prix;
+                    window.location.href = "recapitulatif.php?depart=" + adr_dep + "&arrivee=" + adr_arr + "&totalpers=" + totalpers + "&totalbag=" + totalbag + "&datedep=" + datedep + "&heyres=" + heyres + "&offre=" + window.prix;
                 }
             }
-			
-			     function checkParis(aero)
+
+            function checkParis(aero)
             {
                 var aeroports = "Paris";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -296,7 +296,7 @@ $menu=1;
                     return false;
                 }
             }
-			   function checkGare(aero)
+            function checkGare(aero)
             {
                 var aeroports = "Gare";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -305,7 +305,7 @@ $menu=1;
                     return false;
                 }
             }
-			     function checkAero(aero)
+            function checkAero(aero)
             {
                 var aeroports = "Aéroport";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -332,7 +332,7 @@ $menu=1;
                     return false;
                 }
             }
-			   function checkBourget(aero)
+            function checkBourget(aero)
             {
                 var aeroports = "Aéroport de Paris - Le Bourget, Le Bourget, France";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -367,8 +367,8 @@ $menu=1;
             function showMap() {
                 document.getElementById('bannner').style.display = "block";
                 document.getElementById('bannner2').style.display = "none";
-				document.getElementById('mapro').style.display = "none";
-				document.getElementById('mapro2').style.display = "none";
+                document.getElementById('mapro').style.display = "none";
+                document.getElementById('mapro2').style.display = "none";
             }
 
             function hideMap() {
@@ -395,7 +395,7 @@ $menu=1;
                     zoom: 9,
                     navigationControl: true,
                     mapTypeControl: true,
-                    scaleControl: true,
+                            scaleControl: true,
                     draggable: true,
                     componentRestrictions: {
                         country: "fr"
@@ -430,7 +430,7 @@ $menu=1;
                 }
 
                 origin_autocomplete.addListener('place_changed', function () {
-					codeAddress();
+                    codeAddress();
                     var place = origin_autocomplete.getPlace();
                     if (!place.geometry) {
                         window.alert("Autocomplete's returned place contains no geometry");
@@ -446,7 +446,7 @@ $menu=1;
                 });
 
                 destination_autocomplete.addListener('place_changed', function () {
-					codeAddress();
+                    codeAddress();
                     var place = destination_autocomplete.getPlace();
                     if (!place.geometry) {
                         window.alert("Autocomplete's returned place contains no geometry");
@@ -484,155 +484,155 @@ $menu=1;
                     });
                 }
             }
-			
-			
-			
-				// Obtenir le code postale de départ
-				var geocoder;
-				var mavar;
-				var map;        
-				function codeAddress() {
-				
-					geocoder = new google.maps.Geocoder();
-					var address = document.getElementById('depart').value;
-					var aero_dep = checkAero(address);
-					var garedep = checkGare(address);
-					
-					
-					geocoder.geocode({ 'address': address }, function (results, status) {
-					
-						if (status == google.maps.GeocoderStatus.OK) {                       
-						
-							for (var component in results[0]['address_components']) {
-							
-								for (var i in results[0]['address_components'][component]['types']) {
-								
-									if (results[0]['address_components'][component]['types'][i] == "postal_code") {
-									
-										var state = results[0]['address_components'][component]['long_name'];
-										res = state.substring(0,2);
-											
-				
-										if ( res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78' || aero_dep || garedep)
-										{
-											//alert("Depart d'ile de france : OK");
-											window.mavar = true;
-										} else
-										{
-											//alert("Depart d'ile de france : NON");
-											window.mavar = false;
-										}
-									}
-								}
-								
-							}                                           
-						} else {
-						
-						}
-					
-					});
-					}
-				
-			
+
+
+
+            // Obtenir le code postale de départ
+            var geocoder;
+            var mavar;
+            var map;
+            function codeAddress() {
+
+                geocoder = new google.maps.Geocoder();
+                var address = document.getElementById('depart').value;
+                var aero_dep = checkAero(address);
+                var garedep = checkGare(address);
+
+
+                geocoder.geocode({'address': address}, function (results, status) {
+
+                    if (status == google.maps.GeocoderStatus.OK) {
+
+                        for (var component in results[0]['address_components']) {
+
+                            for (var i in results[0]['address_components'][component]['types']) {
+
+                                if (results[0]['address_components'][component]['types'][i] == "postal_code") {
+
+                                    var state = results[0]['address_components'][component]['long_name'];
+                                    res = state.substring(0, 2);
+
+
+                                    if (res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78' || aero_dep || garedep)
+                                    {
+                                        //alert("Depart d'ile de france : OK");
+                                        window.mavar = true;
+                                    } else
+                                    {
+                                        //alert("Depart d'ile de france : NON");
+                                        window.mavar = false;
+                                    }
+                                }
+                            }
+
+                        }
+                    } else {
+
+                    }
+
+                });
+            }
+
+
 
 
 
             function callback(response, status) {
 
-				
-				
+
+
                 var prixtotal = 0;
                 //r?cup?ration des champs du formulaire
                 var adr_dep = document.getElementById('depart').value;
                 var adr_arr = document.getElementById('arrivee').value;
-				
-				//Conditions départ de Paris
-				/*if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
-				{
-					
-				} else 
-				{
-					alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
-					document.location.href="index.php";
-				}*/
-				
-				// Prix fixe aéroports
-				
+
+                //Conditions départ de Paris
+                /*if (checkParis(adr_dep) == true || checkOrly(adr_dep) == true || checkBeauvais(adr_dep) == true || checkCharlle(adr_dep) == true || checkBourget(adr_dep) == true)
+                 {
+                 
+                 } else 
+                 {
+                 alert('Pour un départ hors de Paris ou Aeroports de Paris, veuillez nous contacter au 06 46 49 49 35 pour reserver');
+                 document.location.href="index.php";
+                 }*/
+
+                // Prix fixe aéroports
+
                 var a = checkOrly(adr_dep);
                 var b = checkOrly(adr_arr);
-				
-				var c = checkBeauvais(adr_dep);
-				var d = checkBeauvais(adr_arr);
-				
-				var e = checkCharlle(adr_dep);
-				var f = checkCharlle(adr_arr);
-				
-				var g = checkBourget(adr_dep);
-				var h = checkBourget(adr_arr);
-				
-				// Verifier si le départ est un aeroport et l'arrivée
-				var aero_dep = checkAero(adr_dep);
-				var aero_arr = checkAero(adr_arr);
-				
-			
-				
-				var chkdep = checkParis(adr_dep);
-				var chkarr = checkParis(adr_arr);
-			
-				var mavar = checkGare(adr_dep);
-				var mavar2= checkParis(adr_dep);
-				var mavar3= checkParis(adr_arr);
-				var mavar4= checkParis(adr_dep);
-				var mavar5= checkGare(adr_arr);
-				
-				//Vérifier si la réservation est le jour même
-				var todayoradvance = checkAdvanceorAsap();
-				
-				if((mavar == true && mavar2 == true && mavar3==true) || (mavar4 == true && mavar5 == true && mavar3 == true))
-				{
-					window.prixtotal=19;
-					rep=true;
-				} else
-				{
-				
-				var rep = false;
-				}
-				
-				if( rep == false && (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
-				{ 
-					window.prixtotal = 0;
-					rep=true;
-				} else if ( rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true)  || (aero_dep == true && aero_arr == true))
-				{
-					if (rep == false && (a == true && chkarr == true) || (b == true && chkdep == true))
-					{
-					window.prixtotal = 39;
-					rep=true;
-					} else if ( rep == false && (c == true && chkarr == true) || (d == true && chkdep == true))
-					{
-					window.prixtotal = 110;
-					rep=true;
-					} else if ( rep == false && (e == true && chkarr == true) || (f == true && chkdep == true))
-					{
-					window.prixtotal = 49;
-					rep=true;
-					} else if ( rep == false && (g == true && chkarr == true) || (h == true && chkdep == true))
-					{
-					window.prixtotal = 59;
-					rep=true;
-					} else if ( rep == false && (b == true && e == true) || (a == true && f == true))
-					{
-					window.prixtotal = 69;
-					rep=true;
-					} else if ( rep == false )
-					{
-					window.prixtotal = 0;
-					rep=true;
-					}
-				}
-				
-		
-       
+
+                var c = checkBeauvais(adr_dep);
+                var d = checkBeauvais(adr_arr);
+
+                var e = checkCharlle(adr_dep);
+                var f = checkCharlle(adr_arr);
+
+                var g = checkBourget(adr_dep);
+                var h = checkBourget(adr_arr);
+
+                // Verifier si le départ est un aeroport et l'arrivée
+                var aero_dep = checkAero(adr_dep);
+                var aero_arr = checkAero(adr_arr);
+
+
+
+                var chkdep = checkParis(adr_dep);
+                var chkarr = checkParis(adr_arr);
+
+                var mavar = checkGare(adr_dep);
+                var mavar2 = checkParis(adr_dep);
+                var mavar3 = checkParis(adr_arr);
+                var mavar4 = checkParis(adr_dep);
+                var mavar5 = checkGare(adr_arr);
+
+                //Vérifier si la réservation est le jour même
+                var todayoradvance = checkAdvanceorAsap();
+
+                if ((mavar == true && mavar2 == true && mavar3 == true) || (mavar4 == true && mavar5 == true && mavar3 == true))
+                {
+                    window.prixtotal = 19;
+                    rep = true;
+                } else
+                {
+
+                    var rep = false;
+                }
+
+                if (rep == false && (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
+                {
+                    window.prixtotal = 0;
+                    rep = true;
+                } else if (rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true) || (aero_dep == true && aero_arr == true))
+                {
+                    if (rep == false && (a == true && chkarr == true) || (b == true && chkdep == true))
+                    {
+                        window.prixtotal = 39;
+                        rep = true;
+                    } else if (rep == false && (c == true && chkarr == true) || (d == true && chkdep == true))
+                    {
+                        window.prixtotal = 110;
+                        rep = true;
+                    } else if (rep == false && (e == true && chkarr == true) || (f == true && chkdep == true))
+                    {
+                        window.prixtotal = 49;
+                        rep = true;
+                    } else if (rep == false && (g == true && chkarr == true) || (h == true && chkdep == true))
+                    {
+                        window.prixtotal = 59;
+                        rep = true;
+                    } else if (rep == false && (b == true && e == true) || (a == true && f == true))
+                    {
+                        window.prixtotal = 69;
+                        rep = true;
+                    } else if (rep == false)
+                    {
+                        window.prixtotal = 0;
+                        rep = true;
+                    }
+                }
+
+
+
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
                 } else {
@@ -649,8 +649,8 @@ $menu=1;
                                 var element = results[j];
                                 var statut = element.status;
                                 var arr = destinations[j];
-								
-								
+
+
                                 if (statut == 'OK') {
                                     var dist = element.distance.value;
                                     var dure = element.duration.text;
@@ -662,16 +662,16 @@ $menu=1;
                                         prix = Math.round(parseInt(dist / 1000) * window.price);
                                     }
 
-                                  if ((prix < 15 && todayoradvance == true) || (prix < 8 && todayoradvance == false))
+                                    if ((prix < 15 && todayoradvance == true) || (prix < 8 && todayoradvance == false))
                                     {
-										window.prixtotal = window.avanceoufutur;
-										prix = window.prixtotal;
-										document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
+                                        window.prixtotal = window.avanceoufutur;
+                                        prix = window.prixtotal;
+                                        document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
                                     } else
                                     {
-										
+
                                         document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
@@ -695,7 +695,7 @@ $menu=1;
 
             function calculDistance() {
 
-			
+
                 //initMap();
                 document.getElementById("distance").style.display = "block";
                 document.getElementById("prix").style.display = "block";
@@ -738,13 +738,17 @@ $menu=1;
 
 
             }
-			
-  
+
+
         </script>
         <style>
             form input {
                 padding-bottom: 0px !important;
                 padding-top: 0px !important;
+            }
+            @media only screen and (max-width: 479px) {
+
+                #form1{width: 300px !important}
             }
         </style>
     </head>
@@ -754,7 +758,7 @@ $menu=1;
 
 
         <div id="page-wrapper">
-	
+
             <!-- Header -->
             <div id="header-wrapper">
                 <div id="header">
@@ -765,242 +769,253 @@ $menu=1;
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>
 
-                        <?php include("module/connexion.php"); ?>
-                            <!-- Banner -->
-                            <br/>
-                            <br/>
-                            <form id="form1" name="form1" action="" method="post">
-							
-                                <section id="banner" style="height : 225px; ; z-index: 1; ">
-                                    <header>
+                    <?php include("module/connexion.php"); ?>
+                    <!-- Banner -->
+                    <br/>
+                    <br/>
+                    <form id="form1" name="form1" action="" method="post">
 
-                                        <h2 style="color: white; font-size: 25px; margin-bottom: 20px; display : block;">Réservez votre véhicule dès maintenant</h2>
+                        <section id="banner" style="z-index: 1; height: 225px; z-index: 1; margin-top: 0px;">
+                            <header>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <div class="input-group-btn">
-                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
-            showMap();codeAddress()">Charles De Gaulle - Roissy</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Orly, Orly, France';
-                                                            showMap();codeAddress()">Orly</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Beauvais';
-                                                            showMap();codeAddress()">Beauvais</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Paris - Le Bourget, Le Bourget, France';
-                                                            showMap();codeAddress()">Le Bourget</a></li>
+                                <h2 class="titre_haut">Réservez votre véhicule dès maintenant</h2>
 
-                                                        </ul>
-                                                    </div>
-                                                    <div class="input-group-btn">
-                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><b style="padding-left: 5px;">Gares à Paris</b></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Saint-Lazare, Paris, France';
-                                                            showMap();codeAddress()">Saint-Lazare</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Montparnasse, Boulevard de Vaugirard, Paris, France';
-                                                            showMap();codeAddress()">Montparnasse</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Lyon, Place Louis Armand, Paris, France';
-                                                            showMap();codeAddress()">Lyon</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Paris Gare de le Est, Paris, France';
-                                                            showMap();codeAddress()">Est</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare du Nord, Rue de Dunkerque, Paris, France';
-                                                            showMap();codeAddress()">Nord</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Quai de Austerlitz, Quartier de la Gare, Paris, France';
-                                                            showMap();codeAddress()">Austerlitz</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Paris-Bercy, Boulevard de Bercy, Paris, France';
-                                                            showMap();codeAddress()">Bercy</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- /btn-group -->
-                                                    <input step="border-left-width: 0px;" type="text" id="depart" size="35" name="depart" class="form-control" placeholder="Adressse de départ" onkeypress="javascript:showMap()"/>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-btn hidden-xs">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
+            showMap();
+            codeAddress()">Charles De Gaulle - Roissy</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Orly, Orly, France';
+                                                                    showMap();
+                                                                    codeAddress()">Orly</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Beauvais';
+                                                                    showMap();
+                                                                    codeAddress()">Beauvais</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Aéroport de Paris - Le Bourget, Le Bourget, France';
+                                                                    showMap();
+                                                                    codeAddress()">Le Bourget</a></li>
 
-                                                </div>
-                                                <!-- /input-group -->
+                                                </ul>
                                             </div>
-                                            <!-- /.col-lg-6 -->
-                                            <div class="col-md-6">
-                                                <div class="input-group">
-                                                    <div class="input-group-btn">
-                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
-                                                            showMap()">Charles De Gaulle - Roissy</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Orly, Orly, France';
-                                                            showMap()">Orly</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Beauvais';
-                                                            showMap()">Beauvais</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Paris - Le Bourget, Le Bourget, France';
-                                                            showMap()">Le Bourget</a></li>
-
-                                                        </ul>
-                                                    </div>
-                                                    <div class="input-group-btn">
-                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><b style="padding-left: 5px;">Gares à Paris</b></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare Saint-Lazare, Paris, France';
-                                                            showMap()">Saint-Lazare</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare Montparnasse, Boulevard de Vaugirard, Paris, France';
-                                                            showMap()">Montparnasse</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare de Lyon, Place Louis Armand, Paris, France';
-                                                            showMap()">Lyon</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Paris Gare de le Est, Paris, France';
-                                                            showMap()">Est</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare du Nord, Rue de Dunkerque, Paris, France';
-                                                            showMap()">Nord</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Quai de Austerlitz, Quartier de la Gare, Paris, France';
-                                                            showMap()">Austerlitz</a></li>
-                                                            <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare de Paris-Bercy, Boulevard de Bercy, Paris, France';
-                                                            showMap()">Bercy</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- /btn-group -->
-                                                    <input type="text" id="arrivee" size="35" name="arrivee" class="form-control" placeholder="Adresse d'arrivée"/>
-                                                </div>
-                                                <!-- /input-group -->
+                                            <div class="input-group-btn hidden-xs">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><b style="padding-left: 5px;">Gares à Paris</b></li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Saint-Lazare, Paris, France';
+                                                                    showMap();
+                                                                    codeAddress()">Saint-Lazare</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare Montparnasse, Boulevard de Vaugirard, Paris, France';
+                                                                    showMap();
+                                                                    codeAddress()">Montparnasse</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Lyon, Place Louis Armand, Paris, France';
+                                                                    showMap();
+                                                                    codeAddress()">Lyon</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Paris Gare de le Est, Paris, France';
+                                                                    showMap();
+                                                                    codeAddress()">Est</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare du Nord, Rue de Dunkerque, Paris, France';
+                                                                    showMap();
+                                                                    codeAddress()">Nord</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Quai de Austerlitz, Quartier de la Gare, Paris, France';
+                                                                    showMap();
+                                                                    codeAddress()">Austerlitz</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('depart').value = 'Gare de Paris-Bercy, Boulevard de Bercy, Paris, France';
+                                                                    showMap();
+                                                                    codeAddress()">Bercy</a></li>
+                                                </ul>
                                             </div>
-                                            <!-- /.col-lg-6 -->
+                                            <!-- /btn-group -->
+                                            <input step="border-left-width: 0px;" type="text" id="depart" size="35" name="depart" class="form-control" placeholder="Adressse de départ" onkeypress="javascript:showMap()"/>
 
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6" style="text-align: left; padding-top: 20px;">
-                                                <label>Date</label>
-                                                <div class="form-group">
-                                                    <div class="input-group date" data-provide="datepicker">
-                                                        <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" value="<?php echo date("m/d/Y"); ?>" required="required">
-                                                        <div class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-th"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <!-- /input-group -->
+                                    </div>
+                                    <!-- /.col-lg-6 -->
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-btn hidden-xs">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport Charles-de-Gaulle, Roissy-en-France, France';
+                                                                    showMap()">Charles De Gaulle - Roissy</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Orly, Orly, France';
+                                                                    showMap()">Orly</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Beauvais';
+                                                                    showMap()">Beauvais</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Aéroport de Paris - Le Bourget, Le Bourget, France';
+                                                                    showMap()">Le Bourget</a></li>
 
-
-
-
+                                                </ul>
                                             </div>
-                                            <!-- /.col-lg-6 -->
-                                            <div class="col-md-6" style="text-align: left; padding-top: 20px;">
-                                                <label>Heure</label>
-                                                <div>
-                                                    <div class="col-md-6" style="padding-left: 0px; padding-right: 15px;">
-                                                        <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkMytime()">
+                                            <div class="input-group-btn hidden-xs">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><b style="padding-left: 5px;">Gares à Paris</b></li>
+                                                    <li role="separator" class="divider"></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare Saint-Lazare, Paris, France';
+                                                                    showMap()">Saint-Lazare</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare Montparnasse, Boulevard de Vaugirard, Paris, France';
+                                                                    showMap()">Montparnasse</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare de Lyon, Place Louis Armand, Paris, France';
+                                                                    showMap()">Lyon</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Paris Gare de le Est, Paris, France';
+                                                                    showMap()">Est</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare du Nord, Rue de Dunkerque, Paris, France';
+                                                                    showMap()">Nord</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Quai de Austerlitz, Quartier de la Gare, Paris, France';
+                                                                    showMap()">Austerlitz</a></li>
+                                                    <li style="cursor: pointer"><a onclick="document.getElementById('arrivee').value = 'Gare de Paris-Bercy, Boulevard de Bercy, Paris, France';
+                                                                    showMap()">Bercy</a></li>
+                                                </ul>
+                                            </div>
+                                            <!-- /btn-group -->
+                                            <input type="text" id="arrivee" size="35" name="arrivee" class="form-control" placeholder="Adresse d'arrivée"/>
+                                        </div>
+                                        <!-- /input-group -->
+                                    </div>
+                                    <!-- /.col-lg-6 -->
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" style="text-align: left; padding-top: 20px;">
+                                        <label class="hidden-xs">Date</label>
+                                        <div class="form-group">
+                                            <div class="input-group date" data-provide="datepicker">
+                                                <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" value="<?php echo date("m/d/Y"); ?>" required="required">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-th"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                    <!-- /.col-lg-6 -->
+                                    <div class="col-md-6 col-xs-12" style="text-align: left; padding-top: 20px;">
+                                        <label class="hidden-xs">Heure</label>
+                                        <div>
+                                            <div class="col-md-6 col-xs-6" style="padding-left: 0px; padding-right: 15px;">
+                                                <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkMytime()">
+                                                    <?php
+                                                    for ($i = 0; $i < 24; $i++) {
+                                                        ?>
+                                                        <option>
                                                             <?php
-														for ($i = 0; $i < 24; $i++) {
-															?>
-                                                                <option>
-                                                                    <?php
-                                                        if ($i < 10)
-                                                            echo "0" . $i . "h";
-                                                        else
-                                                            echo $i . "h";
-                                                        ?>
-                                                                </option>
-                                                                <?php
-                                                        }
-                                                        ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-6" style="padding-left: 15px; padding-right: 0px;">
-                                                        <select class="form-control" id="minutes" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkonlytime()">
-                                                            <option>00 min</option>
-                                                            <option>05 min</option>
-                                                            <option>10 min</option>
-                                                            <option>15 min</option>
-                                                            <option>20 min</option>
-                                                            <option>25 min</option>
-                                                            <option>30 min</option>
-                                                            <option>35 min</option>
-                                                            <option>40 min</option>
-                                                            <option>45 min</option>
-                                                            <option>50 min</option>
-                                                            <option>55 min</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                                            if ($i < 10)
+                                                                echo "0" . $i . "h";
+                                                            else
+                                                                echo $i . "h";
+                                                            ?>
+                                                        </option>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-xs-6" style="padding-left: 15px; padding-right: 0px;">
+                                                <select class="form-control" id="minutes" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkonlytime()">
+                                                    <option>00 min</option>
+                                                    <option>05 min</option>
+                                                    <option>10 min</option>
+                                                    <option>15 min</option>
+                                                    <option>20 min</option>
+                                                    <option>25 min</option>
+                                                    <option>30 min</option>
+                                                    <option>35 min</option>
+                                                    <option>40 min</option>
+                                                    <option>45 min</option>
+                                                    <option>50 min</option>
+                                                    <option>55 min</option>
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6" style="text-align: left; padding-top: 10px;">
-                                                <label>Passagers</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-users"></i></span>
-                                                    <select id="nbpers" class="form-control" onchange="javascript:verif()">
-                                                        <option selected="" value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="8">8</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6" style="text-align: left; padding-top: 10px;">
-                                                <label>Valises</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-suitcase"></i></span>
-                                                    <select id="nbbag" class="form-control" onchange="javascript:verif()">
-                                                        <option selected="" value="0">0</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: white;font-weight : bold">
-                                                <div id="more_passengers" style="color: white; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div>
-                                            </div>
-
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" style="text-align: left; padding-top: 10px;">
+                                        <label class="hidden-xs">Passagers</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-users"></i></span>
+                                            <select id="nbpers" class="form-control" onchange="javascript:verif()">
+                                                <option selected="" value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                            </select>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-2"></div>
-                                            <div class="col-md-4">
-                                                <button type="button" id="mybuton2" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <button type="button" id="mybuton" class="btn btn-danger col-md-12" onclick="javascript:checkAndgo();">Valider la commande</button>
-                                            </div>
-                                            <div class="col-md-2"></div>
+                                    </div>
+                                    <div class="col-md-6" style="text-align: left; padding-top: 10px;">
+                                        <label class="hidden-xs" >Valises</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-suitcase"></i></span>
+                                            <select id="nbbag" class="form-control" onchange="javascript:verif()">
+                                                <option selected="" value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-4" id="distance"></div>
-                                            <div class="col-md-4" id="prix"></div>
-                                            <div class="col-md-4" id="duree"></div>
-                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="padding-top: 10px; padding-bottom: 10px; color: white;font-weight : bold">
+                                        <div id="more_passengers" style="color: white; display: none">Pour cette réservation, veuillez nous contacter au 06 58 54 98 25</div>
+                                    </div>
 
-                                    </header>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-4 col-xs-12">
+                                        <button type="button" id="mybuton2" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
+                                    </div>
+                                    <div class="col-md-4 col-xs-12">
+                                        <button type="button" id="mybuton" class="btn btn-danger col-md-12" onclick="javascript:checkAndgo();">Valider la commande</button>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4" id="distance"></div>
+                                    <div class="col-md-4" id="prix"></div>
+                                    <div class="col-md-4" id="duree"></div>
+                                </div>
+
+                            </header>
 
 
-                                </section>
-                            </form>
-							
-                            <section id="bannner" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; display: block; opacity: 0.8; "></section>
-                            <section id="bannner2" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; opacity: 0.8; "></section>
+                        </section>
+                    </form>
+
+                    <section id="bannner" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; display: block; opacity: 0.8; "></section>
+                    <section id="bannner2" style="height : 443px;  width: 100%; background-image: url('images/pic01.jpg'); position: relative; opacity: 0.8; "></section>
                 </div>
-				<i id="mapro" style="top: 260px;"><br/><h4>Soyez prévoyant !</h4> 
-Réservez votre cab maintenant
-ORLY
-À PARTIR DE 
-32€ CDG
-À PARTIR DE 
-42€
-En réservant 24h à l’avance
+                <i id="mapro" style="top: 260px;"><br/><h4>Soyez prévoyant !</h4> 
+                    Réservez votre cab maintenant
+                    ORLY
+                    À PARTIR DE 
+                    32€ CDG
+                    À PARTIR DE 
+                    42€
+                    En réservant 24h à l’avance
 
-Plus d'infos sur notre page <br/>
-<a href="tarifs.php">- Offre Aéroport -</a></i>
-<i id="mapro2" style="top: 250px; right: 16px"><br/><h4>Offre spéciale !</h4> 
-Votre 10 ème réservation est offerte. Profitez-en vite!</i>
+                    Plus d'infos sur notre page <br/>
+                    <a href="tarifs.php">- Offre Aéroport -</a></i>
+                <i id="mapro2" style="top: 250px; right: 16px"><br/><h4>Offre spéciale !</h4> 
+                    Votre 10 ème réservation est offerte. Profitez-en vite!</i>
                 <br/>
                 <br/>
                 <br/>
@@ -1033,7 +1048,7 @@ Votre 10 ème réservation est offerte. Profitez-en vite!</i>
                                     <h2>Qualité & Prix</h2>
                                 </header>
                                 <p>Nos chauffeurs très aimables assureront votre comfort et bien être tout au long de votre voyage.</p>
-								<p>Profitez de votre 10 eme course offerte au départ de Paris pour une personne parrainé .</p>
+                                <p>Profitez de votre 10 eme course offerte au départ de Paris pour une personne parrainé .</p>
                             </section>
                         </div>
                     </div>
@@ -1099,25 +1114,25 @@ Votre 10 ème réservation est offerte. Profitez-en vite!</i>
         <!-- Footer -->
         <?php include("module/footer.php"); ?>
 
-            </div>
+    </div>
 
-            <!-- Scripts -->
-            <script src="assets/js/jquery.min.js"></script>
-            <script src="assets/js/jquery.dropotron.min.js"></script>
-            <script src="assets/js/skel.min.js"></script>
-            <script src="assets/js/skel-viewport.min.js"></script>
-            <script src="assets/js/util.js"></script>
-            <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-            <script src="assets/js/main.js"></script>
-            <script src="css/moment-with-locales.js" type="text/javascript" LANGUAGE="JavaScript"></script>
-            <script src="css/bootstrap-datetimepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
-            <script src="css/bootstrap-datepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
-            <script type="text/javascript">
-                $('.datepicker').datepicker({
-                                               format: 'dd/mm/yyyy',
-                                               startDate: '-3d'
-                                           });
-            </script>
-    </body>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/skel-viewport.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
+    <script src="css/moment-with-locales.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+    <script src="css/bootstrap-datetimepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+    <script src="css/bootstrap-datepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
+    <script type="text/javascript">
+                                            $('.datepicker').datepicker({
+                                                format: 'dd/mm/yyyy',
+                                                startDate: '-3d'
+                                            });
+    </script>
+</body>
 
-    </html>
+</html>
