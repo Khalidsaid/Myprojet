@@ -1810,7 +1810,7 @@ ol.default li {
     height : 443px;
     z-index: 1;
     position: absolute;
-    opacity: 0.8;
+    opacity: 1;
     background: rgba(11,32,53,0.8);
     margin-left: auto;
     margin-right: auto;
