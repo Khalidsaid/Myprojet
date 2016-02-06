@@ -2816,9 +2816,25 @@ ol.default li {
 .titre_haut{color: white; margin-bottom: 20px; display: block; font-size: 25px;}
 @media only screen and (max-width: 479px) {
     .closemap{ display: none !important; }
-    .titre_haut{color: white; margin-bottom: 20px; display: block; font-size: 13px !important;}
     #form1{width: 300px !important}
+
 }
-
-
+@media only screen and (max-width: 800px) {
+    .titre_haut{color: white; margin-bottom: 20px; display: block; font-size: 13px !important;}
+    #form1{width: 80% !important}
+    #banner{
+        margin-top: 0px !important; 
+        padding-top: 0px !important; 
+        z-index: 1 !important;
+    }
+}
+@media only screen and (max-width: 980px) {
+  #banner header h2{font-size: 1.6em}  
+  #banner{
+        margin-top: 0px !important; 
+        padding-top: 0px !important; 
+        z-index: 1 !important;
+    }
+    #form1{width: 80% !important}
+}
 

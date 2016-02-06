@@ -781,7 +781,7 @@ $menu = 1;
                                 <h2 class="titre_haut">Réservez votre véhicule dès maintenant</h2>
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 col-sm-6">
                                         <div class="input-group">
                                             <div class="input-group-btn hidden-xs">
                                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
@@ -838,7 +838,7 @@ $menu = 1;
                                         <!-- /input-group -->
                                     </div>
                                     <!-- /.col-lg-6 -->
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 col-sm-6">
                                         <div class="input-group">
                                             <div class="input-group-btn hidden-xs">
                                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
@@ -886,8 +886,8 @@ $menu = 1;
 
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6" style="text-align: left; padding-top: 20px;">
-                                        <label class="hidden-xs">Date</label>
+                                    <div class="col-md-6 col-sm-12" style="text-align: left; padding-top: 20px;">
+                                        <label class="hidden-xs hidden-sm">Date</label>
                                         <div class="form-group">
                                             <div class="input-group date" data-provide="datepicker">
                                                 <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" value="<?php echo date("m/d/Y"); ?>" required="required">
@@ -902,8 +902,8 @@ $menu = 1;
 
                                     </div>
                                     <!-- /.col-lg-6 -->
-                                    <div class="col-md-6 col-xs-12" style="text-align: left; padding-top: 20px;">
-                                        <label class="hidden-xs">Heure</label>
+                                    <div class="col-md-6 col-sm-12 col-xs-12" style="text-align: left; padding-top: 20px;">
+                                        <label class="hidden-xs hidden-sm">Heure</label>
                                         <div>
                                             <div class="col-md-6 col-xs-6" style="padding-left: 0px; padding-right: 15px;">
                                                 <select class="form-control" id="heyres" style="padding-left: 0px; padding-right: 0px;" onchange="javascript:checkMytime()">
@@ -943,8 +943,8 @@ $menu = 1;
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6" style="text-align: left; padding-top: 10px;">
-                                        <label class="hidden-xs">Passagers</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: left; padding-top: 10px;">
+                                        <label class="hidden-xs hidden-sm">Passagers</label>
                                         <div class="input-group">
                                             <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-users"></i></span>
                                             <select id="nbpers" class="form-control" onchange="javascript:verif()">
@@ -959,8 +959,8 @@ $menu = 1;
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" style="text-align: left; padding-top: 10px;">
-                                        <label class="hidden-xs" >Valises</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: left; padding-top: 10px;">
+                                        <label class="hidden-xs hidden-sm" >Valises</label>
                                         <div class="input-group">
                                             <span class="input-group-addon" id="basic-addon1"> <i class="fa fa-suitcase"></i></span>
                                             <select id="nbbag" class="form-control" onchange="javascript:verif()">
@@ -979,14 +979,14 @@ $menu = 1;
 
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2"></div>
-                                    <div class="col-md-4 col-xs-12">
+                                    <div class="col-md-2 hidden-xs hidden-sm"></div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12" style="padding-top: 5px;">
                                         <button type="button" id="mybuton2" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
                                     </div>
-                                    <div class="col-md-4 col-xs-12">
+                                    <div class="col-md-4 col-sm-6 col-xs-12" style="padding-top: 5px;">
                                         <button type="button" id="mybuton" class="btn btn-danger col-md-12" onclick="javascript:checkAndgo();">Valider la commande</button>
                                     </div>
-                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2 hidden-xs hidden-sm"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4" id="distance"></div>
