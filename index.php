@@ -12,8 +12,7 @@ $menu = 1;
 
     <head>
         <title>Reserver-Un-Cab</title>
-        <!--Logo en barre de titre-->
-        <link rel="shortcut icon" href="images/logo.png" type="image/png">
+
         <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -764,7 +763,7 @@ $menu = 1;
                 <div id="header">
 
                     <!-- Logo -->
-                    <h3><img src="images/logo.png"/></h3>
+                    <h3>Reserver-Un-Cab.Com</h3>
 
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>
