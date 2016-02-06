@@ -782,8 +782,8 @@ $menu = 1;
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
                                         <div class="input-group">
-                                            <div class="input-group-btn hidden-xs">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 34px; width: 37px; padding-left: 12px; padding-right: 12px"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
                                                 <ul class="dropdown-menu">
                                                     <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
                                                     <li role="separator" class="divider"></li>
@@ -802,8 +802,8 @@ $menu = 1;
 
                                                 </ul>
                                             </div>
-                                            <div class="input-group-btn hidden-xs">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 34px; width: 37px; padding-left: 12px; padding-right: 12px; border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
                                                 <ul class="dropdown-menu">
                                                     <li><b style="padding-left: 5px;">Gares à Paris</b></li>
                                                     <li role="separator" class="divider"></li>
@@ -839,8 +839,8 @@ $menu = 1;
                                     <!-- /.col-lg-6 -->
                                     <div class="col-md-6 col-sm-6">
                                         <div class="input-group">
-                                            <div class="input-group-btn hidden-xs">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 34px; width: 37px; padding-left: 12px; padding-right: 12px"><i class="fa fa-plane" style="color: #1E4F93"></i></button>
                                                 <ul class="dropdown-menu">
                                                     <li><b style="padding-left: 5px;">Aéroports en Ile-de-France</b></li>
                                                     <li role="separator" class="divider"></li>
@@ -855,8 +855,8 @@ $menu = 1;
 
                                                 </ul>
                                             </div>
-                                            <div class="input-group-btn hidden-xs">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 34px; width: 37px; padding-left: 12px; padding-right: 12px;border-right-width: 1px !important; border-left-width: 1px !important; border-radius: 0px !important"><i class="fa fa-bus" style="color: #1E4F93"></i></button>
                                                 <ul class="dropdown-menu">
                                                     <li><b style="padding-left: 5px;">Gares à Paris</b></li>
                                                     <li role="separator" class="divider"></li>
