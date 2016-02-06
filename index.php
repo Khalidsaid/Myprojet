@@ -774,7 +774,7 @@ $menu = 1;
                     <br/>
                     <form id="form1" name="form1" action="" method="post">
 
-                        <section id="banner" style="z-index: 1; height: 225px; z-index: 1; margin-top: 0px;">
+                        <section id="banner" style="z-index: 1; height: 225px; z-index: 1; margin-top: 0px; padding-top: 0px !important">
                             <header>
 
                                 <h2 class="titre_haut">Réservez votre véhicule dès maintenant</h2>
@@ -978,19 +978,19 @@ $menu = 1;
 
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2 hidden-xs hidden-sm"></div>
-                                    <div class="col-md-4 col-sm-6 col-xs-12" style="padding-top: 5px;">
+                                    <div class="col-md-2 hidden-xs hidden-sm hidden"></div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-top: 5px;">
                                         <button type="button" id="mybuton2" class="btn btn-success col-md-12" onclick="javascript:calculDistance();">Calculer le tarif</button>
                                     </div>
-                                    <div class="col-md-4 col-sm-6 col-xs-12" style="padding-top: 5px;">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding-top: 5px;">
                                         <button type="button" id="mybuton" class="btn btn-danger col-md-12" onclick="javascript:checkAndgo();">Valider la commande</button>
                                     </div>
-                                    <div class="col-md-2 hidden-xs hidden-sm"></div>
+                                    <div class="col-md-2 hidden-xs hidden-sm hidden"></div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4" id="distance"></div>
-                                    <div class="col-md-4" id="prix"></div>
-                                    <div class="col-md-4" id="duree"></div>
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-4 col-xs-12" id="distance"></div>
+                                    <div class="col-md-4 col-xs-12" id="prix"></div>
+                                    <div class="col-md-4 col-xs-12" id="duree"></div>
                                 </div>
 
                             </header>
@@ -1020,7 +1020,7 @@ $menu = 1;
                 <br/>
                 <br/>
                 <!-- Intro -->
-                <section id="intro" class="container">
+                <section id="intro" class="container" style="margin-top: 20px;">
                     <div class="row">
                         <div class="4u 12u(mobile)">
                             <section class="first">
