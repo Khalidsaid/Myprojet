@@ -130,20 +130,23 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                         </form>
                                         <?php
                                         if (isset($_POST['chauffeur'])) {
-//echo "select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and week(dtdeb)='" . date("W", strtotime(date('Y-m-d'))) . "' and month(dtdeb)='" . date('m') . "' and year(dtdeb)='" . date('Y') . "'";
                                             $gain_jour = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and dtdeb='" . date('Y-m-d') . "' "));
-                                          //  $gain_week = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and week(dtdeb)='" . date("W", strtotime(date('Y-m-d'))) . "' and month(dtdeb)='" . date('m') . "' and year(dtdeb)='" . date('Y') . "'"));
                                             $gain_month = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and month(dtdeb)='" . date('m') . "' and year(dtdeb)='" . date('Y') . "' "));
                                             $gain_year = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_attente where chauffeur=" . $_POST['chauffeur'] . " and year(dtdeb)='" . date('Y') . "' "));
+
+                                            ////////////////
+                                            $gain_jour_tel = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_tel where id_chauffeur=" . $_POST['chauffeur'] . " and dtdeb='" . date('Y-m-d') . "' "));
+                                            $gain_month_tel = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_tel where id_chauffeur=" . $_POST['chauffeur'] . " and month(dtdeb)='" . date('m') . "' and year(dtdeb)='" . date('Y') . "' "));
+                                            $gain_year_tel = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_tel where id_chauffeur=" . $_POST['chauffeur'] . " and year(dtdeb)='" . date('Y') . "' "));
                                             ?>
-                                            <div class="col-md-12">Gain journalier : <?php echo $gain_jour['somme'] . " €"; ?></div>
-                                           
-                                            <div class="col-md-12">Gain du mois : <?php echo $gain_month['somme'] . " €"; ?></div>
-                                            <div class="col-md-12">Gain annuel : <?php echo $gain_year['somme'] . " €"; ?></div>
-                                            <?php
-                                        }
-                                        ?>
+                                            
+    <?php
+}
+?>
                                     </div>
+                                    <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; font-size: 17px;">Gain journalier : <?php echo $gain_jour['somme'] + $gain_jour_tel['somme'] . " €"; ?></div>
+                                            <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; font-size: 17px;">Gain du mois : <?php echo $gain_month['somme'] + $gain_month_tel['somme'] . " €"; ?></div>
+                                            <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; font-size: 17px;">Gain annuel : <?php echo $gain_year['somme'] + $gain_year_tel['somme'] . " €"; ?></div>
                                 </div>
                             </div>
 
