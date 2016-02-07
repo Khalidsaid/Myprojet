@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-$menu=1;
+$menu = 1;
 $chaine_cmd = "Reservation sur ReserverUnCab";
 // Identifiant unique
 $identifiant = uniqid();
@@ -11,6 +11,7 @@ $totalpers = $_GET['totalpers'];
 $totalbag = $_GET['totalbag'];
 $datedep_tab = explode("/", $_GET['datedep']);
 $datedep = $datedep_tab[1] . "-" . $datedep_tab[0] . "-" . $datedep_tab[2];
+$date_affichage=$datedep_tab[2] . "/" . $datedep_tab[0] . "/" . $datedep_tab[1];
 $heyres = $_GET['heyres'];
 date_default_timezone_set('Europe/Paris');
 $date = date('Y-m-d H:i:s');
@@ -25,16 +26,14 @@ $exec = mysql_query($requete)or die(mysql_error());
 $nb == 0;
 if (isset($_SESSION['myvtclogin'])) {
     $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
-	$check = mysql_fetch_array(mysql_query("select COUNT(*) as total from myvtc_users where parrain= '" . $_SESSION['myvtclogin'] . "'"));
-	
-    if ($user['promos'] == 1) 
-	{
-		if ($check['total'] >= 1 ) 
-		{
-		
-        $sql = mysql_query("select * from reservation_attente inner join myvtc_users on reservation_attente.id_user= myvtc_users.id where parrain IS NOT NULL AND etat=1 AND id_user=" . $user['id']);
-        $nb = mysql_num_rows($sql);
-		}
+    $check = mysql_fetch_array(mysql_query("select COUNT(*) as total from myvtc_users where parrain= '" . $_SESSION['myvtclogin'] . "'"));
+
+    if ($user['promos'] == 1) {
+        if ($check['total'] >= 1) {
+
+            $sql = mysql_query("select * from reservation_attente inner join myvtc_users on reservation_attente.id_user= myvtc_users.id where parrain IS NOT NULL AND etat=1 AND id_user=" . $user['id']);
+            $nb = mysql_num_rows($sql);
+        }
     }
 }
 
@@ -45,8 +44,7 @@ if ($user['type_user'] == 'Professionnel') {
     $rr = $req['prixpro'];
     //prix pro
     echo "<script>window.pricepro = " . $rr . "</script>";
-	
-	} else {
+} else {
     echo "<script>window.pricepro = 0;</script>";
 }
 ?>
@@ -82,9 +80,9 @@ if ($user['type_user'] == 'Professionnel') {
             var price2 = "undefined";
             var pricepro;
             var codepromo = 0;
-			var avanceoufutur = 0;
-			var prixtotal = 0;
-			
+            var avanceoufutur = 0;
+            var prixtotal = 0;
+
             function onload() {
                 calculDistance();
                 getPrix();
@@ -276,13 +274,13 @@ if ($user['type_user'] == 'Professionnel') {
 
 
             }
-			
-			 function checkAdvanceorAsap() {
 
-              //Heure courante.
-			  
-				var EnteredDate = getURIParameter("datedep");
-			
+            function checkAdvanceorAsap() {
+
+                //Heure courante.
+
+                var EnteredDate = getURIParameter("datedep");
+
                 var now = new Date();
 
                 var annee = now.getFullYear();
@@ -295,22 +293,22 @@ if ($user['type_user'] == 'Professionnel') {
                 var month = EnteredDate.substring(0, 2);
                 var date = EnteredDate.substring(3, 5);
                 var year = EnteredDate.substring(6, 10);
-		
 
-				//Test date courante et date séléctionné
-                if ( date == jour && year == annee && month == mois)
+
+                //Test date courante et date séléctionné
+                if (date == jour && year == annee && month == mois)
                 {
-				   window.avanceoufutur = 15;
-				   return true;
+                    window.avanceoufutur = 15;
+                    return true;
                 } else
                 {
-                   window.avanceoufutur = 8;
-				   return false;
+                    window.avanceoufutur = 8;
+                    return false;
                 }
 
             }
 
-			 function checkGare(aero)
+            function checkGare(aero)
             {
                 var aeroports = "Gare";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -326,82 +324,82 @@ if ($user['type_user'] == 'Professionnel') {
                 var adr_dep = getURIParameter("depart");
                 var adr_arr = getURIParameter("arrivee");
 
-                
 
-				// Prix fixe aéroports
-				
+
+                // Prix fixe aéroports
+
                 var a = checkOrly(adr_dep);
                 var b = checkOrly(adr_arr);
-				
-				var c = checkBeauvais(adr_dep);
-				var d = checkBeauvais(adr_arr);
-				
-				var e = checkCharlle(adr_dep);
-				var f = checkCharlle(adr_arr);
-				
-				var g = checkBourget(adr_dep);
-				var h = checkBourget(adr_arr);
-				
-				// Verifier si le départ est un aeroport et l'arrivée
-				var aero_dep = checkAero(adr_dep);
-				var aero_arr = checkAero(adr_arr);
-				
-				var chkdep = checkParis(adr_dep);
-				var chkarr = checkParis(adr_arr);
-			
-				var mavar = checkGare(adr_dep);
-				var mavar2= checkParis(adr_dep);
-				var mavar3= checkParis(adr_arr);
-				var mavar4= checkParis(adr_dep);
-				var mavar5= checkGare(adr_arr);
-				
-				//Vérifier si la réservation est le jour même
-				var todayoradvance = checkAdvanceorAsap();
-				//alert(todayoradvance);
-				
-				if((mavar == true && mavar2 == true && mavar3==true) || (mavar4 == true && mavar5 == true && mavar3 == true))
-				{
-					window.prixtotal=19;
-					rep=true;
-				} else
-				{
-				
-				var rep = false;
-				}
-				
-				if( rep == false && (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
-				{ 
-					window.prixtotal = 0;
-					rep=true;
-				} else if ( rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true)  || (aero_dep == true && aero_arr == true))
-				{
-					if (rep == false && (a == true && chkarr == true) || (b == true && chkdep == true))
-					{
-					window.prixtotal = 39;
-					rep=true;
-					} else if ( rep == false && (c == true && chkarr == true) || (d == true && chkdep == true))
-					{
-					window.prixtotal = 110;
-					rep=true;
-					} else if ( rep == false && (e == true && chkarr == true) || (f == true && chkdep == true))
-					{
-					window.prixtotal = 49;
-					rep=true;
-					} else if ( rep == false && (g == true && chkarr == true) || (h == true && chkdep == true))
-					{
-					window.prixtotal = 59;
-					rep=true;
-					} else if ( rep == false && (b == true && e == true) || (a == true && f == true))
-					{
-					window.prixtotal = 69;
-					rep=true;
-					} else if ( rep == false )
-					{
-					window.prixtotal = 0;
-					rep=true;
-					}
-				}
-				
+
+                var c = checkBeauvais(adr_dep);
+                var d = checkBeauvais(adr_arr);
+
+                var e = checkCharlle(adr_dep);
+                var f = checkCharlle(adr_arr);
+
+                var g = checkBourget(adr_dep);
+                var h = checkBourget(adr_arr);
+
+                // Verifier si le départ est un aeroport et l'arrivée
+                var aero_dep = checkAero(adr_dep);
+                var aero_arr = checkAero(adr_arr);
+
+                var chkdep = checkParis(adr_dep);
+                var chkarr = checkParis(adr_arr);
+
+                var mavar = checkGare(adr_dep);
+                var mavar2 = checkParis(adr_dep);
+                var mavar3 = checkParis(adr_arr);
+                var mavar4 = checkParis(adr_dep);
+                var mavar5 = checkGare(adr_arr);
+
+                //Vérifier si la réservation est le jour même
+                var todayoradvance = checkAdvanceorAsap();
+                //alert(todayoradvance);
+
+                if ((mavar == true && mavar2 == true && mavar3 == true) || (mavar4 == true && mavar5 == true && mavar3 == true))
+                {
+                    window.prixtotal = 19;
+                    rep = true;
+                } else
+                {
+
+                    var rep = false;
+                }
+
+                if (rep == false && (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
+                {
+                    window.prixtotal = 0;
+                    rep = true;
+                } else if (rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true) || (aero_dep == true && aero_arr == true))
+                {
+                    if (rep == false && (a == true && chkarr == true) || (b == true && chkdep == true))
+                    {
+                        window.prixtotal = 39;
+                        rep = true;
+                    } else if (rep == false && (c == true && chkarr == true) || (d == true && chkdep == true))
+                    {
+                        window.prixtotal = 110;
+                        rep = true;
+                    } else if (rep == false && (e == true && chkarr == true) || (f == true && chkdep == true))
+                    {
+                        window.prixtotal = 49;
+                        rep = true;
+                    } else if (rep == false && (g == true && chkarr == true) || (h == true && chkdep == true))
+                    {
+                        window.prixtotal = 59;
+                        rep = true;
+                    } else if (rep == false && (b == true && e == true) || (a == true && f == true))
+                    {
+                        window.prixtotal = 69;
+                        rep = true;
+                    } else if (rep == false)
+                    {
+                        window.prixtotal = 0;
+                        rep = true;
+                    }
+                }
+
 
                 if (status != google.maps.DistanceMatrixStatus.OK) {
                     alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
@@ -424,57 +422,57 @@ if ($user['type_user'] == 'Professionnel') {
                                     var dure = element.duration.text;
                                     if (window.prixtotal > 0)
                                     {
-										
+
                                         prix = window.prixtotal;
-                                    }  
-									
-									if (window.prixtotal == 0 && window.pricepro > 0)
-									{
-										
-										prix = Math.round(parseInt(dist / 1000) * window.pricepro);
-										
-                                    } else if ( window.prixtotal == 0 && window.pricepro == 0)
-									{
-										
-                                        prix = Math.round(parseInt(dist / 1000) * window.price);
-									}
-									
-										
-                                  if ((prix < 15 && todayoradvance == true) )
+                                    }
+
+                                    if (window.prixtotal == 0 && window.pricepro > 0)
                                     {
-										//window.prixtotal = window.avanceoufutur;
-										//prix = window.prixtotal;
-										prix = 15;
+
+                                        prix = Math.round(parseInt(dist / 1000) * window.pricepro);
+
+                                    } else if (window.prixtotal == 0 && window.pricepro == 0)
+                                    {
+
+                                        prix = Math.round(parseInt(dist / 1000) * window.price);
+                                    }
+
+
+                                    if ((prix < 15 && todayoradvance == true))
+                                    {
+                                        //window.prixtotal = window.avanceoufutur;
+                                        //prix = window.prixtotal;
+                                        prix = 15;
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
-                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
-										document.getElementById('amount').value = prix;
-										document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
-										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-                                                                                document.getElementById('amounttxt').value = prix;
+                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
+                                        document.getElementById('amount').value = prix;
+                                        document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
+                                        document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+                                        document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                        document.getElementById('amounttxt').value = prix;
                                     } else if ((prix < 8 && todayoradvance == false))
-									{
-										prix = 8;
+                                    {
+                                        prix = 8;
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
-                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
-										document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
-										document.getElementById('amount').value = prix;
-										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-										document.getElementById('amounttxt').value = prix;
-                                    
-									} 
-									
-									if( prix > 15 )
-									{
+                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
+                                        document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
+                                        document.getElementById('amount').value = prix;
+                                        document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+                                        document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                        document.getElementById('amounttxt').value = prix;
+
+                                    }
+
+                                    if (prix > 15)
+                                    {
                                         prix = (prix - window.codepromo);
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
-                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix  + ' €<b>';
-										document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
-										document.getElementById('amount').value = prix - window.codepromo;
-										document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-										document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-										document.getElementById('amounttxt').value = prix;
+                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
+                                        document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
+                                        document.getElementById('amount').value = prix - window.codepromo;
+                                        document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
+                                        document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
+                                        document.getElementById('amounttxt').value = prix;
                                     }
                                     window.prixtotal = 0;
 
@@ -583,7 +581,7 @@ if ($user['type_user'] == 'Professionnel') {
                     <h3><img src="images/logo.png"/></h3>
 
                     <!-- Nav -->
-                    <?php include("module/menu.php"); ?>
+<?php include("module/menu.php"); ?>
 
                     <?php include("module/connexion.php"); ?>
                     <!-- Banner -->
@@ -621,8 +619,15 @@ if ($user['type_user'] == 'Professionnel') {
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
                             <blockquote style="text-align: left"><h3>Récapitulatif </h3></blockquote>
+
                             <div class="row">
-                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-arrow-circle-left"></i> Adresse de départ</div>
+
+                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Date</div>
+                                <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $date_affichage . " à " . $heyres; ?></b></p></div>
+                            </div>
+                            <hr style="border: 1px dashed ! important;">
+                            <div class="row">
+                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-map-marker"></i> Adresse de départ</div>
                                 <div class="col-md-8" style="text-align: left"> <div id="depart" name="depart" style="font-size: 22px;"></div> </div>
                             </div>
                             <hr style="border: 1px dashed ! important;">
@@ -635,60 +640,63 @@ if ($user['type_user'] == 'Professionnel') {
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Durée</div>
                                 <div class="col-md-8" style="text-align: left">  <p id="duree" style="font-size: 22px;"></p></div>
                             </div>
-                        
-                                <hr style="border: 1px dashed ! important;">
-                                <div class="row">
-                                    <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Distance</div>
-                                    <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b id="distance"></b></p></div>
-                                </div>
-                            
+
                             <hr style="border: 1px dashed ! important;">
                             <div class="row">
-
-                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-clock-o"></i> Date</div>
-                                <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $datedep . " à " . $heyres; ?></b></p></div>
+                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-space-shuttle"></i> Distance</div>
+                                <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b id="distance"></b></p></div>
                             </div>
+                            <hr style="border: 1px dashed ! important;">
+                            <div class="row">
+                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-suitcase"></i> Valises</div>
+                                <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $_GET['totalbag'];  ?></b></p></div>
+                            </div>
+                            <hr style="border: 1px dashed ! important;">
+                            <div class="row">
+                                <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-users"></i> Passagers</div>
+                                <div class="col-md-8" style="text-align: left">  <p style="font-size: 22px;"><b><?php echo $_GET['totalpers'];  ?></b></p></div>
+                            </div>
+
+
 
                             <script type="text/javascript">
                                 var rep = getURIParameter("depart");
                                 var bool = checkParis(rep);
 
-							<?php $marep= "<script>document.write(bool);</script>";?>
+<?php $marep = "<script>document.write(bool);</script>"; ?>
                             </script>
 
-                            <?php
-                            //echo $marep;
-                            if ($nb != 9) {
-                                ?>
+<?php
+//echo $marep;
+if ($nb != 9) {
+    ?>
                                 <hr style="border: 1px dashed ! important;">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
                                     <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p><input type="hidden" id="amounttxt" /><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /></div>
                                 </div>
-                                <?php
-                            } if ($nb == 9 and $marep == true) {
-                                ?>
+    <?php
+} if ($nb == 9 and $marep == true) {
+    ?>
                                 <hr style="border: 1px dashed ! important;">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
                                     <div class="col-md-8" style="text-align: left"><input type="hidden" id="amounttxt" /><span id="prix" name="prix" value="0" style="width: 0px; color: rgb(255, 255, 255) ! important; display: none;"></span><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /> <p  style="font-size: 22px;">Gratuit (offre parrainage de la 10e course)</p></div>
                                 </div>
-                                <?php
-                            } else if ($nb == 9 and $marep == false)
-							{
-							    ?>
+    <?php
+} else if ($nb == 9 and $marep == false) {
+    ?>
                                 <hr style="border: 1px dashed ! important;">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
                                     <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p><input type="hidden" id="amounttxt" /><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /></div>
                                 </div>
-                                <?php
-							}
-							
-							    ?>
-                             
+    <?php
+}
+?>
+
                             <hr style="border: 1px dashed ! important;">
-							
+
 
                             <div class="row">
                                 <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;">Code Promo ?</div>
@@ -699,19 +707,19 @@ if ($user['type_user'] == 'Professionnel') {
                                     <button type="button" class="btn btn-info col-md-12" onclick="javascript:checkCode();">Appliquer</button>
                                 </div>
                                 <div class="col-md-8" style="text-align: left"><?php
-                                    if (!isset($_SESSION['myvtclogin'])) {
-                                        ?>
+if (!isset($_SESSION['myvtclogin'])) {
+    ?>
                                         <a href="javascript:void(0);" class="button big btn btn-success" data-toggle="modal" data-target="#loginModal">Payer</a>
-                                        <?php
-                                    } else {
-                                        if ($nb == 9 && $marep == true) {
-                                            ?>
+    <?php
+} else {
+    if ($nb == 9 && $marep == true) {
+        ?>
                                             <a href="paiementValide.php" class="button big btn btn-success">Confirmer</a>
                                             <?php
                                         } else {
                                             ?>
                                             <a href="#" class="button big btn btn-success" onclick="javascript:reservation();
-                                                        return false;">Payer</a>
+                                                            return false;">Payer</a>
 
                                             <?php
                                         }
@@ -734,7 +742,7 @@ if ($user['type_user'] == 'Professionnel') {
             </form>
 
             <!-- Footer -->
-            <?php include("module/footer.php"); ?>
+<?php include("module/footer.php"); ?>
 
         </div>
 
