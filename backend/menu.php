@@ -14,6 +14,6 @@
     <li><a href="contact.php"><i class="fa fa-user"></i><span class="link-title"> Contact</span></a></li>
     <li><a href="gain.php"><i class="fa fa-eur"></i><span class="link-title"> Gain</span></a></li>
     <li><a href="pourcentage.php"><i class="fa fa-pie-chart"></i><span class="link-title"> Pourcentage</span></a></li>
-    <li><a href="change.php"><i class="fa fa-pie-chart"></i><span class="link-title"> Changer mot de passe</span></a></li>
+    <li><a href="change.php"><i class="fa fa-user"></i><span class="link-title"> Changer mot de passe</span></a></li>
     <li><a href="deconnect.php"><i class="fa fa-sign-out"></i><span class="link-title"> Déconnexion</span></a></li> 
 </ul>

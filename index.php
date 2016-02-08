@@ -898,7 +898,7 @@ $menu = 1;
                                         <label class="hidden-xs hidden-sm">Date</label>
                                         <div class="form-group">
                                             <div class="input-group date" data-provide="datepicker">
-                                                <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" value="<?php echo date("m/d/Y"); ?>" required="required">
+                                                <input type="text" class="form-control" id="datedep" onchange="javascript:checkDate()" value="<?php echo date("d/m/Y"); ?>" required="required">
                                                 <div class="input-group-addon">
                                                     <span class="glyphicon glyphicon-th"></span>
                                                 </div>
@@ -1137,7 +1137,7 @@ $menu = 1;
     <script src="css/bootstrap-datepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
     <script type="text/javascript">
                                             $('.datepicker').datepicker({
-                                                format: 'dd/mm/yyyy',
+                                                format: 'mm/dd/yyyy',
                                                 startDate: '-3d'
                                             });
     </script>
