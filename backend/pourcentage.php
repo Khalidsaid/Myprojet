@@ -126,15 +126,15 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
 
 
                                             <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Part societe</label>
+                                                <label for="text1" class="control-label col-lg-4">ReserverUnCab</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="part_societe" placeholder="Type" value="<?php echo $pourcentage['part_societe']; ?>" class="form-control">
+                                                    <input type="text" id="part_societe" placeholder="ReserverUnCab" value="<?php echo $pourcentage['part_societe']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Part chauffeur</label>
+                                                <label for="text1" class="control-label col-lg-4">Chauffeurs</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="part_chauffeur" placeholder="Prénom" value="<?php echo $pourcentage['part_chauffeur']; ?>" class="form-control">
+                                                    <input type="text" id="part_chauffeur" placeholder="Chauffeurs" value="<?php echo $pourcentage['part_chauffeur']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
                                         </form>

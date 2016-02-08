@@ -21,9 +21,7 @@
                 <div class="col-md-12"> 
                     <img src="images/ministere.jpg" alt="">
                 </div>
-                <div class="col-md-12"> 
-                    <p style="padding-top: 10px; color: rgb(255, 255, 255);">Licence n° 0000/00/0000000 délivrée par la Direction Régionale de l'Équipement d'Île de France</p>
-                </div>
+               
             </div>
             <div class="4u 12u(mobile)">
                 <section>

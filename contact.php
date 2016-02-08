@@ -82,7 +82,7 @@ $menu=4;
                                                 <i class="fa fa-home"></i></span> <b>ReserverUnCab.com</b><br>
                                                 20 rue Saint John Perse <br>
                                                 94450 Limeil-Brevannes, France<br>813 685 484 R.C.S. CRETEIL<br>
-                                                <i class="fa fa-phone"></i> <b>06 59 56 63 83</b><br>
+                                                <i class="fa fa-phone"></i> <b>06 59 34 27 03</b><br>
 												
 
                                                 <i class="fa fa-envelope"></i> <a href="mailto:contact@reserveruncab.com">contact@reserveruncab.com</a><br><br>

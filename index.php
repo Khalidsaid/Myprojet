@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <!--
-        Developer : Said KHALID, khalidsaid.box@gmail.com, 2015.
+        Developer : Said KHALID, khalidsaid.box@gmail.com, 2016.
 -->
 <?php
 if (!isset($_SESSION)) {
@@ -763,7 +763,8 @@ $menu = 1;
                 <div id="header">
 
                     <!-- Logo -->
-                    <h3>Reserver-Un-Cab.Com</h3>
+					<img src="images/logo.png"></img>
+                    
 
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>

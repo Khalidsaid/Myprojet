@@ -608,7 +608,7 @@ if ($user['type_user'] == 'Professionnel') {
                 <input name="cancel_return" type="hidden" value="/paiementAnnule.php" />
                 <input name="notify_url" type="hidden" value="/paiementValide.php" />
                 <input name="cmd" type="hidden" value="_xclick" />
-                <input name="business" type="hidden" value="ad.prestiges@gmail.com" />
+                <input name="business" type="hidden" value="reserveruncab@gmail.com" />
                 <input name="item_name" type="hidden" value="<?php echo $chaine_cmd; ?>" />
                 <input name="no_note" type="hidden" value="1" />
                 <input name="lc" type="hidden" value="FR" />
