@@ -361,8 +361,8 @@ if ($user['type_user'] == 'Professionnel') {
 				
 				if((mavar == true && mavar2 == true && mavar3==true) || (mavar4 == true && mavar5 == true && mavar3 == true))
 				{
-					window.prixtotal=19;
-					rep=true;
+					window.prixtotal = 0;
+                    rep = true;
 				} else
 				{
 				

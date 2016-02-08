@@ -596,7 +596,7 @@ $menu = 1;
 
                 if ((mavar == true && mavar2 == true && mavar3 == true) || (mavar4 == true && mavar5 == true && mavar3 == true))
                 {
-                    window.prixtotal = 19;
+                    window.prixtotal = 0;
                     rep = true;
                 } else
                 {
@@ -779,7 +779,7 @@ $menu = 1;
                     <?php include("module/connexion.php"); ?>
                     <!-- Banner -->
                     <br>
-					<h2>Reservez plus vite en appelant au <a href="tel:0659342703"><input type="button" class="btn btn-danger small" value="06 59 34 27 03"></input></a></h2>
+					Reservez plus vite en appelant au <a href="tel:0659342703"><input type="button" class="btn btn-danger small" value="06 59 34 27 03"></input></a>
                     <br>
                     <form id="form1" name="form1" action="" method="post">
 
