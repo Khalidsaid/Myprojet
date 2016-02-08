@@ -24,21 +24,21 @@ $nom_complet = $nom_chauffeur['prenom'] . " " . $nom_chauffeur['nom'];
 $headers = 'From: info@reserveruncab.com' . "\r\n" .
         'Reply-To: info@reserveruncab.com' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
-$message = "Notification de rÃ©servation :\n
+$message = "Notification de réservation :\n
 
 Type : " . $type_user . "\n
 Nom : " . $nom . "\n
-PrÃ©nom : " . $prenom . "\n
-TÃ©lÃ©phone: " . $tel . "\n
-DÃ©part : " . $depart . "\n
-ArrivÃ©e : " . $arrivee . "\n
+Prénom : " . $prenom . "\n
+Téléphone: " . $tel . "\n
+Départ : " . $depart . "\n
+Arrivée : " . $arrivee . "\n
 Prix : " . $prix . "\n
 Date : " . $date . "\n
 Heure : " . $heure . "\n
 ";
 mail($nom_chauffeur['email'], "Notification sur ReserverUnCab.com", $message, $headers);
 
-$sql = mysql_query("update reservation_attente set notif=1,chauffeur=" . $nom_chauffeur['id_chauffeur'] . ",part_societe='".$part_societe."',part_chauffeur='".$part_chauffeur."' where id=" . $id)or die(mysql_error());
+$sql = mysql_query("update reservation_tel set notif=1, chauffeur=" . $nom_chauffeur['id_chauffeur'] . ",part_societe='".$part_societe."',part_chauffeur='".$part_chauffeur."' where id=" . $id)or die(mysql_error());
 
 $rs = "[";
 

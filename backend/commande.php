@@ -148,7 +148,7 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                                         <td><?php echo $data['prix']; ?>€</td>
                                                         <td><?php echo $nom_complet; ?></td>
                                                         <td>
-															<a class="btn btn-warning btn-sm">Commande telephone</a>
+															<a class="btn btn-success btn-sm" href="notifiertel.php?id=<?php echo $data['id'] ?>">Ajout chauffeur</a>
                                                             <a class="btn btn-success btn-sm" href="detailcmdtel.php?id=<?php echo $data['id'] ?>">Détail</a>
                                                             <a class="btn btn-success btn-sm" onclick="archivetel(<?php echo $data['id']; ?>)">Archiver</a>
                                                         </td>
