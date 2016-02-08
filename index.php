@@ -67,8 +67,8 @@ $menu = 1;
                 var EnteredDate = document.getElementById("datedep").value; //for javascript
                 var EnteredDate = $("#datedep").val(); // For JQuery
 
-                var month = EnteredDate.substring(0, 2);
-                var date = EnteredDate.substring(3, 5);
+                var date = EnteredDate.substring(0, 2);
+                var month = EnteredDate.substring(3, 5);
                 var year = EnteredDate.substring(6, 10);
 
 
@@ -135,8 +135,8 @@ $menu = 1;
                 var EnteredDate = document.getElementById("datedep").value; //for javascript
                 var EnteredDate = $("#datedep").val(); // For JQuery
 
-                var month = EnteredDate.substring(0, 2);
-                var date = EnteredDate.substring(3, 5);
+                var date = EnteredDate.substring(0, 2);
+                var  month= EnteredDate.substring(3, 5);
                 var year = EnteredDate.substring(6, 10);
 
                 var currentTime = new Date();
@@ -1137,7 +1137,7 @@ $menu = 1;
     <script src="css/bootstrap-datepicker.js" type="text/javascript" LANGUAGE="JavaScript"></script>
     <script type="text/javascript">
                                             $('.datepicker').datepicker({
-                                                format: 'mm/dd/yyyy',
+                                                format: 'dd/mm/yyyy',
                                                 startDate: '-3d'
                                             });
     </script>
