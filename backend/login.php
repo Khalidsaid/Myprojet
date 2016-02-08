@@ -30,7 +30,11 @@ include("util.php");
                     if (isset($_POST['login'])) {
                         $login = $_POST['login'];
                         $pwd = $_POST['pwd'];
-                        if (($login == "admin") && ($pwd == "admin")) {
+
+                        $sql = mysql_query("select * from users where login='" . $login . "' and pwd='" . $pwd . "'");
+                        $nb = mysql_num_rows($sql);
+
+                        if ($nb != 0) {
                             $_SESSION['backend'] = $login;
                             echo '<script>window.location="index.php"</script>';
                         } else {
