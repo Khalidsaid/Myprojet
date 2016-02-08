@@ -618,7 +618,7 @@ if ($user['type_user'] == 'Professionnel') {
                     <div class="row">
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
-                            <blockquote style="text-align: left"><h3>Récapitulatif </h3></blockquote>
+                            <blockquote style="text-align: left"><h3>Récapitulatif </h3></blockquote> 
 
                             <div class="row">
 
