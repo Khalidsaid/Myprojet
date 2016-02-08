@@ -8,11 +8,18 @@ if (!isset($_SESSION)) {
 }
 $menu = 1;
 ?>
-<html>
+<html lang="fr-FR">
 
     <head>
-        <title>Reserver-Un-Cab</title>
-
+        <title>Reserver Un Cab</title>
+		<meta name="robots" content="index,follow">
+		<meta name="keywords" content="vtc, taxi, taxi ile de france, reserver un cab, aeroport, transfert, transfert aeroport, cab, taxi paris, taxi pas cher, chauffeur privee, transport de personne" />
+		<meta name="og:description" content="Vous chercher un VTC ? Faites un devis et profitez des prix pas cher !" />
+		<meta name="og:title" content="Réservation et Devis VTC cab" />
+		<meta name="title" content="Devis de réservation VTC cab" />
+		<meta name="description" content="Vous chercher un VTC ? Faites un devis et profitez des prix pas cher !" />
+		<meta name="author" content="">
+		<link rel="alternate" href="http://reserveruncab.com" hreflang="fr" />
         <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -763,16 +770,17 @@ $menu = 1;
                 <div id="header">
 
                     <!-- Logo -->
-					<img src="images/logo.png"></img>
-                    
+					<img src="images/logo.png"></img><br>
+                    <img src="images/titre.png"></img>
 
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>
 
                     <?php include("module/connexion.php"); ?>
                     <!-- Banner -->
-                    <br/>
-                    <br/>
+                    <br>
+					<h2>Reservez plus vite en appelant au <a href="tel:0659342703"><input type="button" class="btn btn-danger small" value="06 59 34 27 03"></input></a></h2>
+                    <br>
                     <form id="form1" name="form1" action="" method="post">
 
                         <section id="banner" style="z-index: 1; height: 225px; z-index: 1; margin-top: 0px; padding-top: 0px !important">
