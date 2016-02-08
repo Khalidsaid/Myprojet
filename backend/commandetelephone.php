@@ -6,10 +6,486 @@ if (!isset($_SESSION['backend']))
 $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.prenom, chauffeur.nom, chauffeur.prenom as chauff, chauffeur.nom as name, reservation_attente.heure,reservation_attente.depart,myvtc_users.tel,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.prix from chauffeur, myvtc_users, reservation_attente where  reservation_attente.id_user = myvtc_users.id and chauffeur.id_chauffeur=reservation_attente.chauffeur and reservation_attente.id=" . $_GET['id']));
 $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id=1"));
 $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $data['chauffeur']));
+
+
+$user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
+if ($user['type_user'] == 'Professionnel') {
+    $req = mysql_fetch_array(mysql_query("select prixpro from prixkm where id=1"));
+    $rr = $req['prixpro'];
+    //prix pro
+    echo "<script>window.pricepro = " . $rr . "</script>";
+	
+	} else {
+    echo "<script>window.pricepro = 0;</script>";
+}
 ?>
 <!doctype html>
-<html class="no-js">
+<html>
     <head>
+	
+		<script>
+		
+		    var price2 = "undefined";
+            var pricepro;
+            var codepromo = 0;
+			var avanceoufutur = 0;
+			var prixtotal = 0;
+			
+          function onload() {
+                getprix();
+         
+
+            }
+		
+		
+		function checkParis(aero)
+            {
+                var aeroports = "Paris";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function checkOrly(aero)
+            {
+                var aeroports = "Aéroport de Orly, Orly";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function checkGare(aero)
+            {
+                var aeroports = "Gare";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function checkAero(aero)
+            {
+                var aeroports = "Aéroport";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function checkCharlle(aero)
+            {
+                var aeroports = "Aéroport Charles-de-Gaulle, Roissy-en-France";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function checkBeauvais(aero)
+            {
+                var aeroports = "Aéroport de Beauvais";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function checkBourget(aero)
+            {
+                var aeroports = "Aéroport de Paris - Le Bourget, Le Bourget, France";
+                if (aero.indexOf(aeroports) >= 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+			
+			// init map google with itineraire and autocomplete
+
+            function initMap() {
+                var a = document.getElementById("depart").value;
+               
+                var origin_place_id = null;
+                var destination_place_id = null;
+                var travel_mode = google.maps.TravelMode.DRIVING;
+                var map = new google.maps.Map(document.getElementById('bannner'), {
+                    mapTypeControl: true,
+                    zoom: 9,
+                    navigationControl: true,
+                    mapTypeControl: true,
+                            scaleControl: true,
+                    draggable: true,
+                    componentRestrictions: {
+                        country: "fr"
+                    }
+                });
+
+
+                var directionsService = new google.maps.DirectionsService;
+                var directionsDisplay = new google.maps.DirectionsRenderer;
+                directionsDisplay.setMap(map);
+
+                var origin_input = document.getElementById('depart');
+                var destination_input = document.getElementById('arrivee');
+
+                var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
+                origin_autocomplete.bindTo('bounds', map);
+                var destination_autocomplete =
+                        new google.maps.places.Autocomplete(destination_input);
+                destination_autocomplete.bindTo('bounds', map);
+
+                // Sets a listener on a radio button to change the filter type on Places
+                // Autocomplete.
+
+
+                function expandViewportToFitPlace(map, place) {
+                    if (place.geometry.viewport) {
+                        map.fitBounds(place.geometry.viewport);
+                    } else {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(17);
+                    }
+                }
+
+                origin_autocomplete.addListener('place_changed', function () {
+                    codeAddress();
+                    var place = origin_autocomplete.getPlace();
+                    if (!place.geometry) {
+                        window.alert("Autocomplete's returned place contains no geometry");
+                        return;
+                    }
+                    expandViewportToFitPlace(map, place);
+
+                    // If the place has a geometry, store its place ID and route if we have
+                    // the other place ID
+                    origin_place_id = place.place_id;
+                    route(origin_place_id, destination_place_id, travel_mode,
+                            directionsService, directionsDisplay);
+                });
+
+                destination_autocomplete.addListener('place_changed', function () {
+                    codeAddress();
+                    var place = destination_autocomplete.getPlace();
+                    if (!place.geometry) {
+                        window.alert("Autocomplete's returned place contains no geometry");
+                        return;
+                    }
+                    expandViewportToFitPlace(map, place);
+
+                    // If the place has a geometry, store its place ID and route if we have
+                    // the other place ID
+                    destination_place_id = place.place_id;
+                    route(origin_place_id, destination_place_id, travel_mode,
+                            directionsService, directionsDisplay);
+                });
+
+                function route(origin_place_id, destination_place_id, travel_mode,
+                        directionsService, directionsDisplay) {
+
+                    if (!origin_place_id || !destination_place_id) {
+                        return;
+                    }
+                    directionsService.route({
+                        origin: {
+                            'placeId': origin_place_id
+                        },
+                        destination: {
+                            'placeId': destination_place_id
+                        },
+                        travelMode: travel_mode
+                    }, function (response, status) {
+                        if (status === google.maps.DirectionsStatus.OK) {
+                            directionsDisplay.setDirections(response);
+                        } else {
+                            window.alert('Itineraire impossible ');
+                        }
+                    });
+                }
+            }
+
+
+
+            // Obtenir le code postale de départ
+            var geocoder;
+            var mavar;
+            var map;
+            function codeAddress() {
+
+                geocoder = new google.maps.Geocoder();
+                var address = document.getElementById('depart').value;
+                var aero_dep = checkAero(address);
+                var garedep = checkGare(address);
+
+
+                geocoder.geocode({'address': address}, function (results, status) {
+
+                    if (status == google.maps.GeocoderStatus.OK) {
+
+                        for (var component in results[0]['address_components']) {
+
+                            for (var i in results[0]['address_components'][component]['types']) {
+
+                                if (results[0]['address_components'][component]['types'][i] == "postal_code") {
+
+                                    var state = results[0]['address_components'][component]['long_name'];
+                                    res = state.substring(0, 2);
+
+
+                                    if (res == '91' || res == '92' || res == '93' || res == '94' || res == '95' || res == '75' || res == '77' || res == '78' || aero_dep || garedep)
+                                    {
+                                        //alert("Depart d'ile de france : OK");
+                                        window.mavar = true;
+                                    } else
+                                    {
+                                        //alert("Depart d'ile de france : NON");
+                                        window.mavar = false;
+                                    }
+                                }
+                            }
+
+                        }
+                    } else {
+
+                    }
+
+                });
+            }
+
+			function checkAdvanceorAsap() {
+
+              //Heure courante.
+			  
+				var EnteredDate = document.getElementById("dtdeb").value;
+			
+                var now = new Date();
+
+                var annee = now.getFullYear();
+                var mois = ('0' + now.getMonth() + 1).slice(-2);
+                var jour = ('0' + now.getDate()).slice(-2);
+
+                //var EnteredDate = document.getElementById("datedep").value; //for javascript
+                //var EnteredDate = $("#datedep").val(); // For JQuery
+
+                var month = EnteredDate.substring(0, 2);
+                var date = EnteredDate.substring(3, 5);
+                var year = EnteredDate.substring(6, 10);
+		
+
+				//Test date courante et date séléctionné
+                if ( date == jour && year == annee && month == mois)
+                {
+				   window.avanceoufutur = 15;
+				   return true;
+                } else
+                {
+                   window.avanceoufutur = 8;
+				   return false;
+                }
+
+            }
+
+				function genererPrix() {
+
+              //
+			  calculDistance();
+			  
+			
+
+            }
+
+
+
+            function callback(response, status) {
+
+
+
+                var prixtotal = 0;
+                //r?cup?ration des champs du formulaire
+                var adr_dep = document.getElementById('depart').value;
+                var adr_arr = document.getElementById('arrivee').value;
+
+                // Prix fixe aéroports
+
+                var a = checkOrly(adr_dep);
+                var b = checkOrly(adr_arr);
+
+                var c = checkBeauvais(adr_dep);
+                var d = checkBeauvais(adr_arr);
+
+                var e = checkCharlle(adr_dep);
+                var f = checkCharlle(adr_arr);
+
+                var g = checkBourget(adr_dep);
+                var h = checkBourget(adr_arr);
+
+                // Verifier si le départ est un aeroport et l'arrivée
+                var aero_dep = checkAero(adr_dep);
+                var aero_arr = checkAero(adr_arr);
+
+
+
+                var chkdep = checkParis(adr_dep);
+                var chkarr = checkParis(adr_arr);
+
+                var mavar = checkGare(adr_dep);
+                var mavar2 = checkParis(adr_dep);
+                var mavar3 = checkParis(adr_arr);
+                var mavar4 = checkParis(adr_dep);
+                var mavar5 = checkGare(adr_arr);
+
+                //Vérifier si la réservation est le jour même
+                var todayoradvance = checkAdvanceorAsap();
+
+                if ((mavar == true && mavar2 == true && mavar3 == true) || (mavar4 == true && mavar5 == true && mavar3 == true))
+                {
+                    window.prixtotal = 0;
+                    rep = true;
+                } else
+                {
+
+                    var rep = false;
+                }
+
+                if (rep == false && (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
+                {
+                    window.prixtotal = 0;
+                    rep = true;
+                } else if (rep == false && (aero_dep == true && chkarr == true) || (aero_arr == true && chkdep == true) || (aero_dep == true && aero_arr == true))
+                {
+                    if (rep == false && (a == true && chkarr == true) || (b == true && chkdep == true))
+                    {
+                        window.prixtotal = 39;
+                        rep = true;
+                    } else if (rep == false && (c == true && chkarr == true) || (d == true && chkdep == true))
+                    {
+                        window.prixtotal = 110;
+                        rep = true;
+                    } else if (rep == false && (e == true && chkarr == true) || (f == true && chkdep == true))
+                    {
+                        window.prixtotal = 49;
+                        rep = true;
+                    } else if (rep == false && (g == true && chkarr == true) || (h == true && chkdep == true))
+                    {
+                        window.prixtotal = 59;
+                        rep = true;
+                    } else if (rep == false && (b == true && e == true) || (a == true && f == true))
+                    {
+                        window.prixtotal = 69;
+                        rep = true;
+                    } else if (rep == false)
+                    {
+                        window.prixtotal = 0;
+                        rep = true;
+                    }
+                }
+
+
+
+                if (status != google.maps.DistanceMatrixStatus.OK) {
+                    alert('Erreur : ' + status); //message d'erreur du serveur distant GG Maps
+                } else {
+                    //rponses du serveur 
+                    var origins = response.originAddresses;
+                    var destinations = response.destinationAddresses;
+
+
+                    for (var i = 0; i < origins.length; i++) {
+                        var results = response.rows[i].elements;
+                        var dep = origins[i];
+                        if (dep != '') {
+                            for (var j = 0; j < results.length; j++) {
+                                var element = results[j];
+                                var statut = element.status;
+                                var arr = destinations[j];
+
+
+                                if (statut == 'OK') {
+                                    var dist = element.distance.value;
+                                    var dure = element.duration.text;
+                                    if (window.prixtotal > 0)
+                                    {
+                                        prix = window.prixtotal;
+                                    } else
+                                    {
+                                        prix = Math.round(parseInt(dist / 1000) * window.price);
+                                    }
+
+                                    if ((prix < 15 && todayoradvance == true) || (prix < 8 && todayoradvance == false))
+                                    {
+                                        window.prixtotal = window.avanceoufutur;
+                                        prix = window.prixtotal;
+                                     
+                                        document.getElementById('prix').value = prix ;
+                                    } else
+                                    {
+
+                                        document.getElementById('prix').value = prix ;
+                                    }
+                                    window.prixtotal = 0;
+
+                                } else if (statut == 'NOT_FOUND') {
+                                    alert("impossible de localiser l'adresse d'arrivée");
+                                } else if (statut == 'ZERO_RESULTS') {
+                                    alert("impossible de calculer cette distance");
+                                }
+                            }
+                        } else {
+                            alert("impossible de localiser l'adresse de depart");
+                        }
+                    }
+                }
+
+
+            }
+
+            function calculDistance() {
+
+
+
+                //r?cup?ration des champs du formulaire
+                var adr_dep = document.getElementById('depart').value;
+                var adr_arr = document.getElementById('arrivee').value;
+
+                var origine = adr_dep;
+                var destination = adr_arr;
+
+                //requ?te de distance aupr?s du service DistanceMatrix, avec ici une seule adresse de d?part et une seule d'arriv?e
+                var service = new google.maps.DistanceMatrixService();
+                service.getDistanceMatrix({
+                    origins: [origine],
+                    destinations: [destination],
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.METRIC,
+                    avoidHighways: false,
+                    avoidTolls: false
+                }, callback);
+
+
+            }
+
+            function getprix() {
+
+                $.ajax({
+                    method: "GET",
+                    url: "http://reserveruncab.com/webservice/v1/users/getPrix",
+                    success: function (data) {
+                        var response = JSON.parse(data);
+
+                        for (var i = 0; i < response.length; i++) {
+                            window.price = response[i].prix;
+                        }
+                    }
+                });
+
+
+            }
+
+
+		
+		</script>
         <meta charset="UTF-8">
         <title>Detail Commande</title>
 
@@ -83,7 +559,9 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
         <!--Modernizr-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     </head>
-    <body class="  ">
+     <body onload="javascript:onload()">
+	         <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBPTlib2Fu69g_aIhZDcYUvz424TxCz7y4&signed_in=true&libraries=places&callback=initAutocomplete&callback=initMap" async defer></script>
+
         <div class="bg-dark dk" id="wrap">
             <div id="top">
                 <!-- .navbar -->
@@ -145,17 +623,43 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                 </div>
                                             </div><!-- /.form-group -->
 
-
+											   <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Date</label>
+                                                <div class="col-lg-8">
+                                                    <input type="date" id="dtdeb" placeholder="Date"  class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                    
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Depart</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="depart" placeholder="Depart" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
+											  
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Heure</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="heure" placeholder="Heure" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Arrivee</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="arrivee" placeholder="Prenom" value="<?php echo $client['prenom']; ?>" class="form-control">
+                                                    <input type="text" id="arrivee" placeholder="Arrivee" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
+											   <div class="form-group">
+                                                 <label for="text1" class="control-label col-lg-4">Générer le prix</label>
+                                                <div class="col-lg-8">
+												 <button type="button" id="genererprix" class="btn btn-primary" onClick="javascript:genererPrix()">Prix</button>
+                                                  
+                                                </div>
+                                            </div><!-- /.form-group -->
+											      <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Prix</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="prix" name="prix" placeholder="Prix" class="form-control"/>
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
@@ -175,19 +679,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     </select>
                                                 </div>
                                             </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Paiement</label>
-                                                <div class="col-lg-8">
-
-                                                    <select class="form-control" name="paiement" id="paiement">
-                                                        <option></option>
-
-                                                        <option value="CB">CB</option>
-                                                        <option value="ESPECE">Especes</option>
-
-                                                    </select>
-                                                </div>
-                                            </div><!-- /.form-group -->
+                                  
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">ou Mobile client</label>
                                                 <div class="col-lg-8">
@@ -212,17 +704,19 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <input type="text" id="email" name="email" placeholder="Email" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Valises</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="valise" name="valise" placeholder="Valises" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->    <div class="form-group">
+												<div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Passager</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="passager" name="passager" placeholder="Passager" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Valises</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="valise" name="valise" placeholder="Valises" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->    
+										
 
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Chauffeur</label>
@@ -241,38 +735,20 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     </select>
                                                 </div>
                                             </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Date</label>
+											          <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Paiement</label>
                                                 <div class="col-lg-8">
-                                                    <input type="date" id="dtdeb" placeholder="Date"  class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Prix</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="prix" placeholder="Prix" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Heure</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="heure" placeholder="Heure" class="form-control">
+
+                                                    <select class="form-control" name="paiement" id="paiement">
+                                                        <option></option>
+
+                                                        <option value="CB">CB</option>
+                                                        <option value="ESPECE">Especes</option>
+
+                                                    </select>
                                                 </div>
                                             </div><!-- /.form-group -->
 
-
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Part chauffeur</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="part_chauffeur" placeholder="Part chauffeur" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Part societe</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="part_societe" placeholder="Part societe" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
 
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Si societe :</label>
@@ -287,7 +763,12 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <input type="text" id="siren" placeholder="SIREN" value="<?php echo $client['siren']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-
+											   <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Note</label>
+                                                <div class="col-lg-8">
+                                                    <textarea id="note" placeholder="Note"  class="form-control"></textarea>
+                                                </div>
+                                            </div><!-- /.form-group -->
 
                                             <div class="row-flex" id="select_vehicle">
                                                 <div class="col" >
@@ -310,24 +791,6 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                             </div>
                                                         </label>
 
-
-                                                        <input class="vehicle_select_now" type="radio" id="vehicle_type_id2" value="2" name="vehicle_type[]">
-                                                        <label for="vehicle_type_id2" style="border-style : ridge;">
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <i></i>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-xs-6 nopadding-right info_vehicle">4 x <i class="fa fa-user"></i></div>
-                                                                <div class="col-xs-6 nopadding-left info_vehicle">2 x <i class="fa fa-suitcase"></i></div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-xs-12">
-                                                                    <p>Berline luxe</p>
-                                                                </div>
-                                                            </div>
-                                                        </label>
 
 
                                                         <input class="vehicle_select_now" type="radio" id="vehicle_type_id3" value="3" name="vehicle_type[]">
@@ -357,7 +820,7 @@ $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id
                                                     <button type="button" class="btn btn-primary" onclick="addCommande()">Ajouter la commande</button>
                                                 </div>
                                             </div><!-- /.form-group -->
-
+											<div id="bannner"></div>
 
 
                                         </form>

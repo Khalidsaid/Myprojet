@@ -23,6 +23,7 @@ $siren = $_GET['siren'];
 $societe = $_GET['societe'];
 $type_vehicule = $_GET['type_vehicule'];
 $paiement = $_GET['paiement'];
+$note = $_GET['note'];
 
 
 //Ajout du client à la base si il n'a jamais command� par tel
@@ -61,7 +62,7 @@ if ($client != "" or $client > 0) {
     $sql = mysql_query("INSERT INTO `reserverrzad`.`reservation_tel` ( `depart`, `arrivee`, `tel`, `prix`, `part_chauffeur`, `part_societe`, `dtdeb`, `date_add`, `heure`, `societe`, `siren`, `id_chauffeur`, `passager`, `valise`, `type_vehicule`, `client`, `etat`, `notif`, `archive`, `paiement`) VALUES ( '".$depart."', '".$arrivee."', '".$tel."', '".$prix."', '".$part_chauffeur."', '".$part_societe."', '".$dtdeb."', '". date('Y-m-d')."', '".$heure."', '".$societe."', '".$siren."', ".$chauffeur.", ".$passager.", ".$valise.", ".$type_vehicule.", '".$client."', 0, 1, 0, '".$paiement."');") or die(mysql_error());
 } else {
     
-    $sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe, type_vehicule, etat, notif, archive, paiement) values('" . $chauffeur . "','" . $tel . "', '" . $part_societe . "', '" . $part_chauffeur . "' , '" . $depart . "', '" . $arrivee . "', '" . $prix . "','" . date('d-m-Y') . "', '" . $dtdeb . "', '" . $heure . "', '" . $valise . "', '" . $passager . "',0,'" . $siren . "','" . $societe . "','" . $type_vehicule . "', 0, 1, 0,'" . $paiement . "';")or die(mysql_error());
+    $sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe, type_vehicule, etat, notif, archive, paiement, ,note) values('" . $chauffeur . "','" . $tel . "', '" . $part_societe . "', '" . $part_chauffeur . "' , '" . $depart . "', '" . $arrivee . "', '" . $prix . "','" . date('d-m-Y') . "', '" . $dtdeb . "', '" . $heure . "', '" . $valise . "', '" . $passager . "',0,'" . $siren . "','" . $societe . "','" . $type_vehicule . "', 0, 1, 0,'" . $paiement . "','" . $note . "';")or die(mysql_error());
   
     $sql2 = mysql_query("Insert into client_tel(nom, prenom, tel, email) values('" . $nom . "','" . $prenom . "','" . $tel . "','" . $email . "';")or die(mysql_error());
 }
