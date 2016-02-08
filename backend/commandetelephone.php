@@ -14,31 +14,30 @@ if ($user['type_user'] == 'Professionnel') {
     $rr = $req['prixpro'];
     //prix pro
     echo "<script>window.pricepro = " . $rr . "</script>";
-	
-	} else {
+} else {
     echo "<script>window.pricepro = 0;</script>";
 }
 ?>
 <!doctype html>
 <html>
     <head>
-	
-		<script>
-		
-		    var price2 = "undefined";
+
+        <script>
+
+            var price2 = "undefined";
             var pricepro;
             var codepromo = 0;
-			var avanceoufutur = 0;
-			var prixtotal = 0;
-			
-          function onload() {
+            var avanceoufutur = 0;
+            var prixtotal = 0;
+
+            function onload() {
                 getprix();
-         
+
 
             }
-		
-		
-		function checkParis(aero)
+
+
+            function checkParis(aero)
             {
                 var aeroports = "Paris";
                 if (aero.indexOf(aeroports) >= 0) {
@@ -102,12 +101,12 @@ if ($user['type_user'] == 'Professionnel') {
                     return false;
                 }
             }
-			
-			// init map google with itineraire and autocomplete
+
+            // init map google with itineraire and autocomplete
 
             function initMap() {
                 var a = document.getElementById("depart").value;
-               
+
                 var origin_place_id = null;
                 var destination_place_id = null;
                 var travel_mode = google.maps.TravelMode.DRIVING;
@@ -254,12 +253,12 @@ if ($user['type_user'] == 'Professionnel') {
                 });
             }
 
-			function checkAdvanceorAsap() {
+            function checkAdvanceorAsap() {
 
-              //Heure courante.
-			  
-				var EnteredDate = document.getElementById("dtdeb").value;
-			
+                //Heure courante.
+
+                var EnteredDate = document.getElementById("dtdeb").value;
+
                 var now = new Date();
 
                 var annee = now.getFullYear();
@@ -272,27 +271,27 @@ if ($user['type_user'] == 'Professionnel') {
                 var month = EnteredDate.substring(0, 2);
                 var date = EnteredDate.substring(3, 5);
                 var year = EnteredDate.substring(6, 10);
-		
 
-				//Test date courante et date séléctionné
-                if ( date == jour && year == annee && month == mois)
+
+                //Test date courante et date séléctionné
+                if (date == jour && year == annee && month == mois)
                 {
-				   window.avanceoufutur = 15;
-				   return true;
+                    window.avanceoufutur = 15;
+                    return true;
                 } else
                 {
-                   window.avanceoufutur = 8;
-				   return false;
+                    window.avanceoufutur = 8;
+                    return false;
                 }
 
             }
 
-				function genererPrix() {
+            function genererPrix() {
 
-              //
-			  calculDistance();
-			  
-			
+                //
+                calculDistance();
+
+
 
             }
 
@@ -417,12 +416,12 @@ if ($user['type_user'] == 'Professionnel') {
                                     {
                                         window.prixtotal = window.avanceoufutur;
                                         prix = window.prixtotal;
-                                     
-                                        document.getElementById('prix').value = prix ;
+
+                                        document.getElementById('prix').value = prix;
                                     } else
                                     {
 
-                                        document.getElementById('prix').value = prix ;
+                                        document.getElementById('prix').value = prix;
                                     }
                                     window.prixtotal = 0;
 
@@ -484,8 +483,8 @@ if ($user['type_user'] == 'Professionnel') {
             }
 
 
-		
-		</script>
+
+        </script>
         <meta charset="UTF-8">
         <title>Detail Commande</title>
 
@@ -559,8 +558,8 @@ if ($user['type_user'] == 'Professionnel') {
         <!--Modernizr-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     </head>
-     <body onload="javascript:onload()">
-	         <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBPTlib2Fu69g_aIhZDcYUvz424TxCz7y4&signed_in=true&libraries=places&callback=initAutocomplete&callback=initMap" async defer></script>
+    <body onload="javascript:onload()">
+        <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBPTlib2Fu69g_aIhZDcYUvz424TxCz7y4&signed_in=true&libraries=places&callback=initAutocomplete&callback=initMap" async defer></script>
 
         <div class="bg-dark dk" id="wrap">
             <div id="top">
@@ -623,20 +622,20 @@ if ($user['type_user'] == 'Professionnel') {
                                                 </div>
                                             </div><!-- /.form-group -->
 
-											   <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Date</label>
                                                 <div class="col-lg-8">
                                                     <input type="date" id="dtdeb" placeholder="Date"  class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-                                    
+
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Depart</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="depart" placeholder="Depart" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-											  
+
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Heure</label>
                                                 <div class="col-lg-8">
@@ -649,17 +648,36 @@ if ($user['type_user'] == 'Professionnel') {
                                                     <input type="text" id="arrivee" placeholder="Arrivee" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-											   <div class="form-group">
-                                                 <label for="text1" class="control-label col-lg-4">Générer le prix</label>
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Générer le prix</label>
                                                 <div class="col-lg-8">
-												 <button type="button" id="genererprix" class="btn btn-primary" onClick="javascript:genererPrix()">Prix</button>
-                                                  
+                                                    <button type="button" id="genererprix" class="btn btn-primary" onClick="javascript:genererPrix()">Prix</button>
+
                                                 </div>
                                             </div><!-- /.form-group -->
-											      <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Prix</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="prix" name="prix" placeholder="Prix" class="form-control"/>
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Générer les parts</label>
+                                                <div class="col-lg-8">
+                                                    <button type="button" id="genererprix" class="btn btn-primary" onClick="javascript:genererPart()">Les parts</button>
+
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Part Chauffeur</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="part_chauffeur" name="part_chauffeur" placeholder="Part Chauffeur" class="form-control"/>
+                                                </div>
+                                            </div><!-- /.form-group -->
+                                            <div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Part Société</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="part_societe" name="part_societe" placeholder="Part Société" class="form-control"/>
                                                 </div>
                                             </div><!-- /.form-group -->
                                             <div class="form-group">
@@ -679,7 +697,7 @@ if ($user['type_user'] == 'Professionnel') {
                                                     </select>
                                                 </div>
                                             </div><!-- /.form-group -->
-                                  
+
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">ou Mobile client</label>
                                                 <div class="col-lg-8">
@@ -704,7 +722,7 @@ if ($user['type_user'] == 'Professionnel') {
                                                     <input type="text" id="email" name="email" placeholder="Email" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-												<div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Passager</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="passager" name="passager" placeholder="Passager" class="form-control">
@@ -716,7 +734,7 @@ if ($user['type_user'] == 'Professionnel') {
                                                     <input type="text" id="valise" name="valise" placeholder="Valises" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->    
-										
+
 
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Chauffeur</label>
@@ -735,7 +753,7 @@ if ($user['type_user'] == 'Professionnel') {
                                                     </select>
                                                 </div>
                                             </div><!-- /.form-group -->
-											          <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Paiement</label>
                                                 <div class="col-lg-8">
 
@@ -763,7 +781,7 @@ if ($user['type_user'] == 'Professionnel') {
                                                     <input type="text" id="siren" placeholder="SIREN" value="<?php echo $client['siren']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-											   <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Note</label>
                                                 <div class="col-lg-8">
                                                     <textarea id="note" placeholder="Note"  class="form-control"></textarea>
@@ -820,7 +838,7 @@ if ($user['type_user'] == 'Professionnel') {
                                                     <button type="button" class="btn btn-primary" onclick="addCommande()">Ajouter la commande</button>
                                                 </div>
                                             </div><!-- /.form-group -->
-											<div id="bannner"></div>
+                                            <div id="bannner"></div>
 
 
                                         </form>
@@ -917,17 +935,29 @@ if ($user['type_user'] == 'Professionnel') {
                 }
 
                 $.ajax({
-                    url: 'inserttelephonecmd.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&dtdeb=' + date + '&heure=' + heure + '&prix=' + prix + '&societe=' + societe + '&siren=' + siren + '&part_chauffeur=' + part_chauffeur + '&part_societe=' + part_societe + '&client=' + client + '&type_vehicule=' + box + '&paiement=' + paiement+ '&valise=' + valise+ '&passager=' + passager,
+                    url: 'inserttelephonecmd.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&dtdeb=' + date + '&heure=' + heure + '&prix=' + prix + '&societe=' + societe + '&siren=' + siren + '&part_chauffeur=' + part_chauffeur + '&part_societe=' + part_societe + '&client=' + client + '&type_vehicule=' + box + '&paiement=' + paiement + '&valise=' + valise + '&passager=' + passager,
                     success: function (data) {
                         var t = eval(data);
-
+                        var id_cmd = t[0].id
                         alert("Commande ajouté !");
-                        document.location.href = "http://reserveruncab.com/paiementValide.php";
+                        document.location.href = "http://reserveruncab.com/paiementValideTel.php?id=" + id_cmd;
                     }
                 });
             }
 
+            function genererPart() {
+                var prix = document.getElementById("prix").value;
+                $.ajax({
+                    url: 'calculer_part.php?prix=' + prix,
+                    success: function (data) {
+                        var t = eval(data);
+                        document.getElementById("part_societe").value = t[0].part_societe;
+                        document.getElementById("part_chauffeur").value = t[0].part_chauffeur;
 
+
+                    }
+                });
+            }
 
 
         </script>
