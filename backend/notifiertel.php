@@ -101,8 +101,21 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                         <div class="icons">
                                             <i class="fa fa-edit"></i>
                                         </div>
-                                        <h5>Detail Commande</h5>
-
+                                        <h5>Notifier Chauffeur</h5>
+												     <?php
+                                        if (isset($_GET['id']) && isset($_GET['chauffeur'])) {
+                                        $sql = mysql_query("update reservation_tel set id_chauffeur=" . $_GET['chauffeur'] . "  where id=" . $id);
+										if ($sql) {
+                                        echo "<script>alert('Chauffeur change !')</script>";
+                                        echo "<script>window.location='commande.php'</script>";
+										} else
+										{
+										echo "<script>alert('Erreur !')</script>";
+                                        echo "<script>window.location='commande.php'</script>";
+										}
+                                    
+                                    }
+                                    ?>
                                         <!-- .toolbar -->
                                         <div class="toolbar">
                                             <nav style="padding: 8px;">
@@ -116,100 +129,30 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                     </header>
                                     <div id="div-1" class="body">
 
-                                        <form class="form-horizontal" method="post" action="">
+                                        <form class="form-horizontal" method="POST" action="">
 
-                                            <div class="form-group center">
-
-                                                <div class="col-lg-8">
-                                                    <button type="button" class="btn btn-primary" onclick="notifchauffeur(<?php echo $_GET['id']; ?>)">Modifier</button>
-                                                </div>
-                                            </div><!-- /.form-group -->
 
 
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Chauffeur</label>
                                                 <div class="col-lg-8">
 
-                                                    <select class="form-control"name="chauffeur" id="chauffeur">
+                                                    <select class="form-control" name="chauffeur" id="chauffeur">
                                                         <option></option>
                                                         <?php
                                                         $sql_chauffeur = mysql_query("select * from chauffeur");
                                                         while ($data_chauffeur = mysql_fetch_array($sql_chauffeur)) {
                                                             ?>
                                                             <option value="<?php echo $data_chauffeur['id_chauffeur']; ?>"><?php echo $data_chauffeur['prenom'] . " " . $data_chauffeur['nom']; ?></option>
-                                                            <?php
+                                                            
+															<?php
                                                         }
                                                         ?>
                                                     </select>
+													<br>
+													<a href="notifiertel.php?chauffeur=<?php echo $_POST['chauffeur']; ?>?id=<?php echo $_GET['id'];?>" class="btn btn-success btn-xs">Modifier</a>
                                                 </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Type User</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="type_user" placeholder="Type User" value="<?php echo $client['type_user']; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Nom</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="nom" placeholder="Nom" value="<?php echo $client['nom']; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Prenom</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="prenom" placeholder="Prenom" value="<?php echo $client['prenom']; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Telephone</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="tel" placeholder="Telephone" value="<?php echo $client['tel']; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Depart</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="depart" placeholder="Depart" value="<?php echo $client['depart']; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Arrivee</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="arrivee" name="arrivee" placeholder="Arrivee" value="<?php echo $client['arrivee']; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Date</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="date11" placeholder="Adresse" value="<?php echo $client['dtdeb']; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Heure</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="heure" placeholder="Heure" value="<?php echo $client['heure']; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Part de la societe</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="part_societe" placeholder="Part de la societe" value="<?php echo $p = ($client['prix'] * $pourcentage['part_societe']) / 100; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Part du chauffeur</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="part_chauffeur" placeholder="Part du chauffeur" value="<?php echo $p = ($client['prix'] * $pourcentage['part_chauffeur']) / 100; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Prix</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="prix" placeholder="Ville" value="<?php echo $client['prix']; ?>" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
+                                           
 
                                         </form>
                                     </div>
@@ -270,19 +213,9 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
             function notifchauffeur(id) {
 
                 var chauffeur = document.getElementById("chauffeur").value;
-                var prenom = document.getElementById("prenom").value;
-                var nom = document.getElementById("nom").value;
-                var tel = document.getElementById("tel").value;
-                var depart = document.getElementById("depart").value;
-                var arrivee = document.getElementById("arrivee").value;
-                var date = document.getElementById("date11").value;
-                var heure = document.getElementById("heure").value;
-                var prix = document.getElementById("prix").value;
-                var type_user = document.getElementById("type_user").value;
-                var part_societe = document.getElementById("part_societe").value;
-                var part_chauffeur = document.getElementById("part_chauffeur").value;
+            
                 $.ajax({
-                    url: 'notifchauffeurtel.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&date=' + date + '&heure=' + heure + '&id=' + id + '&prix=' + prix + '&type_user=' + type_user + '&part_chauffeur=' + part_chauffeur + '&part_societe=' + part_societe,
+                    url: 'notifchauffeurtel.php?chauffeur=' + chauffeur,
                     success: function (data) {
                         var t = eval(data);
                         alert("Chauffeur Notifie !");

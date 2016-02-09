@@ -93,6 +93,13 @@ if (!isset($_SESSION['backend']))
                                         <h5><a href="ajoutchauffeur.php" class="btn btn-primary">Ajouter un chauffeur</a></h5>
                                     </header>
                                     <div id="collapse4" class="body">
+									     <?php
+                                    if (isset($_GET['id'])) {
+                                        mysql_query("delete from chauffeur where id_chauffeur=" . $_GET['id']);
+                                        echo "<script>alert('Chauffeur supprimé !')</script>";
+                                        echo "<script>window.location='chauffeur.php'</script>";
+                                    }
+                                    ?>
                                         <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
                                             <thead>
                                                 <tr>
@@ -103,6 +110,7 @@ if (!isset($_SESSION['backend']))
                                                     <th>Tel</th>
                                                     <th>Véhicule</th>    
                                                     <th>Détails</th>
+													<th>Supprimer</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -118,6 +126,7 @@ if (!isset($_SESSION['backend']))
                                                         <td><?php echo $data['tel']; ?></td>
                                                         <td><?php echo $data['typevehicule']; ?></td>            
                                                         <td><a href="detailchauffeur.php?id=<?php echo $data['id_chauffeur']; ?>" class="btn btn-warning btn-xs">Détails</a></td>
+														<td><a href="chauffeur.php?id=<?php echo $data['id_chauffeur']; ?>" class="btn btn-danger btn-xs">Supprimer</a></td>
                                                     </tr>
                                                     <?php
                                                 }
@@ -216,6 +225,7 @@ if (!isset($_SESSION['backend']))
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal --><!-- /#helpModal -->
+	
 
         <!--jQuery -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
