@@ -104,8 +104,7 @@ if (!isset($_SESSION['backend']))
                                                 <tr>
                                                     <th class="col-md-2">Client</th>   
                                                     <th class="col-md-2">Depart</th>
-                                                    <th class="col-md-2">Arrivee</th>
-                                                    <th class="col-md-2">Date</th>
+                                                    <th class="col-md-2">Arrivee</th> 
                                                     <th class="col-md-2">Total</th>
                                                     <th class="col-md-2">Action</th>
                                                 </tr>
@@ -120,7 +119,7 @@ if (!isset($_SESSION['backend']))
                                                         <td><?php echo $data['prenom'] . " " . $data['nom']; ?></td>     
                                                         <td><?php echo $data['depart']; ?></td>
                                                         <td><?php echo $data['arrivee']; ?> </td>
-                                                        <td><?php echo $data['dtdeb']; ?></td>
+                                                        
                                                         <td><?php echo $data['prix']; ?>€</td>
                                                         <td>
                                                             <a class="btn btn-success btn-sm" onclick="valider(<?php echo $data['id']; ?>)">Valider</a>
