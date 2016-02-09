@@ -130,7 +130,7 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                                 <label for="text1" class="control-label col-lg-4">Chauffeur</label>
                                                 <div class="col-lg-8">
 
-                                                    <select class="form-control"name="chauffeur" id="chauffeur">
+                                                    <select class="form-control"name="chauffeur" id="chauffeur" onchange="part_societe_fct()">
                                                         <option></option>
                                                         <?php
                                                         $sql_chauffeur = mysql_query("select * from chauffeur");
@@ -198,7 +198,7 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                                     <input type="text" id="part_societe" placeholder="Part de la société" value="<?php echo $p = ($client['prix'] * $pourcentage['part_societe']) / 100; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-                                            <div class="form-group">
+                                            <div class="form-group" id="part_chauffeur_bloc">
                                                 <label for="text1" class="control-label col-lg-4">Part du chauffeur</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="part_chauffeur" placeholder="Part du chauffeur" value="<?php echo $p = ($client['prix'] * $pourcentage['part_chauffeur']) / 100; ?>" class="form-control">
@@ -207,7 +207,7 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Prix</label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" id="prix" placeholder="Ville" value="<?php echo $client['prix']; ?>" class="form-control">
+                                                    <input type="text" id="prix" placeholder="Prix" value="<?php echo $client['prix']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
 
@@ -261,9 +261,9 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
         <!-- Metis demo scripts -->
         <script src="assets/js/app.js"></script>
         <script>
-            $(function () {
-                Metis.formGeneral();
-            });
+                                                        $(function () {
+                                                            Metis.formGeneral();
+                                                        });
         </script>
 
         <script>
@@ -289,6 +289,15 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                         alert("Chauffeur Notifié !");
                     }
                 });
+            }
+            function part_societe_fct() {
+                var chauffeur = document.getElementById("chauffeur").value;
+                if (chauffeur == 5) {
+                    document.getElementById("part_chauffeur_bloc").style.display = 'none';
+
+                } else {
+                    document.getElementById("part_chauffeur_bloc").style.display = 'block';
+                }
             }
         </script>
 

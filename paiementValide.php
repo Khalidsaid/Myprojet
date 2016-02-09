@@ -29,10 +29,10 @@ $mail->Body    = "Bonjour " . $user["prenom"] . ",
 Fécilitation ! Votre paiement sur le site ReserverUnCab.com a été effectué avec succès.
 
 Voici le détail de votre commande :\n
+Date : " . $commande['dtdeb'] . "\n\n
 Départ : " . $commande['depart'] . "\n\n
 Arrivée : " . $commande['arrivee'] . "\n\n
 Prix : " . $commande['prix'] . "\n\n
-Date : " . $commande['dtdeb'] . "\n\n
 
 L'équipe ReserverUnCab.com.";
 
