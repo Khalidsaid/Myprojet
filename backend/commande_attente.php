@@ -81,7 +81,13 @@ if (!isset($_SESSION['backend']))
             <div id="content">
                 <div class="outer">
                     <div class="inner bg-light lter">
-
+                        <?php
+                        if (isset($_GET['id'])) {
+                            mysql_query("delete from reservation_attente where id=" . $_GET['id']);
+                            echo "<script>alert('Commande supprimée !')</script>";
+                            echo "<script>window.location='commande_attente.php'</script>";
+                        }
+                        ?>
                         <!--Begin Datatables-->
                         <div class="row">
                             <div class="col-lg-12">
@@ -96,12 +102,12 @@ if (!isset($_SESSION['backend']))
                                         <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Client</th>   
-                                                    <th>Depart</th>
-                                                    <th>Arrivee</th>
-                                                    <th>Date</th>
-                                                    <th>Total</th>
-                                                    <th>Action</th>
+                                                    <th class="col-md-2">Client</th>   
+                                                    <th class="col-md-2">Depart</th>
+                                                    <th class="col-md-2">Arrivee</th>
+                                                    <th class="col-md-2">Date</th>
+                                                    <th class="col-md-2">Total</th>
+                                                    <th class="col-md-2">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -111,16 +117,19 @@ if (!isset($_SESSION['backend']))
                                                     ?>
                                                     <tr>
 
-                                                        <td><?php echo  $data['prenom']." ".$data['nom']; ?></td>     
+                                                        <td><?php echo $data['prenom'] . " " . $data['nom']; ?></td>     
                                                         <td><?php echo $data['depart']; ?></td>
                                                         <td><?php echo $data['arrivee']; ?> </td>
                                                         <td><?php echo $data['dtdeb']; ?></td>
                                                         <td><?php echo $data['prix']; ?>€</td>
-                                                        <td><a class="btn btn-success btn-sm" onclick="valider(<?php echo $data['id']; ?>)">Valider</a></td>
+                                                        <td>
+                                                            <a class="btn btn-success btn-sm" onclick="valider(<?php echo $data['id']; ?>)">Valider</a>
+                                                            <a class="btn btn-danger btn-sm" href="commande_attente.php?id=<?php echo $data['id']; ?>" >Supprimer</a>
+                                                        </td>
                                                     </tr>
-    <?php
-}
-?>
+                                                    <?php
+                                                }
+                                                ?>
 
                                             </tbody>
                                         </table>

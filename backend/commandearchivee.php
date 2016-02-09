@@ -104,6 +104,7 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                                     <th>Date</th>
                                                     <th>Total</th>
                                                     <th>Chauffeur</th>
+                                                   
                                                  
                                                 </tr>
                                             </thead>
@@ -123,27 +124,26 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                                         <td><?php echo $data['dtdeb']; ?></td>
                                                         <td><?php echo $data['prix']; ?> euros</td>
                                                         <td><?php echo $nom_complet; ?></td>
+                                                       
                                                      
                                                     </tr>
                                                     <?php
                                                 }
                                                 ?>
 												  <?php
-                                                $sql = mysql_query("select chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_tel.id, client_tel.nom, client_tel.prenom, DATE_FORMAT(reservation_tel.dtdeb, '%d/%m/%Y') as dtdeb, prix  from reservation_tel, client_tel, chauffeur WHERE client_tel.id = reservation_tel.client AND reservation_tel.id_chauffeur=chauffeur.id_chauffeur AND reservation_tel.archive=1 AND reservation_tel.dtdeb<'" . date("Y-m-d") . "'");
-                                                while ($data = mysql_fetch_array($sql)) {
-                                                    
-                                                    $nom_complet = $data['chauffeurnom'] . " " . $data['chauffeurprenom'];
+                                                $sql1 = mysql_query("select chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_tel.id as id_cmd, client_tel.nom, client_tel.prenom, DATE_FORMAT(reservation_tel.dtdeb, '%d/%m/%Y') as dtdeb, prix  from reservation_tel, client_tel, chauffeur WHERE client_tel.id = reservation_tel.client AND reservation_tel.id_chauffeur=chauffeur.id_chauffeur AND reservation_tel.archive=1 AND reservation_tel.dtdeb<'" . date("Y-m-d") . "'");
+                                                while ($data1 = mysql_fetch_array($sql1)) {                                                 
+                                                    $nom_complet = $data1['chauffeurnom'] . " " . $data1['chauffeurprenom'];
                                                     ?>
                                                     <tr>
-
-                                                        <td><?php echo $data['nom']; ?></td>
-                                                        <td><?php echo $data['prenom']; ?></td>
-                                                        <td><?php echo $data['depart'];?></td>
-                                                        <td><?php echo $data['arrivee']; ?></td>
-                                                        <td><?php echo $data['dtdeb']; ?></td>
-                                                        <td><?php echo $data['prix']; ?> euros</td>
+                                                        <td><?php echo $data1['nom']; ?></td>
+                                                        <td><?php echo $data1['prenom']; ?></td>
+                                                        <td><?php echo $data1['depart'];?></td>
+                                                        <td><?php echo $data1['arrivee']; ?></td>
+                                                        <td><?php echo $data1['dtdeb']; ?></td>
+                                                        <td><?php echo $data1['prix']; ?> euros</td>
                                                         <td><?php echo $nom_complet; ?></td>
-                                                     
+                                                   
                                                     </tr>
                                                     <?php
                                                 }

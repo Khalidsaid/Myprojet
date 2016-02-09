@@ -82,7 +82,20 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
             <div id="content">
                 <div class="outer">
                     <div class="inner bg-light lter">
-
+                        <?php
+                        if (isset($_GET['id'])) {
+                            mysql_query("delete from reservation_attente where id=" . $_GET['id']);
+                            echo "<script>alert('Commande supprimée !')</script>";
+                            echo "<script>window.location='commande.php'</script>";
+                        }
+                        ?>
+                        <?php
+                        if (isset($_GET['id_tel'])) {
+                            mysql_query("delete from reservation_tel where id=" . $_GET['id_tel']);
+                            echo "<script>alert('Commande supprimée !')</script>";
+                            echo "<script>window.location='commande.php'</script>";
+                        }
+                        ?>
                         <!--Begin Datatables-->
                         <div class="row">
                             <div class="col-lg-12">
@@ -111,7 +124,7 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                                 <?php
                                                 $sql = mysql_query("select reservation_attente.id, myvtc_users.nom, myvtc_users.prenom, chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_attente.heure, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from chauffeur, myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.dtdeb>='" . date("Y-m-d") . "' AND chauffeur.id_chauffeur = reservation_attente.chauffeur AND reservation_attente.etat=1 and  reservation_attente.archive=0");
                                                 while ($data = mysql_fetch_array($sql)) {
-                                                
+
                                                     $nom_complet = $data['chauffeurnom'] . " " . $data['chauffeurprenom'];
                                                     ?>
                                                     <tr>
@@ -127,15 +140,16 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                                             <a class="btn btn-success btn-sm" href="detailcmd.php?id=<?php echo $data['id'] ?>">Détail</a>
                                                             <a class="btn btn-success btn-sm" href="notifier.php?id=<?php echo $data['id'] ?>">Ajout chauffeur</a>
                                                             <a class="btn btn-success btn-sm" onclick="archive(<?php echo$data['id']; ?>)">Archiver</a>
+                                                            <a class="btn btn-danger btn-sm" href="commande.php?id=<?php echo $data['id']; ?>" >Supprimer</a>
                                                         </td>
                                                     </tr>
                                                     <?php
                                                 }
                                                 ?>
-												          <?php
+                                                <?php
                                                 $sql = mysql_query("select chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_tel.id, client_tel.nom, client_tel.prenom, DATE_FORMAT(reservation_tel.dtdeb, '%d/%m/%Y') as dtdeb, prix  from reservation_tel, client_tel, chauffeur WHERE client_tel.id = reservation_tel.client AND reservation_tel.id_chauffeur=chauffeur.id_chauffeur AND reservation_tel.archive=0 AND reservation_tel.dtdeb>='" . date("Y-m-d") . "'");
                                                 while ($data = mysql_fetch_array($sql)) {
-                                                
+
                                                     $nom_complet = $data['chauffeurnom'] . " " . $data['chauffeurprenom'];
                                                     ?>
                                                     <tr>
@@ -148,9 +162,10 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                                         <td><?php echo $data['prix']; ?>€</td>
                                                         <td><?php echo $nom_complet; ?></td>
                                                         <td>
-															<a class="btn btn-success btn-sm" href="notifiertel.php?id=<?php echo $data['id'] ?>">Ajout chauffeur</a>
+                                                            <a class="btn btn-success btn-sm" href="notifiertel.php?id=<?php echo $data['id'] ?>">Ajout chauffeur</a>
                                                             <a class="btn btn-success btn-sm" href="detailcmdtel.php?id=<?php echo $data['id'] ?>">Détail</a>
                                                             <a class="btn btn-success btn-sm" onclick="archivetel(<?php echo $data['id']; ?>)">Archiver</a>
+                                                            <a class="btn btn-danger btn-sm" href="commande.php?id_tel=<?php echo $data['id']; ?>" >Supprimer</a>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -200,41 +215,41 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
         <!-- Metis demo scripts -->
         <script src="assets/js/app.js"></script>
         <script>
-            $(function () {
-                Metis.MetisTable();
-                Metis.metisSortable();
-            });
+                                                                $(function () {
+                                                                    Metis.MetisTable();
+                                                                    Metis.metisSortable();
+                                                                });
         </script>
         <script src="assets/js/style-switcher.min.js"></script>
         <script>
-            function archive(id) {
+                                                                function archive(id) {
 
 
 
-                $.ajax({
-                    url: 'archiverCmd.php?id=' + id,
-                    success: function (data) {
-                        var t = eval(data);
+                                                                    $.ajax({
+                                                                        url: 'archiverCmd.php?id=' + id,
+                                                                        success: function (data) {
+                                                                            var t = eval(data);
 
-                        alert("Commande Archivée !");
-                        location.reload();
-                    }
-                });
-            }
-			
-			function archivetel(id) {
+                                                                            alert("Commande Archivée !");
+                                                                            location.reload();
+                                                                        }
+                                                                    });
+                                                                }
+
+                                                                function archivetel(id) {
 
 
 
-                $.ajax({
-                    url: 'archiverCmdtel.php?id=' + id,
-                    success: function (data) {
-                        var t = eval(data);
+                                                                    $.ajax({
+                                                                        url: 'archiverCmdtel.php?id=' + id,
+                                                                        success: function (data) {
+                                                                            var t = eval(data);
 
-                        alert("Commande Archivée !");
-                        location.reload();
-                    }
-                });
-            }
+                                                                            alert("Commande Archivée !");
+                                                                            location.reload();
+                                                                        }
+                                                                    });
+                                                                }
         </script>
     </body>
