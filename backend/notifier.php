@@ -192,13 +192,13 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                                     <input type="text" id="heure" placeholder="Heure" value="<?php echo $client['heure']; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-                                            <div class="form-group">
+                                            <div class="form-group" id="part_chauffeur_bloc">
                                                 <label for="text1" class="control-label col-lg-4">Part de la société</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="part_societe" placeholder="Part de la société" value="<?php echo $p = ($client['prix'] * $pourcentage['part_societe']) / 100; ?>" class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-                                            <div class="form-group" id="part_chauffeur_bloc">
+                                            <div class="form-group" >
                                                 <label for="text1" class="control-label col-lg-4">Part du chauffeur</label>
                                                 <div class="col-lg-8">
                                                     <input type="text" id="part_chauffeur" placeholder="Part du chauffeur" value="<?php echo $p = ($client['prix'] * $pourcentage['part_chauffeur']) / 100; ?>" class="form-control">
@@ -294,9 +294,11 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                 var chauffeur = document.getElementById("chauffeur").value;
                 if (chauffeur == 5) {
                     document.getElementById("part_chauffeur_bloc").style.display = 'none';
+                    document.getElementById("part_societe").value = '';
 
                 } else {
                     document.getElementById("part_chauffeur_bloc").style.display = 'block';
+                    document.getElementById("part_societe").value = '';
                 }
             }
         </script>
