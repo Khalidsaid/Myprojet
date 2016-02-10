@@ -10,7 +10,8 @@ $commande = mysql_fetch_array($ll);
 
 $mail = new PHPMailer;
 
-
+$mail->IsHTML(true); 
+$mail->CharSet = 'UTF-8';  
 $mail->Host = 'smtp.gmail.com';                 // Specify main and backup server
 $mail->Port = 26;                                    // Set the SMTP port
 $mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -20,21 +21,21 @@ $mail->Password = 'Balloo94';                  // SMTP password
 
 $mail->From = 'contact@reserveruncab.com';
 $mail->FromName = 'ReserverUnCab';
-$mail->AddAddress($_SESSION['myvtclogin'], "Confirmation"); // Add address
+$mail->AddAddress($_SESSION['myvtclogin'], $_SESSION['myvtclogin']); // Add address
 
 
 $mail->Subject = 'Validation de paiement ReserverUnCab.com';
-$mail->Body    = "Bonjour " . $user["prenom"] . ",
+$mail->Body    = "Bonjour " . $user["prenom"] . ",<br><br>
 
-Fécilitation ! Votre paiement sur le site ReserverUnCab.com a été effectué avec succès.
+F&eacute;cilitation ! Votre paiement sur le site ReserverUnCab.com a &eacute;t&eacute; effectu&eacute; avec succ&egrave;s.<br><br>
 
-Voici le détail de votre commande :\n
-Date : " . $commande['dtdeb'] . "\n\n
-Départ : " . $commande['depart'] . "\n\n
-Arrivée : " . $commande['arrivee'] . "\n\n
-Prix : " . $commande['prix'] . "\n\n
+Voici le d&eacute;tail de votre commande :<br><br>
+Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
+D&eacute;part : " . $commande['depart'] . "<br><br>
+Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
+Prix : " . $commande['prix'] . "€<br><br>
 
-L'équipe ReserverUnCab.com.";
+L'&eacute;quipe ReserverUnCab.com.";
 
 
 $mail->AddAttachment("Facture_" . $commande['codecommande'] . ".pdf");  
@@ -98,7 +99,7 @@ mail_attachment($my_file, $my_path, $_SESSION['myvtclogin'], $my_mail, $my_name,
 
     <head>
         <title>Validation de paiement</title>
-        <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+        <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
         <link rel="stylesheet" href="assets/css/main.css" />
@@ -120,7 +121,7 @@ mail_attachment($my_file, $my_path, $_SESSION['myvtclogin'], $my_mail, $my_name,
 
         </style>
     </head>
-
+    
     <body  class="homepage">
         <div id="page-wrapper">
 

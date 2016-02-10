@@ -279,7 +279,13 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                 var heure = document.getElementById("heure").value;
                 var prix = document.getElementById("prix").value;
                 var type_user = document.getElementById("type_user").value;
-                var part_societe = document.getElementById("part_societe").value;
+                var chauffeur = document.getElementById("chauffeur").value;
+                var part_societe = 0;
+                if (chauffeur == 5) {
+                    part_societe = 0;
+                } else {
+                    part_societe = document.getElementById("part_societe").value;
+                }
                 var part_chauffeur = document.getElementById("part_chauffeur").value;
                 $.ajax({
                     url: 'notifchauffeur.php?prenom=' + prenom + '&nom=' + nom + '&chauffeur=' + chauffeur + '&tel=' + tel + '&depart=' + depart + '&arrivee=' + arrivee + '&date=' + date + '&heure=' + heure + '&id=' + id + '&prix=' + prix + '&type_user=' + type_user + '&part_chauffeur=' + part_chauffeur + '&part_societe=' + part_societe,
@@ -293,11 +299,11 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
             function part_societe_fct() {
                 var chauffeur = document.getElementById("chauffeur").value;
                 if (chauffeur == 5) {
-                    document.getElementById("part_chauffeur_bloc").style.display = 'none';
+                    document.getElementById("part_societe").disabled = true;
                     document.getElementById("part_societe").value = '';
 
                 } else {
-                    document.getElementById("part_chauffeur_bloc").style.display = 'block';
+                    document.getElementById("part_societe").disabled = true;
                     document.getElementById("part_societe").value = '';
                 }
             }
