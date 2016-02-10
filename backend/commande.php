@@ -3,7 +3,8 @@ include("config.php");
 include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
-mysql_query("update reservation_attente, reservation_tel set archive=1 where reservation_attente.dtdeb<'" . date("Y-m-d") . "' AND reservation_tel.dtdeb<'" . date("Y-m-d") . "'");
+mysql_query("update reservation_attente set archive=1 where reservation_attente.dtdeb<'" . date("Y-m-d") . "'");
+mysql_query("update reservation_tel set archive=1 where reservation_tel.dtdeb<'" . date("Y-m-d") . "'");
 ?>
 <!doctype html>
 <html class="no-js">
@@ -122,10 +123,10 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select reservation_attente.id, myvtc_users.nom, myvtc_users.prenom, chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_attente.heure, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from chauffeur, myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.dtdeb>='" . date("Y-m-d") . "' AND chauffeur.id_chauffeur = reservation_attente.chauffeur AND reservation_attente.etat=1 and  reservation_attente.archive=0");
+                                                $sql = mysql_query("select reservation_attente.id, myvtc_users.nom, myvtc_users.prenom, reservation_attente.heure, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from  myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.etat=1 and  reservation_attente.archive=0");
                                                 while ($data = mysql_fetch_array($sql)) {
-
-                                                    $nom_complet = $data['chauffeurnom'] . " " . $data['chauffeurprenom'];
+                                                    $nom_complet1 = mysql_fetch_array(mysql_query("select chauffeur.nom,chauffeur.prenom from chauffeur where id_chauffeur=" . $data['chauffeur']));
+                                                    $nom_complet = $nom_complet1['nom'] . " " . $nom_complet1['prenom'];
                                                     ?>
                                                     <tr>
 
@@ -137,8 +138,9 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                                         <td><?php echo $data['prix']; ?>€</td>
                                                         <td><?php echo $nom_complet; ?></td>
                                                         <td>
-                                                            <a class="btn btn-success btn-sm" href="detailcmd.php?id=<?php echo $data['id'] ?>">Détail</a>
+
                                                             <a class="btn btn-success btn-sm" href="notifier.php?id=<?php echo $data['id'] ?>">Ajout chauffeur</a>
+                                                            <a class="btn btn-success btn-sm" href="detailcmd.php?id=<?php echo $data['id'] ?>">Détail</a>
                                                             <a class="btn btn-success btn-sm" onclick="archive(<?php echo$data['id']; ?>)">Archiver</a>
                                                             <a class="btn btn-danger btn-sm" href="commande.php?id=<?php echo $data['id']; ?>" >Supprimer</a>
                                                         </td>
@@ -215,41 +217,41 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
         <!-- Metis demo scripts -->
         <script src="assets/js/app.js"></script>
         <script>
-                                                                $(function () {
-                                                                    Metis.MetisTable();
-                                                                    Metis.metisSortable();
-                                                                });
+                                                            $(function () {
+                                                                Metis.MetisTable();
+                                                                Metis.metisSortable();
+                                                            });
         </script>
         <script src="assets/js/style-switcher.min.js"></script>
         <script>
-                                                                function archive(id) {
+                                                            function archive(id) {
 
 
 
-                                                                    $.ajax({
-                                                                        url: 'archiverCmd.php?id=' + id,
-                                                                        success: function (data) {
-                                                                            var t = eval(data);
+                                                                $.ajax({
+                                                                    url: 'archiverCmd.php?id=' + id,
+                                                                    success: function (data) {
+                                                                        var t = eval(data);
 
-                                                                            alert("Commande Archivée !");
-                                                                            location.reload();
-                                                                        }
-                                                                    });
-                                                                }
+                                                                        alert("Commande Archivée !");
+                                                                        location.reload();
+                                                                    }
+                                                                });
+                                                            }
 
-                                                                function archivetel(id) {
+                                                            function archivetel(id) {
 
 
 
-                                                                    $.ajax({
-                                                                        url: 'archiverCmdtel.php?id=' + id,
-                                                                        success: function (data) {
-                                                                            var t = eval(data);
+                                                                $.ajax({
+                                                                    url: 'archiverCmdtel.php?id=' + id,
+                                                                    success: function (data) {
+                                                                        var t = eval(data);
 
-                                                                            alert("Commande Archivée !");
-                                                                            location.reload();
-                                                                        }
-                                                                    });
-                                                                }
+                                                                        alert("Commande Archivée !");
+                                                                        location.reload();
+                                                                    }
+                                                                });
+                                                            }
         </script>
     </body>

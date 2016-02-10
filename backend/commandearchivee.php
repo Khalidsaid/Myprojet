@@ -3,7 +3,8 @@ include("config.php");
 include("util.php");
 if (!isset($_SESSION['backend']))
     header("location:login.php");
-mysql_query("update reservation_attente, reservation_tel set archive=1 where reservation_attente.dtdeb<'" . date("Y-m-d") . "' AND reservation_tel.dtdeb<'" . date("Y-m-d") . "'");
+mysql_query("update reservation_attente set archive=1 where reservation_attente.dtdeb<'" . date("Y-m-d") . "'");
+mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<'" . date("Y-m-d") . "'");
 ?>
 <!doctype html>
 <html class="no-js">
@@ -110,10 +111,10 @@ mysql_query("update reservation_attente, reservation_tel set archive=1 where res
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select  myvtc_users.nom, myvtc_users.prenom, chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_attente.heure, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from chauffeur, myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.dtdeb>='2016-01-01' AND chauffeur.id_chauffeur = reservation_attente.chauffeur AND reservation_attente.etat=1 and  reservation_attente.archive=1  UNION SELECT client_tel.nom, client_tel.prenom,  chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_tel.heure, reservation_tel.depart, reservation_tel.arrivee, reservation_tel.dtdeb, reservation_tel.prix from reservation_tel INNER JOIN client_tel, chauffeur WHERE  reservation_tel.dtdeb>='2016-01-01' AND chauffeur.id_chauffeur=reservation_tel.id_chauffeur AND reservation_tel.archive=1;");
+                                                $sql = mysql_query("select  myvtc_users.nom, myvtc_users.prenom,  reservation_attente.heure,reservation_attente.chauffeur, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from  myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.dtdeb>='2016-01-01'  AND reservation_attente.etat=1 and  reservation_attente.archive=1  ;");
                                                 while ($data = mysql_fetch_array($sql)) {
-                                                    
-                                                    $nom_complet = $data['chauffeurnom'] . " " . $data['chauffeurprenom'];
+                                                    $nom_complet1=  mysql_fetch_array(mysql_query("select chauffeur.nom,chauffeur.prenom from chauffeur where id_chauffeur=".$data['chauffeur']));
+                                                    $nom_complet = $nom_complet1['nom'] . " " . $nom_complet1['prenom'];
                                                     ?>
                                                     <tr>
 
