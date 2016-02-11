@@ -176,6 +176,12 @@ if ($user['type_user'] == 'Professionnel') {
                     return false;
                 }
             }
+			
+			      function msg()
+            {
+                var txt = "Pour reserver, Appelez le 06 59 34 27 03";
+                alert(txt);
+            }
 
             function checkOrly(aero)
             {
@@ -709,7 +715,9 @@ if ($nb != 9) {
                                 <div class="col-md-8" style="text-align: left"><?php
 if (!isset($_SESSION['myvtclogin'])) {
     ?>
-                                        <a href="javascript:void(0);" class="button big btn btn-success" data-toggle="modal" data-target="#loginModal">Payer</a>
+                                       <!-- <a href="javascript:void(0);" class="button big btn btn-success" data-toggle="modal" data-target="#loginModal">Payer</a>!-->
+									    <a href="#" class="button big btn btn-success" onclick="javascript:msg();
+                                                            ">Reserver</a>
     <?php
 } else {
     if ($nb == 9 && $marep == true) {
