@@ -1,12 +1,77 @@
 <?php
 include("config.php");
- $menu=5;
+ 
 require 'phpmailer/class.phpmailer.php';
 
 $reference = $_SESSION['reference'];
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
-$ll = mysql_query("select reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.codecommande,reservation_attente.prix,reservation_attente.dtdeb,reservation_attente.heure,reservation_attente.passager,reservation_attente.valise from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  myvtc_users.id=" . $user['id'] . " order by reservation_attente.id desc limit 1")or die(mysql_error());
+$ll = mysql_query("select reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.codecommande,reservation_attente.prix,reservation_attente.dtdeb,reservation_attente.heure from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  myvtc_users.id=" . $user['id'] . " order by reservation_attente.id desc limit 1")or die(mysql_error());
 $commande = mysql_fetch_array($ll);
+
+mysql_query("update reservation_attente set etat=1 where codecommande='" . $commande['codecommande'] . "'")or die(mysql_error());
+
+// reference the Dompdf namespace
+use Dompdf\Dompdf;
+
+// instantiate and use the dompdf class
+$dompdf = new Dompdf();
+$chaine = utf8_encode('<table border="0" style="width:100%">
+            <tr>
+                <td colspan="2" style="text-align: center"><img src="http://www.reserveruncab.com/images/logo.png" alt="" /></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center"><h2>Facture N&deg; ' . $commande['codecommande'] . '</h2></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: left"><br><br><br><br>Bonjour ' . $user["prenom"] . ',<br><br>Ci-dessous, vous trouvez le d&eacute;tail de votre commande : <br><br><br></td>
+            </tr>
+             <tr>
+                 <td colspan="2" >
+                     <table border="1" style="width:600px">
+                         <tr>
+                             <td style="height:25px; width:200px">D&eacute;part</td>
+                             <td> ' . $commande['depart'] . '</td>
+                         </tr>
+                         <tr style="height:35px">
+                             <td style="height:25px">Arriv&eacute;</td>
+                             <td> ' . $commande['arrivee'] . '</td>
+                         </tr>
+                         <tr style="height:35px">
+                             <td style="height:25px">Date</td>
+                             <td> ' . $commande['dtdeb'] . '</td>
+                         </tr>
+                         <tr style="height:35px">
+                             <td style="height:25px">Heure</td>
+                             <td> ' . $commande['heure'] . '</td>
+                         </tr>
+                         <tr style="height:35px">
+                             <td style="height:25px">Prix</td>
+                             <td> ' . $commande['prix'] . ' €</td>
+                         </tr>
+                     </table>
+                 </td>
+               
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center; padding-top:200px">L\'&eacute;quipe ReserverUnCab.com</td>
+            </tr>
+        </table>');
+$dompdf->loadHtml($chaine, 'UTF-8');
+
+
+// (Optional) Setup the paper size and orientation
+$dompdf->setPaper('A4', 'paysage');
+
+// Render the HTML as PDF
+$dompdf->render();
+
+// Get the generated PDF file contents
+//$pdf = $dompdf->output();
+file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $dompdf->output());
+
+$mail->IsSMTP();                                // Set mailer to use SMTP
+$mail->Host = 'SSL0.OVH.NET';                 // Specify main and backup server
+$mail->Port = 465; 
 
 $mail = new PHPMailer;
 
@@ -34,8 +99,6 @@ Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
 D&eacute;part : " . $commande['depart'] . "<br><br>
 Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
 Prix : " . $commande['prix'] . "€<br><br>
-Passagers : " . $commande['passager'] . "<br><br>
-Valises : " . $commande['valise'] . "<br><br>
 
 L'&eacute;quipe ReserverUnCab.com.";
 
@@ -132,8 +195,7 @@ mail_attachment($my_file, $my_path, $_SESSION['myvtclogin'], $my_mail, $my_name,
                 <div id="header">
 
                     <!-- Logo -->
-                    <img src="images/logo.png" /><br>
-                    <img src="images/titre.png" />
+                    <h3><img src="images/logo.png"/></h3>
 
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>
