@@ -102,20 +102,44 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                             <i class="fa fa-edit"></i>
                                         </div>
                                         <h5>Notifier Chauffeur</h5>
-												     <?php
-                                        if (isset($_GET['id']) && isset($_GET['chauffeur'])) {
-                                        $sql = mysql_query("update reservation_tel set id_chauffeur=" . $_GET['chauffeur'] . "  where id=" . $id);
-										if ($sql) {
-                                        echo "<script>alert('Chauffeur change !')</script>";
-                                        echo "<script>window.location='commande.php'</script>";
-										} else
-										{
-										echo "<script>alert('Erreur !')</script>";
-                                        echo "<script>window.location='commande.php'</script>";
-										}
-                                    
-                                    }
-                                    ?>
+                                        <?php
+                                        if (isset($_POST['id_cmd']) && isset($_POST['chauffeur'])) {
+                                            $sql = mysql_query("update reservation_tel set id_chauffeur=" . $_POST['chauffeur'] . "  where id=" . $_POST['id_cmd']);
+                                            if ($sql) {
+                                                $ll = mysql_query("select client_tel.nom,client_tel.prenom,client_tel.type_user,client_tel.tel, reservation_tel.depart,reservation_tel.arrivee,reservation_tel.id as id_cmd,reservation_tel.dtdeb,reservation_tel.prix,reservation_tel.dtdeb,client_tel.email,reservation_tel.heure,reservation_tel.passager,reservation_tel.valise from client_tel inner join reservation_tel on reservation_tel.client = client_tel.id where  reservation_tel.id=" . $_POST['id_cmd'] . " order by reservation_tel.id desc limit 1")or die(mysql_error());
+                                                $commande = mysql_fetch_array($ll);
+                                               
+                                                $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $_POST['chauffeur']));
+                                                $nom_complet = $nom_chauffeur['prenom'] . " " . $nom_chauffeur['nom'];
+
+                                                $headers = 'From: contact@reserveruncab.com' . "\r\n" .
+                                                        'Reply-To: contact@reserveruncab.com' . "\r\n" .
+                                                        'X-Mailer: PHP/' . phpversion();
+                                                $message = "Notification de réservation :\n
+Client : " . $commande['type_user'] .": ".$commande['prenom'] ." ".$commande['nom']. "\n
+Téléphone : " . $commande['tel']. "\n
+Date : " . $commande['dtdeb'] . "\n
+Heure : " . $commande['heure'] . "\n
+Départ : " . $commande['depart'] . "\n
+Arrivée : " . $commande['arrivee'] . "\n
+Prix : " . $commande['prix'] . "\n
+Passagers : " . $commande['passager'] . "\n
+Valises : " . $commande['valise'] . "\n
+";
+                                                mail($nom_chauffeur['email'], "Notification sur ReserverUnCab.com", $message, $headers);
+
+
+
+
+
+                                                echo "<script>alert('Chauffeur change !')</script>";
+                                                echo "<script>window.location='commande.php'</script>";
+                                            } else {
+                                                echo "<script>alert('Erreur !')</script>";
+                                                echo "<script>window.location='commande.php'</script>";
+                                            }
+                                        }
+                                        ?>
                                         <!-- .toolbar -->
                                         <div class="toolbar">
                                             <nav style="padding: 8px;">
@@ -129,10 +153,10 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                     </header>
                                     <div id="div-1" class="body">
 
-                                        <form class="form-horizontal" method="POST" action="">
+                                        <form class="form-horizontal" method="post" action="notifiertel.php">
 
 
-
+                                            <input type="hidden" name="id_cmd" value="<?php echo $_GET['id']; ?>" />
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Chauffeur</label>
                                                 <div class="col-lg-8">
@@ -144,86 +168,86 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                                                         while ($data_chauffeur = mysql_fetch_array($sql_chauffeur)) {
                                                             ?>
                                                             <option value="<?php echo $data_chauffeur['id_chauffeur']; ?>"><?php echo $data_chauffeur['prenom'] . " " . $data_chauffeur['nom']; ?></option>
-                                                            
-															<?php
+
+                                                            <?php
                                                         }
                                                         ?>
                                                     </select>
-													<br>
-													<a href="notifiertel.php?chauffeur=<?php echo $_POST['chauffeur']; ?>?id=<?php echo $_GET['id'];?>" class="btn btn-success btn-xs">Modifier</a>
-                                                </div>
-                                           
+                                                    <br>
 
+                                                    <button type="submit" class="btn btn-success">Modifier</button>
+                                                </div>
+
+                                            </div>
                                         </form>
+
                                     </div>
                                 </div>
-                            </div>
 
-                            <!--END TEXT INPUT FIELD-->
+                                <!--END TEXT INPUT FIELD-->
 
 
-                        </div><!-- /.row -->
+                            </div><!-- /.row -->
 
-                    </div><!-- /.inner -->
-                </div><!-- /.outer -->
-            </div><!-- /#content -->
+                        </div><!-- /.inner -->
+                    </div><!-- /.outer -->
+                </div><!-- /#content -->
 
-        </div><!-- /#wrap -->
-        <footer class="Footer bg-dark dker">
-            <p>2014 &copy; Metis Bootstrap Admin Template</p>
-        </footer><!-- /#footer -->
+            </div><!-- /#wrap -->
+            <footer class="Footer bg-dark dker">
+                <p>2014 &copy; Metis Bootstrap Admin Template</p>
+            </footer><!-- /#footer -->
 
-        <!--jQuery -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/Uniform.js/2.1.2/jquery.uniform.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.3/jquery.tagsinput.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/autosize.js/1.18.17/jquery.autosize.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.1/js/bootstrap-switch.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.0.1/js/bootstrap-colorpicker.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js"></script>
+            <!--jQuery -->
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/Uniform.js/2.1.2/jquery.uniform.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.3/jquery.tagsinput.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/autosize.js/1.18.17/jquery.autosize.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.1/js/bootstrap-switch.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/js/bootstrap-datepicker.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.0.1/js/bootstrap-colorpicker.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js"></script>
 
-        <!--Bootstrap -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+            <!--Bootstrap -->
+            <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
-        <!-- MetisMenu -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.js"></script>
+            <!-- MetisMenu -->
+            <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.js"></script>
 
-        <!-- Screenfull -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/screenfull.js/2.0.0/screenfull.min.js"></script>
-        <script src="assets/lib/jquery-inputlimiter/jquery.inputlimiter.1.3.1.min.js"></script>
-        <script src="assets/lib/jQuery.validVal/js/jquery.validVal.min.js"></script>
-        <script src="assets/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
+            <!-- Screenfull -->
+            <script src="//cdnjs.cloudflare.com/ajax/libs/screenfull.js/2.0.0/screenfull.min.js"></script>
+            <script src="assets/lib/jquery-inputlimiter/jquery.inputlimiter.1.3.1.min.js"></script>
+            <script src="assets/lib/jQuery.validVal/js/jquery.validVal.min.js"></script>
+            <script src="assets/lib/bootstrap-daterangepicker/daterangepicker.js"></script>
 
-        <!-- Metis core scripts -->
-        <script src="assets/js/core.min.js"></script>
+            <!-- Metis core scripts -->
+            <script src="assets/js/core.min.js"></script>
 
-        <!-- Metis demo scripts -->
-        <script src="assets/js/app.js"></script>
-        <script>
-            $(function () {
-                Metis.formGeneral();
-            });
-        </script>
+            <!-- Metis demo scripts -->
+            <script src="assets/js/app.js"></script>
+            <script>
+                $(function () {
+                    Metis.formGeneral();
+                });
+            </script>
 
-        <script>
-            function notifchauffeur(id) {
+            <script>
+                function notifchauffeur(id) {
 
                 var chauffeur = document.getElementById("chauffeur").value;
-            
+
                 $.ajax({
-                    url: 'notifchauffeurtel.php?chauffeur=' + chauffeur,
-                    success: function (data) {
+                    url: 'notifchauffeurtel.php?chauffeur=' + chauffeur,                     success: function (data) {
                         var t = eval(data);
                         alert("Chauffeur Notifie !");
-                    }
-                });
-            }
-        </script>
+                        }
+                    });
+                            }
+            </script>
 
 
-        <script src="assets/js/style-switcher.min.js"></script>
+            <script src="assets/js/style-switcher.min.js"></script>
     </body>
