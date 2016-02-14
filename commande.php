@@ -2,7 +2,7 @@
 include("config.php");
 if (!isset($_SESSION['myvtclogin']))
     header("location:connexion.php");
-
+$menu=5;
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
 ?>
 <!DOCTYPE HTML>
@@ -44,8 +44,8 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                 <div id="header">
 
                     <!-- Logo -->
-                    <h3><img src="images/logo.png"/></h3>
-
+                   <img src="images/logo.png" /><br>
+                    <img src="images/titre.png" />
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>
 
@@ -75,25 +75,25 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                                                 $nb = mysql_num_rows($sql);
                                                 if ($nb > 0) {
                                                     ?>
-                                                    <table>
+                                                    <table border="1">
 													
                                                         <tr>
-                                                        <td>Départ</td>
-                                                        <td>Arrivé</td>
-                                                        <td>Date</td>
-                                                        <td>Heure</td>
-                                                        <td>Prix</td>
+                                                            <th class="col-md-4" style="border: 1px solid #ccc; font-weight: bold">Départ</th>
+                                                        <th class="col-md-4" style="border: 1px solid #ccc; font-weight: bold">Arrivé</th>
+                                                        <th class="col-md-2" style="border: 1px solid #ccc; font-weight: bold">Date</th>
+                                                        <th class="col-md-1" style="border: 1px solid #ccc; font-weight: bold">Heure</th>
+                                                        <th class="col-md-1" style="border: 1px solid #ccc; font-weight: bold">Prix</th>
                                                         </tr>
                                                         <?php
                                                         
                                                             while ($data = mysql_fetch_array($sql)) {
                                                                 ?>
                                                                 <tr>
-                                                                    <td><?php echo $data['depart']; ?></td>
-                                                                    <td><?php echo $data['arrivee']; ?></td>
-                                                                    <td><?php echo $data['dtdeb']; ?></td>
-                                                                    <td><?php echo $data['heure']; ?></td>
-                                                                    <td><?php echo $data['prix']; ?></td>
+                                                                    <td style="border: 1px solid #ccc; text-align: left; padding-left: 5px; padding-right: 5px;"><?php echo $data['depart']; ?></td>
+                                                                    <td style="border: 1px solid #ccc; text-align: left; padding-left: 5px; padding-right: 5px;"><?php echo $data['arrivee']; ?></td>
+                                                                    <td style="border: 1px solid #ccc"><?php echo $data['dtdeb']; ?></td>
+                                                                    <td style="border: 1px solid #ccc"><?php echo $data['heure']; ?></td>
+                                                                    <td style="border: 1px solid #ccc"><?php echo $data['prix']; ?> €</td>
                                                                 </tr>
                                                                 <?php
                                                             }

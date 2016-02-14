@@ -2,7 +2,7 @@
 include("config.php");
 if (!isset($_SESSION['myvtclogin']))
     header("location:connexion.php");
-
+$menu=5;
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
 ?>
 <!DOCTYPE HTML>
@@ -52,7 +52,8 @@ $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" 
                 <div id="header">
 
                     <!-- Logo -->
-                    <h3><img src="images/logo.png"/></h3>
+                   <img src="images/logo.png" /><br>
+                    <img src="images/titre.png" />
 
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>
