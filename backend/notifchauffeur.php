@@ -29,12 +29,13 @@ $message = "Notification de réservation :\n
 Type : " . $type_user . "\n
 Nom : " . $nom . "\n
 Prénom : " . $prenom . "\n
-Téléphone: " . $tel . "\n
-Départ : " . $depart . "\n
-Arrivée : " . $arrivee . "\n
-Prix : " . $prix . "\n
+Téléphone: " . $tel . "\n\n
 Date : " . $date . "\n
 Heure : " . $heure . "\n
+Départ : " . $depart . "\n
+Arrivée : " . $arrivee . "\n
+Prix : " . $prix . "€\n
+
 ";
 mail($nom_chauffeur['email'], "Notification sur ReserverUnCab.com", $message, $headers);
 

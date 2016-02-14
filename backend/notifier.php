@@ -293,6 +293,7 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                         var t = eval(data);
 
                         alert("Chauffeur Notifié !");
+                        window.location="commande.php"
                     }
                 });
             }
@@ -303,8 +304,8 @@ $pourcentage = mysql_fetch_array(mysql_query("select * from pourcentage where id
                     document.getElementById("part_societe").value = '';
 
                 } else {
-                    document.getElementById("part_societe").disabled = true;
-                    document.getElementById("part_societe").value = '';
+                    document.getElementById("part_societe").disabled = false;
+                    
                 }
             }
         </script>
