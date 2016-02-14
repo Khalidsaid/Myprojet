@@ -126,7 +126,7 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                                 }
                                                 ?>
                                             </select>
-                                            <button type="submit" class="btn btn-success">Chercher</button>
+                                            <button type="submit" class="btn btn-success" style="margin-top: 20px;">Chercher</button>
                                         </form>
                                         <?php
                                         if (isset($_POST['chauffeur'])) {
@@ -139,14 +139,14 @@ $client = mysql_fetch_array(mysql_query("select myvtc_users.nom,myvtc_users.pren
                                             $gain_month_tel = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_tel where id_chauffeur=" . $_POST['chauffeur'] . " and month(dtdeb)='" . date('m') . "' and year(dtdeb)='" . date('Y') . "' "));
                                             $gain_year_tel = mysql_fetch_array(mysql_query("select sum(part_chauffeur) as somme from reservation_tel where id_chauffeur=" . $_POST['chauffeur'] . " and year(dtdeb)='" . date('Y') . "' "));
                                             ?>
-                                            
-    <?php
-}
-?>
+
+                                            <?php
+                                        }
+                                        ?>
                                     </div>
-                                    <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; font-size: 17px;">Gain journalier : <?php echo $gain_jour['somme'] + $gain_jour_tel['somme'] . " €"; ?></div>
-                                            <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; font-size: 17px;">Gain du mois : <?php echo $gain_month['somme'] + $gain_month_tel['somme'] . " €"; ?></div>
-                                            <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; font-size: 17px;">Gain annuel : <?php echo $gain_year['somme'] + $gain_year_tel['somme'] . " €"; ?></div>
+                                    <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; font-size: 17px;">Gain journalier : <?php echo number_format($gain_jour['somme'] + $gain_jour_tel['somme'], 2, ',', ' ') . " €"; ?></div>
+                                    <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; font-size: 17px;">Gain du mois : <?php echo number_format($gain_month['somme'] + $gain_month_tel['somme'], 2, ',', ' ') . " €"; ?></div>
+                                    <div class="col-md-12" style="margin-top: 20px; margin-bottom: 20px; font-size: 17px;">Gain annuel : <?php echo number_format($gain_year['somme'] + $gain_year_tel['somme'], 2, ',', ' ') . " €"; ?></div>
                                 </div>
                             </div>
 
