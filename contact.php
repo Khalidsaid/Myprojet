@@ -41,7 +41,8 @@ $menu=4;
                 <div id="header">
 
                     <!-- Logo -->
-                    <h3><img src="images/logo.png"/></h3>
+                    <img src="images/logo.png" /><br>
+                    <img src="images/titre.png" />
 
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>
