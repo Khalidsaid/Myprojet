@@ -1,11 +1,11 @@
 <?php
 include("config.php");
- 
+ $menu=5;
 require 'phpmailer/class.phpmailer.php';
 
 $reference = $_SESSION['reference'];
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
-$ll = mysql_query("select reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.codecommande,reservation_attente.prix,reservation_attente.dtdeb,reservation_attente.heure from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  myvtc_users.id=" . $user['id'] . " order by reservation_attente.id desc limit 1")or die(mysql_error());
+$ll = mysql_query("select reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.codecommande,reservation_attente.prix,reservation_attente.dtdeb,reservation_attente.heure,reservation_attente.passager,reservation_attente.valise from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  myvtc_users.id=" . $user['id'] . " order by reservation_attente.id desc limit 1")or die(mysql_error());
 $commande = mysql_fetch_array($ll);
 
 $mail = new PHPMailer;
@@ -34,6 +34,8 @@ Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
 D&eacute;part : " . $commande['depart'] . "<br><br>
 Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
 Prix : " . $commande['prix'] . "€<br><br>
+Passagers : " . $commande['passager'] . "<br><br>
+Valises : " . $commande['valise'] . "<br><br>
 
 L'&eacute;quipe ReserverUnCab.com.";
 
@@ -130,7 +132,8 @@ mail_attachment($my_file, $my_path, $_SESSION['myvtclogin'], $my_mail, $my_name,
                 <div id="header">
 
                     <!-- Logo -->
-                    <h3><img src="images/logo.png"/></h3>
+                    <img src="images/logo.png" /><br>
+                    <img src="images/titre.png" />
 
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>
