@@ -99,9 +99,9 @@ mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<
                                             <thead>
                                                 <tr>
                                                     <th>Nom</th>
-                                                    <th>Prenom</th>
-                                                    <th>Depart</th>
-                                                    <th>Arrivee</th>
+                                                  
+                                                    <th class="col-md-2">Depart</th>
+                                                    <th class="col-md-2">Arrivee</th>
                                                     <th>Date</th>
                                                     <th>Total</th>
                                                     <th>Chauffeur</th>
@@ -118,8 +118,8 @@ mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<
                                                     ?>
                                                     <tr>
 
-                                                        <td><?php echo $data['nom']; ?></td>
-                                                        <td><?php echo $data['prenom']; ?></td>
+                                                        <td><?php echo $data['prenom']." ".$data['nom']; ?></td>
+                                                      
                                                         <td><?php echo $data['depart'];?></td>
                                                         <td><?php echo $data['arrivee']; ?></td>
                                                         <td><?php echo $data['dtdeb']; ?></td>
@@ -137,8 +137,8 @@ mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<
                                                     $nom_complet = $data1['chauffeurnom'] . " " . $data1['chauffeurprenom'];
                                                     ?>
                                                     <tr>
-                                                        <td><?php echo $data1['nom']; ?></td>
-                                                        <td><?php echo $data1['prenom']; ?></td>
+                                                        <td><?php echo $data1['prenom']." ".$data1['nom']; ?></td>
+                                                       
                                                         <td><?php echo $data1['depart'];?></td>
                                                         <td><?php echo $data1['arrivee']; ?></td>
                                                         <td><?php echo $data1['dtdeb']; ?></td>
