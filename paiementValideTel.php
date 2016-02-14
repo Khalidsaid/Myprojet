@@ -5,12 +5,13 @@ require 'phpmailer/class.phpmailer.php';
 
 $id_cmd = $_GET['id'];
 //$user = mysql_fetch_array(mysql_query("select * from client_tel where email='" . $_SESSION['myvtclogin'] . "'"));
-$ll = mysql_query("select reservation_tel.depart,reservation_tel.arrivee,reservation_tel.id as id_cmd,reservation_tel.dtdeb,reservation_tel.prix,reservation_tel.dtdeb,client_tel.email,reservation_tel.heure from client_tel inner join reservation_tel on reservation_tel.client = client_tel.id where  client_tel.id=" . $_GET['id'] . " order by reservation_tel.id desc limit 1")or die(mysql_error());
+$ll = mysql_query("select reservation_tel.depart,reservation_tel.arrivee,reservation_tel.id as id_cmd,reservation_tel.dtdeb,reservation_tel.prix,reservation_tel.dtdeb,client_tel.email,reservation_tel.heure,reservation_tel.passager,reservation_tel.valise from client_tel inner join reservation_tel on reservation_tel.client = client_tel.id where  reservation_tel.id=" . $_GET['id'] . " order by reservation_tel.id desc limit 1")or die(mysql_error());
 $commande = mysql_fetch_array($ll);
 
 $mail = new PHPMailer;
 
-
+$mail->IsHTML(true); 
+$mail->CharSet = 'UTF-8';  
 $mail->Host = 'smtp.gmail.com';                 // Specify main and backup server
 $mail->Port = 26;                                    // Set the SMTP port
 $mail->SMTPAuth = true;                               // Enable SMTP authentication
@@ -20,19 +21,21 @@ $mail->Password = 'Balloo94';                  // SMTP password
 
 $mail->From = 'contact@reserveruncab.com';
 $mail->FromName = 'ReserverUnCab';
-$mail->AddAddress($_SESSION['myvtclogin'], "Confirmation"); // Add address
+$mail->AddAddress($_SESSION['myvtclogin'], $_SESSION['myvtclogin']); // Add address
 
 
 $mail->Subject = 'Validation de paiement ReserverUnCab.com';
-$mail->Body    = "Bonjour,
+$mail->Body    = "Bonjour,<br>
 
-Fécilitation ! Votre paiement sur le site ReserverUnCab.com a été effectué avec succès.
+Fécilitation ! Votre réservation sur le site ReserverUnCab.com a été effectué avec succès.<br><br>
 
-Voici le détail de votre commande :\n
-Départ : " . $commande['depart'] . "\n\n
-Arrivée : " . $commande['arrivee'] . "\n\n
-Prix : " . $commande['prix'] . "\n\n
-Date : " . $commande['dtdeb'] . "\n\n
+Voici le détail de votre commande :<br><br>
+<b>Date :</b> " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
+<b>Départ :</b> " . $commande['depart'] . "<br><br>
+<b>Arrivée :</b> " . $commande['arrivee'] . "<br><br>
+<b>Prix :</b> " . $commande['prix'] . "€<br><br>
+<b>Passagers :</b> " . $commande['passager'] . "<br><br>
+<b>Valises :</b> " . $commande['valise'] . "<br><br>
 
 L'équipe ReserverUnCab.com.";
 
@@ -81,7 +84,8 @@ $mail->AddAttachment("Facture_" . $commande['id_cmd'] . ".pdf");
                 <div id="header">
 
                     <!-- Logo -->
-                    <h3><img src="images/logo.png"/></h3>
+                    <img src="images/logo.png" /><br>
+                    <img src="images/titre.png" />
 
                     <!-- Nav -->
                     <?php include("module/menu.php"); ?>

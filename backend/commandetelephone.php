@@ -628,7 +628,12 @@ if ($user['type_user'] == 'Professionnel') {
                                                     <input type="date" id="dtdeb" placeholder="Date"  class="form-control">
                                                 </div>
                                             </div><!-- /.form-group -->
-
+<div class="form-group">
+                                                <label for="text1" class="control-label col-lg-4">Heure</label>
+                                                <div class="col-lg-8">
+                                                    <input type="text" id="heure" placeholder="Heure" class="form-control">
+                                                </div>
+                                            </div><!-- /.form-group -->
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Depart</label>
                                                 <div class="col-lg-8">
@@ -636,12 +641,7 @@ if ($user['type_user'] == 'Professionnel') {
                                                 </div>
                                             </div><!-- /.form-group -->
 
-                                            <div class="form-group">
-                                                <label for="text1" class="control-label col-lg-4">Heure</label>
-                                                <div class="col-lg-8">
-                                                    <input type="text" id="heure" placeholder="Heure" class="form-control">
-                                                </div>
-                                            </div><!-- /.form-group -->
+                                            
                                             <div class="form-group">
                                                 <label for="text1" class="control-label col-lg-4">Arrivee</label>
                                                 <div class="col-lg-8">
