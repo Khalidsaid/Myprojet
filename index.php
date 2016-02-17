@@ -1132,8 +1132,9 @@ $menu = 1;
                                             <li>Bénéficiez d'un service de haute qualité, fiable et disponible 7j/7, 24h/24.</li>
                                             <li>Réalisez jusqu'à 40% d'économies sur votre budget taxi actuel.</li>
                                             <li>Optez pour la transparence et l'efficacité : une équipe dédiée aux entreprises répond à vos questions sous 24h.</li>
+											<li>Connectez-vous et retrouvez un espace privé regroupant toutes vos informations client, réservations, etc...</li>
                                         </header>
-                                        <p>Connectez-vous et retrouvez un espace privé regroupant toutes vos informations client, réservations, etc...</p>
+                                        
 
                                     </section>
                                 </div>
