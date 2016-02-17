@@ -41,9 +41,11 @@ $menu = 1;
 
             var price = "undefined";
             var avanceoufutur = 0;
+			var pricedure = 0;
 
             function onload() {
                 getprix();
+				getPrixDuree();
                 document.getElementById('bannner').style.display = "none";
                 document.getElementById('bannner2').style.display = "block";
                 document.getElementById('more_passengers').style.display = "none";
@@ -658,20 +660,27 @@ $menu = 1;
 
 
                                 if (statut == 'OK') {
-                                    var dist = element.distance.value;
+                                    var dist = element.distance.value; 
                                     var dure = element.duration.text;
+									var dure2 = element.duration.value;
+									//prix statique en attendant le WS
+									
+									
+									var supp = Math.round(parseInt(dure2/60)* window.pricedure);
+									
                                     if (window.prixtotal > 0)
                                     {
-                                        prix = window.prixtotal;
+                                        prix = window.prixtotal + supp;
                                     } else
                                     {
                                         prix = Math.round(parseInt(dist / 1000) * window.price);
+										prix = prix + supp;
                                     }
 
                                     if ((prix < 15 && todayoradvance == true) || (prix < 8 && todayoradvance == false))
                                     {
                                         window.prixtotal = window.avanceoufutur;
-                                        prix = window.prixtotal;
+                                        prix = window.prixtotal + supp;;
                                         document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
@@ -701,7 +710,7 @@ $menu = 1;
 
             function calculDistance() {
 
-
+		
                 //initMap();
                 document.getElementById("distance").style.display = "block";
                 document.getElementById("prix").style.display = "block";
@@ -738,6 +747,23 @@ $menu = 1;
 
                         for (var i = 0; i < response.length; i++) {
                             window.price = response[i].prix;
+                        }
+                    }
+                });
+
+
+            }
+			
+			        function getPrixDuree() {
+
+                $.ajax({
+                    method: "GET",
+                    url: "http://reserveruncab.com/webservice/v1/users/getPrixDuree",
+                    success: function (data) {
+                        var response = JSON.parse(data);
+
+                        for (var i = 0; i < response.length; i++) {
+                            window.pricedure = response[i].prix;
                         }
                     }
                 });

@@ -161,6 +161,39 @@ class Users {
      * Returns price infos.
      *
 	 * @noAuth
+     * @url GET /users/getPrixDuree
+     */
+    public function getPrixDuree() {
+		try {
+			global $con;			
+			/* Statement declaration */
+			$sql = 	"SELECT * ".
+					"FROM prixduree ";
+				
+					
+			/* Statement values & execution */
+			$stmt = $con->prepare($sql);
+			
+			/* Statement execution */
+			$stmt->execute();
+			
+			/* Handle errors */
+			if ($stmt->errno)
+			  throw new PDOException($stmt->error);
+			else
+			  return $stmt->fetchAll(PDO::FETCH_OBJ);
+			
+			/* Close statement */
+			$stmt->close();
+		} catch(PDOException $e) {
+			return array("error" => $e->getMessage());
+		}
+    }
+	
+	 /**
+     * Returns price infos.
+     *
+	 * @noAuth
      * @url GET /users/getCodepromo
      */
     public function getCodepromo() {

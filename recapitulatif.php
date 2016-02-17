@@ -82,10 +82,33 @@ if ($user['type_user'] == 'Professionnel') {
             var codepromo = 0;
             var avanceoufutur = 0;
             var prixtotal = 0;
-
-            function onload() {
-                calculDistance();
+			var pricedure = 0;
+			getPrixDuree();
                 getPrix();
+				calculDistance();
+			
+            function onload() {
+                
+				getPrixDuree();
+                getPrix();
+				calculDistance();
+            }
+			
+			function getPrixDuree() {
+
+                $.ajax({
+                    method: "GET",
+                    url: "http://reserveruncab.com/webservice/v1/users/getPrixDuree",
+                    success: function (data) {
+                        var response = JSON.parse(data);
+
+                        for (var i = 0; i < response.length; i++) {
+                            window.pricedure = response[i].prix;
+                        }
+                    }
+                });
+				
+
             }
 
             function isNumber(n) {
@@ -119,7 +142,7 @@ if ($user['type_user'] == 'Professionnel') {
                     }
                 });
 
-
+			
             }
 
 
@@ -323,6 +346,22 @@ if ($user['type_user'] == 'Professionnel') {
                     return false;
                 }
             }
+			
+			   function suppVan()
+            {
+				var aa= document.getElementById("van").checked ;
+				
+				if(aa == true)
+				 {
+					prix = prix + 15;
+					document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
+				 } 
+				 if(aa == false)
+				 {
+				 prix = prix - 15;
+				 document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
+				 }
+            }
 
             function callback(response, status) {
 
@@ -426,21 +465,25 @@ if ($user['type_user'] == 'Professionnel') {
                                 if (statut == 'OK') {
                                     var dist = element.distance.value;
                                     var dure = element.duration.text;
-                                    if (window.prixtotal > 0)
+								    var dure2 = element.duration.value;
+									
+									var supp = Math.round(parseInt(dure2/60)* window.pricedure);
+                                    
+									if (window.prixtotal > 0)
                                     {
 
-                                        prix = window.prixtotal;
+                                        prix = window.prixtotal + supp;
                                     }
 
                                     if (window.prixtotal == 0 && window.pricepro > 0)
                                     {
 
-                                        prix = Math.round(parseInt(dist / 1000) * window.pricepro);
+                                        prix = Math.round(parseInt(dist / 1000) * window.pricepro) + supp;
 
                                     } else if (window.prixtotal == 0 && window.pricepro == 0)
                                     {
 
-                                        prix = Math.round(parseInt(dist / 1000) * window.price);
+                                        prix = Math.round(parseInt(dist / 1000) * window.price) + supp;
                                     }
 
 
@@ -448,7 +491,7 @@ if ($user['type_user'] == 'Professionnel') {
                                     {
                                         //window.prixtotal = window.avanceoufutur;
                                         //prix = window.prixtotal;
-                                        prix = 15;
+                                        prix = 15 + supp;
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
                                         document.getElementById('amount').value = prix;
@@ -458,7 +501,7 @@ if ($user['type_user'] == 'Professionnel') {
                                         document.getElementById('amounttxt').value = prix;
                                     } else if ((prix < 8 && todayoradvance == false))
                                     {
-                                        prix = 8;
+                                        prix = 8 + supp;
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
                                         document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
@@ -702,6 +745,14 @@ if ($nb != 9) {
 ?>
 
                             <hr style="border: 1px dashed ! important;">
+							<div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-car"></i>Voiture :</div>
+							<div class="col-md-8" style="text-align: left">
+								
+								  <b>Van (supplément 15€)</b>
+									<input type="checkbox" name="van" id="van" onClick="javascript:suppVan()">
+							
+							</div>
+								<div class="ui form">
 
 
                             <div class="row">

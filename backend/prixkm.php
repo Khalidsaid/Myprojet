@@ -116,6 +116,19 @@ if (!isset($_SESSION['backend']))
                                                             <th><input type="text" id="prix_pro<?php echo $data['id']; ?>" value="<?php echo $data['prixpro']; ?>" />€</th>        
                                                             <th><button class="btn btn-success btn-sm" type="button" onclick="modifprixpro(<?php echo $data['id']; ?>)">Modifier</button></th>
                                                         </tr>
+														
+                                                        <?php
+                                                    }
+                                                
+                                                    $sql = mysql_query("select * from prixduree");
+                                                    while ($data = mysql_fetch_array($sql)) {
+                                                        ?>
+                                                     
+														 <tr>
+                                                            <th>Prix à la minute</th>
+                                                            <th><input type="text" id="prix_minute<?php echo $data['id']; ?>" value="<?php echo $data['prix']; ?>" />€</th>        
+                                                            <th><button class="btn btn-success btn-sm" type="button" onclick="modifprixminute(<?php echo $data['id']; ?>)">Modifier</button></th>
+                                                        </tr>
                                                         <?php
                                                     }
                                                     ?>
@@ -186,6 +199,17 @@ if (!isset($_SESSION['backend']))
                 var prix = document.getElementById("prix_pro" + id).value;
                 $.ajax({
                     url: 'modifprixpro.php?prix=' + prix + '&id=' + id,
+                    success: function (data) {
+                        var t = eval(data);
+
+                        alert("Prix changé !");
+                    }
+                });
+            }
+			   function modifprixminute(id) {
+                var prix = document.getElementById("prix_minute" + id).value;
+                $.ajax({
+                    url: 'modifprixduree.php?prix=' + prix + '&id=' + id,
                     success: function (data) {
                         var t = eval(data);
 
