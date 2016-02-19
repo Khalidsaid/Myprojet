@@ -31,7 +31,7 @@
 	    //    -> Windows : $parm="$parm pathfile=c:/repertoire/pathfile";
 	    //    -> Unix    : $parm="$parm pathfile=/home/repertoire/pathfile";
 	    
-	$parm="$parm pathfile=/www/sogenactif/param/pathfile";
+	$parm="$parm pathfile=../param/pathfile";
 
 	//		Si aucun transaction_id n'est affecté, request en génère
 	//		un automatiquement à partir de heure/minutes/secondes
@@ -91,7 +91,7 @@
 	// -> Unix    : $path_bin = "/home/repertoire/bin/request";
 	//
 
-	$path_bin = "/www/sogenactif/bin/static/request";
+	$path_bin = "../bin/static/request";
 
 
 	//	Appel du binaire request

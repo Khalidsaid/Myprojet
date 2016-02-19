@@ -17,11 +17,11 @@ LOGO!merchant.gif!
 
 # URL de retour suite a paiement refuse
 
-CANCEL_URL!http://!
+CANCEL_URL!http://reserveruncab.com/paiementAnnule.php!
 
 # URL de retour suite a paiement accepte
 
-RETURN_URL!http://!
+RETURN_URL!http://reserveruncab.com/paiementValide.php!
 
 
 # END OF FILE

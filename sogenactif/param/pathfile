@@ -19,7 +19,7 @@ DEBUG!NO!
 # indiquer:
 # ------------------------------------------------------------------------
 #
-D_LOGO!/sogenactif/payment/logo/!
+D_LOGO!/sogenactif/logo/!
 #
 # --------------------------------------------------------------------------
 #  Fichiers paramètres liés a l'api sogenactif paiement	
@@ -27,7 +27,7 @@ D_LOGO!/sogenactif/payment/logo/!
 #
 # certificat du commercant
 #
-F_CERTIFICATE!/home/sogenactif/payment/param/certif!
+F_CERTIFICATE!/www/sogenactif/param/certif!
 #
 # type du certificat
 #
@@ -35,11 +35,11 @@ F_CTYPE!php!
 #
 # fichier paramètre commercant
 #
-F_PARAM!/home/sogenactif/payment/param/parmcom!
+F_PARAM!/www/sogenactif/param/parmcom!
 #
 # fichier des paramètres sogenactif
 #
-F_DEFAULT!/home/sogenactif/payment/param/parmcom.sogenactif!
+F_DEFAULT!/www/sogenactif/param/parmcom.sogenactif!
 #
 #########################################################################
 # End of file
