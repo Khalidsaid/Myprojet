@@ -69,7 +69,7 @@ $dompdf->render();
 //$pdf = $dompdf->output();
 file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $dompdf->output());
 
-$mail->IsSMTP();                                // Set mailer to use SMTP
+//$mail->IsSMTP();                                // Set mailer to use SMTP
 $mail->Host = 'SSL0.OVH.NET';                 // Specify main and backup server
 $mail->Port = 465; 
 

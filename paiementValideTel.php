@@ -1,4 +1,5 @@
 <?php
+
 include("config.php");
 require 'phpmailer/class.phpmailer.php';
 
