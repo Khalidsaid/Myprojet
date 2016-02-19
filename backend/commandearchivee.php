@@ -10,7 +10,7 @@ mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<
 <html class="no-js">
     <head>
         <meta charset="UTF-8">
-        <title>Commandes validees</title>
+        <title>Commandes archivées</title>
 
         <!--IE Compatibility modes-->
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -132,7 +132,7 @@ mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<
                                                 }
                                                 ?>
 												  <?php
-                                                $sql1 = mysql_query("select chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom, reservation_tel.id as id_cmd, client_tel.nom, client_tel.prenom, DATE_FORMAT(reservation_tel.dtdeb, '%d/%m/%Y') as dtdeb, prix  from reservation_tel, client_tel, chauffeur WHERE client_tel.id = reservation_tel.client AND reservation_tel.id_chauffeur=chauffeur.id_chauffeur AND reservation_tel.archive=1 AND reservation_tel.dtdeb<'" . date("Y-m-d") . "'");
+                                                $sql1 = mysql_query("select chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom,reservation_tel.depart,reservation_tel.arrivee, reservation_tel.id as id_cmd, client_tel.nom, client_tel.prenom, DATE_FORMAT(reservation_tel.dtdeb, '%d/%m/%Y') as dtdeb, prix  from reservation_tel, client_tel, chauffeur WHERE client_tel.id = reservation_tel.client AND reservation_tel.id_chauffeur=chauffeur.id_chauffeur AND reservation_tel.archive=1");
                                                 while ($data1 = mysql_fetch_array($sql1)) {                                                 
                                                     $nom_complet = $data1['chauffeurnom'] . " " . $data1['chauffeurprenom'];
                                                     ?>
