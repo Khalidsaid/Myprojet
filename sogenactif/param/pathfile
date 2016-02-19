@@ -27,19 +27,19 @@ D_LOGO!/sogenactif/payment/logo/!
 #
 # certificat du commercant
 #
-F_CERTIFICATE!c:\sogenactif\payment\param\certif!
-# --------------------------------------------------------------------------
-#  Type du certificat php ou asp	
-# --------------------------------------------------------------------------
+F_CERTIFICATE!/home/sogenactif/payment/param/certif!
+#
+# type du certificat
+#
 F_CTYPE!php!
 #
 # fichier paramètre commercant
 #
-F_PARAM!c:\sogenactif\payment\param\parmcom!
+F_PARAM!/home/sogenactif/payment/param/parmcom!
 #
 # fichier des paramètres sogenactif
 #
-F_DEFAULT!c:\sogenactif\payment\param\parmcom.sogenactif!
+F_DEFAULT!/home/sogenactif/payment/param/parmcom.sogenactif!
 #
 #########################################################################
 # End of file

@@ -31,7 +31,7 @@
 	    //    -> Windows : $parm="$parm pathfile=c:/repertoire/pathfile";
 	    //    -> Unix    : $parm="$parm pathfile=/home/repertoire/pathfile";
 	    
-	$parm="$parm pathfile=http://reserveruncab.com/sogenactif/payment/param/pathfile";
+	$parm="$parm pathfile=/www/sogenactif/param/pathfile";
 
 	//		Si aucun transaction_id n'est affecté, request en génère
 	//		un automatiquement à partir de heure/minutes/secondes
@@ -87,11 +87,11 @@
 
 	// Initialisation du chemin de l'executable request (à modifier)
 	// ex :
-	// -> Windows : $path_bin = "c:/repertoire/bin/request.exe";
+	// -> Windows : $path_bin = "c:/repertoire/bin/request";
 	// -> Unix    : $path_bin = "/home/repertoire/bin/request";
 	//
 
-	$path_bin = "http://reserveruncab.com/sogenactif/payment/bin/request";
+	$path_bin = "/www/sogenactif/bin/static/request";
 
 
 	//	Appel du binaire request

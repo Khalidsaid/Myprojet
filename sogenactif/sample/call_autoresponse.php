@@ -23,7 +23,7 @@
 
 	//Initialisation du chemin de l'executable response (à modifier)
 	//ex :
-	//-> Windows : $path_bin = "c:/repertoire/bin/response.exe"
+	//-> Windows : $path_bin = "c:/repertoire/bin/response"
 	//-> Unix    : $path_bin = "/home/repertoire/bin/response"
 	//
 
@@ -88,7 +88,7 @@
 
 	// Initialisation du chemin du fichier de log (à modifier)
     //   ex :
-    //    -> Windows : $logfile="c:/repertoire/log/logfile.txt";
+    //    -> Windows : $logfile="c:\\repertoire\\log\\logfile.txt";
     //    -> Unix    : $logfile="/home/repertoire/log/logfile.txt";
     //
 

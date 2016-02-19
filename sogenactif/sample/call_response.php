@@ -31,7 +31,7 @@
 
 	// Initialisation du chemin de l'executable response (à modifier)
 	// ex :
-	// -> Windows : $path_bin = "c:/repertoire/bin/response.exe";
+	// -> Windows : $path_bin = "c:/repertoire/bin/response";
 	// -> Unix    : $path_bin = "/home/repertoire/bin/response";
 	//
 
