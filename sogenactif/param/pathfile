@@ -27,7 +27,7 @@ D_LOGO!/sogenactif/logo/!
 #
 # certificat du commercant
 #
-F_CERTIFICATE!/www/sogenactif/param/certif!
+F_CERTIFICATE!/home/reserverrz/www/sogenactif/param/certif!
 #
 # type du certificat
 #
@@ -35,11 +35,11 @@ F_CTYPE!php!
 #
 # fichier paramètre commercant
 #
-F_PARAM!/www/sogenactif/param/parmcom!
+F_PARAM!/home/reserverrz/www/sogenactif/param/parmcom!
 #
 # fichier des paramètres sogenactif
 #
-F_DEFAULT!/www/sogenactif/param/parmcom.sogenactif!
+F_DEFAULT!/home/reserverrz/www/sogenactif/param/parmcom.sogenactif!
 #
 #########################################################################
 # End of file
