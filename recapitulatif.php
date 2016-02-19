@@ -292,17 +292,13 @@ if ($user['type_user'] == 'Professionnel') {
                 var price = document.getElementById("amounttxt").value;
                 var ref = document.getElementById("myref").value;
 
-                $.ajax({
-                    url: 'reservation.php?price=' + price + "&ref=" + ref,
-                    success: function (data) {
-                        var t = eval(data);
-                        document.paypal.submit();
-                    }
-                });
+              window.location.href = "call_request.php?p=" + price + "&ref=" + ref;
+                
+				}
 
 
 
-            }
+            
 
             function checkAdvanceorAsap() {
 
@@ -777,9 +773,8 @@ if (!isset($_SESSION['myvtclogin'])) {
                                             <?php
                                         } else {
                                             ?>
-                                            <a href="#" class="button big btn btn-success" onclick="javascript:reservation();
-                                                            return false;">Payer</a>
-
+                                           <!-- <a href="#" class="button big btn btn-success" onClick="javascript:reservation()">Payer</a>!-->
+											 <a href="#" class="button big btn btn-success" onclick="javascript:msg();">Reserver</a>
                                             <?php
                                         }
                                     }
