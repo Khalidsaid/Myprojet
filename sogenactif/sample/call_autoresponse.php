@@ -19,7 +19,7 @@
 	    //    -> Windows : $pathfile="pathfile=c:/repertoire/pathfile"
 	    //    -> Unix    : $pathfile="pathfile=/home/repertoire/pathfile"
 	    
-	$pathfile="pathfile=chemin_du_fichier_pathfile";
+	$pathfile="pathfile=../param/pathfile";
 
 	//Initialisation du chemin de l'executable response (à modifier)
 	//ex :
@@ -27,7 +27,7 @@
 	//-> Unix    : $path_bin = "/home/repertoire/bin/response"
 	//
 
-	$path_bin = "chemin_du_fichier_response";
+	$path_bin = "../bin/static/response";
 
 	// Appel du binaire response
   	$message = escapeshellcmd($message);
@@ -92,7 +92,7 @@
     //    -> Unix    : $logfile="/home/repertoire/log/logfile.txt";
     //
 
-	$logfile="chemin_du_fichier_de_log";
+	$logfile="../bin/static/log.txt";
 
 	// Ouverture du fichier de log en append
 

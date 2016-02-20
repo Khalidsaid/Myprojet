@@ -1,5 +1,6 @@
 <?php
 include("config.php");
+$mavar= $_GET['response_code'];
 
 ?>
 <!DOCTYPE HTML>
@@ -62,7 +63,7 @@ include("config.php");
                                             
                                             <div class="col-sm-12">
 
-                                                <p>Erreur.</p>
+                                                <p>Erreur.<?php echo $mavar;?></p>
                                                 <p>Votre commande n'a pas été validée.</p>
                                                 <p>Cliquer <a href="http://reserveruncab.com/">ici</a> pour retourner à la page d'accueil.</p>
 

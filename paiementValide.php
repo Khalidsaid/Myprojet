@@ -1,7 +1,10 @@
 <?php
 include("config.php");
- 
 require 'phpmailer/class.phpmailer.php';
+
+$mavar= $_GET['response_code'];
+echo $mavar;
+
 
 $reference = $_SESSION['reference'];
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));

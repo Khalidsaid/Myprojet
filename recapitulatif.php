@@ -773,7 +773,7 @@ if (!isset($_SESSION['myvtclogin'])) {
                                             <?php
                                         } else {
                                             ?>
-                                           <!-- <a href="#" class="button big btn btn-success" onClick="javascript:reservation()">Payer</a>!-->
+                                        <!--    <a href="#" class="button big btn btn-success" onClick="javascript:reservation()">Payer</a>!-->
 											 <a href="#" class="button big btn btn-success" onclick="javascript:msg();">Reserver</a>
                                             <?php
                                         }

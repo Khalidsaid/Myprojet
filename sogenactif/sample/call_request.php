@@ -1,17 +1,15 @@
-<!--
--------------------------------------------------------------
- Topic	 : Exemple PHP traitement de la requête de paiement
- Version : P615
-
- 		Dans cet exemple, on affiche un formulaire HTML
-		de connection à l'internaute.
-
--------------------------------------------------------------
--->
-
-<!--	Affichage du header html	-->
  <?php
+ include("config.php");
+	if (!isset($_SESSION['myvtclogin']))
+    header("location:connexion.php");
+	$user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
 
+
+	$price=$_GET['p'];
+	$pp = number_format((int)$price);
+	$tt = str_pad((string)$pp, 4, '0', STR_PAD_RIGHT);
+	
+	
 	print ("<HTML><HEAD><TITLE>SOGENACTIF - Paiement Securise sur Internet</TITLE></HEAD>");
 	print ("<BODY bgcolor=#ffffff>");
 	print ("<Font color=#000000>");
@@ -20,9 +18,9 @@
 
 	//		Affectation des paramètres obligatoires
 
-	$parm="merchant_id=014213245611111";
+	$parm="merchant_id=081368548400012";
 	$parm="$parm merchant_country=fr";
-	$parm="$parm amount=100";
+	$parm="$parm amount=$tt";
 	$parm="$parm currency_code=978";
 
 
@@ -31,7 +29,7 @@
 	    //    -> Windows : $parm="$parm pathfile=c:/repertoire/pathfile";
 	    //    -> Unix    : $parm="$parm pathfile=/home/repertoire/pathfile";
 	    
-	$parm="$parm pathfile=../param/pathfile";
+	$parm="$parm pathfile=./sogenactif/param/pathfile";
 
 	//		Si aucun transaction_id n'est affecté, request en génère
 	//		un automatiquement à partir de heure/minutes/secondes
@@ -91,7 +89,7 @@
 	// -> Unix    : $path_bin = "/home/repertoire/bin/request";
 	//
 
-	$path_bin = "../bin/static/request";
+	$path_bin = "./sogenactif/bin/static/request";
 
 
 	//	Appel du binaire request
