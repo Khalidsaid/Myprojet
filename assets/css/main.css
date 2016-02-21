@@ -2667,10 +2667,11 @@ ol.default li {
     #navPanel .indent-5 {
         display: inline-block;
         width: 5em;
+
     }
 
     #navPanel .depth-0 {
-        color: #fff;
+        color: black;
     }
 
     body.navPanel-visible #page-wrapper {

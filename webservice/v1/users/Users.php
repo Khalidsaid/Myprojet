@@ -158,6 +158,39 @@ class Users {
     }
 	
 	 /**
+     * Returns shop infos.
+     *
+	 * @noAuth
+     * @url GET /users/openOrclose
+     */
+    public function openOrclose() {
+		try {
+			global $con;			
+			/* Statement declaration */
+			$sql = 	"SELECT * ".
+					"FROM etat_boutique ";
+				
+					
+			/* Statement values & execution */
+			$stmt = $con->prepare($sql);
+			
+			/* Statement execution */
+			$stmt->execute();
+			
+			/* Handle errors */
+			if ($stmt->errno)
+			  throw new PDOException($stmt->error);
+			else
+			  return $stmt->fetchAll(PDO::FETCH_OBJ);
+			
+			/* Close statement */
+			$stmt->close();
+		} catch(PDOException $e) {
+			return array("error" => $e->getMessage());
+		}
+    }
+	
+	 /**
      * Returns price infos.
      *
 	 * @noAuth

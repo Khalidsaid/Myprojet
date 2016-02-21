@@ -1,7 +1,5 @@
 <!DOCTYPE HTML>
-<!--
-        Developer : Said KHALID, khalidsaid.box@gmail.com, 2016.
--->
+
 <?php
 if (!isset($_SESSION)) {
     session_start();
@@ -90,36 +88,7 @@ $menu = 1;
 
             }
 
-            function checkAdvanceorAsap() {
-
-                //Heure courante.
-
-                var now = new Date();
-
-                var annee = now.getFullYear();
-                var mois = ('0' + now.getMonth() + 1).slice(-2);
-                var jour = ('0' + now.getDate()).slice(-2);
-
-                var EnteredDate = document.getElementById("datedep").value; //for javascript
-                var EnteredDate = $("#datedep").val(); // For JQuery
-
-                var month = EnteredDate.substring(0, 2);
-                var date = EnteredDate.substring(3, 5);
-                var year = EnteredDate.substring(6, 10);
-
-
-                //Test date courante et date séléctionné
-                if (date == jour && year == annee && month == mois)
-                {
-                    window.avanceoufutur = 15;
-                    return true;
-                } else
-                {
-                    window.avanceoufutur = 8;
-                    return false;
-                }
-
-            }
+            
 
             function checkonlytime()
             {
@@ -594,9 +563,9 @@ $menu = 1;
                 var mavar5 = checkGare(adr_arr);
 
                 //Vérifier si la réservation est le jour même
-                var todayoradvance = checkAdvanceorAsap();
+                //var todayoradvance = checkAdvanceorAsap();
 
-                if ((mavar == true && mavar2 == true && mavar3 == true) || (mavar4 == true && mavar5 == true && mavar3 == true))
+                /*if ((mavar == true && mavar2 == true && mavar3 == true) || (mavar4 == true && mavar5 == true && mavar3 == true))
                 {
                     window.prixtotal = 19;
                     rep = true;
@@ -604,8 +573,10 @@ $menu = 1;
                 {
 
                     var rep = false;
-                }
-
+                }*/
+				
+				var rep = false;
+				
                 if (rep == false && (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
                 {
                     window.prixtotal = 0;
@@ -670,17 +641,17 @@ $menu = 1;
 									
                                     if (window.prixtotal > 0)
                                     {
-                                        prix = window.prixtotal + supp;
+                                        prix = window.prixtotal;
                                     } else
                                     {
                                         prix = Math.round(parseInt(dist / 1000) * window.price);
 										prix = prix + supp;
                                     }
 
-                                    if ((prix < 15 && todayoradvance == true) || (prix < 8 && todayoradvance == false))
+                                    if (prix < 15)
                                     {
-                                        window.prixtotal = window.avanceoufutur;
-                                        prix = window.prixtotal + supp;;
+                                        window.prixtotal = 15;
+                                        prix = window.prixtotal;
                                         document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
@@ -1108,7 +1079,7 @@ $menu = 1;
                         <section>
                             <header class="major">
                                 <h2>Qui sommes nous?</h2>
-                                <h3>ReserverUnCab EST UNE PLATEFORME PROPOSANT LA RÉSERVATION DE VOITURES AVEC CHAUFFEURS PRIVÉS DE VTC EN ILE-DE-FRANCE</h3>
+                                <h3>ReserverUnCab est une plateforme proposant la réservation de voiture avec chauffeurs privés VTC en Ile-De-France</h3>
                             </header>
                             <div class="row">
                                 <div class="6u 12u(mobile)">

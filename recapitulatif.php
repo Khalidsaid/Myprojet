@@ -2,6 +2,7 @@
 include("config.php");
 $menu = 1;
 $chaine_cmd = "Reservation sur ReserverUnCab";
+
 // Identifiant unique
 $identifiant = uniqid();
 $_SESSION['reference'] = $identifiant;
@@ -18,12 +19,10 @@ $date = date('Y-m-d H:i:s');
 
 $requete = "insert into reservation_attente(codecommande,depart, arrivee,passager,valise,dtdeb,heure,distance,  date_add, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($arrivee) . "', '" . addslashes($totalpers) . "', '" . addslashes($totalbag) . "', '" . trim($datedep) . "', '" . addslashes($heyres) . "', '" . addslashes($distance) . "', '" . addslashes($date) . "', 0);";
 $exec = mysql_query($requete)or die(mysql_error());
-/* if(mysql_query($requete)){
-  echo '<script>alert("requete réussi !")</script>';
-  }else{
-  echo '<script>alert("requete non reussi !")</script>';
-  } */
-$nb == 0;
+
+
+ //parrainage
+ /*$nb == 0;
 if (isset($_SESSION['myvtclogin'])) {
     $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
     $check = mysql_fetch_array(mysql_query("select COUNT(*) as total from myvtc_users where parrain= '" . $_SESSION['myvtclogin'] . "'"));
@@ -35,7 +34,7 @@ if (isset($_SESSION['myvtclogin'])) {
             $nb = mysql_num_rows($sql);
         }
     }
-}
+}*/
 
 
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
@@ -47,6 +46,9 @@ if ($user['type_user'] == 'Professionnel') {
 } else {
     echo "<script>window.pricepro = 0;</script>";
 }
+
+$et = mysql_fetch_array(mysql_query("select * from etat_boutique"));
+$etat = $et['etat'];
 ?>
 <!DOCTYPE HTML>
 
@@ -83,15 +85,18 @@ if ($user['type_user'] == 'Professionnel') {
             var avanceoufutur = 0;
             var prixtotal = 0;
 			var pricedure = 0;
+			var etat = 0;
 			getPrixDuree();
-                getPrix();
-				calculDistance();
+            getPrix();
+			calculDistance();
+		
 			
             function onload() {
                 
 				getPrixDuree();
                 getPrix();
 				calculDistance();
+				openOrclose();
             }
 			
 			function getPrixDuree() {
@@ -104,6 +109,23 @@ if ($user['type_user'] == 'Professionnel') {
 
                         for (var i = 0; i < response.length; i++) {
                             window.pricedure = response[i].prix;
+                        }
+                    }
+                });
+				
+
+            }
+			
+				function openOrclose() {
+
+                $.ajax({
+                    method: "GET",
+                    url: "http://reserveruncab.com/webservice/v1/users/openOrclose",
+                    success: function (data) {
+                        var response = JSON.parse(data);
+
+                        for (var i = 0; i < response.length; i++) {
+                            window.openorclose = response[i].etat;
                         }
                     }
                 });
@@ -202,7 +224,13 @@ if ($user['type_user'] == 'Professionnel') {
 			
 			      function msg()
             {
-                var txt = "Pour reserver, Appelez le 06 59 34 27 03";
+                var txt = "Veuillez créer un Compte ou Appelez le 06 59 34 27 03";
+                alert(txt);
+            }
+			
+			      function msgclose()
+            {
+                var txt = "Boutique fermée, pour reserver, appelez le 06 59 34 27 03";
                 alert(txt);
             }
 
@@ -394,11 +422,10 @@ if ($user['type_user'] == 'Professionnel') {
                 var mavar4 = checkParis(adr_dep);
                 var mavar5 = checkGare(adr_arr);
 
-                //Vérifier si la réservation est le jour même
-                var todayoradvance = checkAdvanceorAsap();
-                //alert(todayoradvance);
 
-                if ((mavar == true && mavar2 == true && mavar3 == true) || (mavar4 == true && mavar5 == true && mavar3 == true))
+              
+				//Conditions départ gare de Paris
+                /*if ((mavar == true && mavar2 == true && mavar3 == true) || (mavar4 == true && mavar5 == true && mavar3 == true))
                 {
                     window.prixtotal = 19;
                     rep = true;
@@ -406,8 +433,10 @@ if ($user['type_user'] == 'Professionnel') {
                 {
 
                     var rep = false;
-                }
+                }*/
 
+				var rep = false;
+				
                 if (rep == false && (a == true && b == true) || (c == true && d == true) || (e == true && f == true) || (g == true && h == true))
                 {
                     window.prixtotal = 0;
@@ -468,7 +497,7 @@ if ($user['type_user'] == 'Professionnel') {
 									if (window.prixtotal > 0)
                                     {
 
-                                        prix = window.prixtotal + supp;
+                                        prix = window.prixtotal;
                                     }
 
                                     if (window.prixtotal == 0 && window.pricepro > 0)
@@ -483,11 +512,10 @@ if ($user['type_user'] == 'Professionnel') {
                                     }
 
 
-                                    if ((prix < 15 && todayoradvance == true))
+                                    if (prix < 15)
                                     {
-                                        //window.prixtotal = window.avanceoufutur;
-                                        //prix = window.prixtotal;
-                                        prix = 15 + supp;
+                                        window.prixtotal = 15;
+                                        prix = window.prixtotal;
                                         document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
                                         document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
                                         document.getElementById('amount').value = prix;
@@ -495,17 +523,6 @@ if ($user['type_user'] == 'Professionnel') {
                                         document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
                                         document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
                                         document.getElementById('amounttxt').value = prix;
-                                    } else if ((prix < 8 && todayoradvance == false))
-                                    {
-                                        prix = 8 + supp;
-                                        document.getElementById('duree').innerHTML = '<b><i class="fa fa-clock-o"></i> ' + dure + '<b>';
-                                        document.getElementById('prix').innerHTML = '<b><i class="fa fa-money"></i> Tarif : ' + prix + ' €<b>';
-                                        document.getElementById('distance').innerHTML = '<b><i class="fa fa-car"></i> ' + parseInt(dist / 1000) + ' kilomètres<b> '; //distance en km
-                                        document.getElementById('amount').value = prix;
-                                        document.getElementById('depart').innerHTML = '<b> ' + getURIParameter("depart") + '<b> ';
-                                        document.getElementById('arrivee').innerHTML = '<b>' + getURIParameter("arrivee");
-                                        document.getElementById('amounttxt').value = prix;
-
                                     }
 
                                     if (prix > 15)
@@ -704,41 +721,12 @@ if ($user['type_user'] == 'Professionnel') {
 
 
 
-                            <script type="text/javascript">
-                                var rep = getURIParameter("depart");
-                                var bool = checkParis(rep);
-
-<?php $marep = "<script>document.write(bool);</script>"; ?>
-                            </script>
-
-<?php
-//echo $marep;
-if ($nb != 9) {
-    ?>
                                 <hr style="border: 1px dashed ! important;">
                                 <div class="row">
                                     <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
                                     <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p><input type="hidden" id="amounttxt" /><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /></div>
                                 </div>
-    <?php
-} if ($nb == 9 and $marep == true) {
-    ?>
-                                <hr style="border: 1px dashed ! important;">
-                                <div class="row">
-                                    <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
-                                    <div class="col-md-8" style="text-align: left"><input type="hidden" id="amounttxt" /><span id="prix" name="prix" value="0" style="width: 0px; color: rgb(255, 255, 255) ! important; display: none;"></span><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /> <p  style="font-size: 22px;">Gratuit (offre parrainage de la 10e course)</p></div>
-                                </div>
-    <?php
-} else if ($nb == 9 and $marep == false) {
-    ?>
-                                <hr style="border: 1px dashed ! important;">
-                                <div class="row">
-                                    <div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-money"></i> Prix</div>
-                                    <div class="col-md-8" style="text-align: left"> <p id="prix" name="prix" style="font-size: 22px;"></p><input type="hidden" id="amounttxt" /><input type="hidden" value="<?php echo $identifiant; ?>" id="myref" /></div>
-                                </div>
-    <?php
-}
-?>
+					
 
                             <hr style="border: 1px dashed ! important;">
 							<div class="col-md-4" style="text-align: left; color: rgb(30, 79, 147); font-size: 17px;"><i class="fa fa-car"></i>Voiture :</div>
@@ -759,25 +747,38 @@ if ($nb != 9) {
                                     <br>
                                     <button type="button" class="btn btn-info col-md-12" onclick="javascript:checkCode();">Appliquer</button>
                                 </div>
-                                <div class="col-md-8" style="text-align: left"><?php
-if (!isset($_SESSION['myvtclogin'])) {
-    ?>
+                                <div class="col-md-8" style="text-align: left">
+								
+								<?php
+									
+									if (!isset($_SESSION['myvtclogin'])) {
+										?>
                                        <!-- <a href="javascript:void(0);" class="button big btn btn-success" data-toggle="modal" data-target="#loginModal">Payer</a>!-->
-									    <a href="#" class="button big btn btn-success" onclick="javascript:msg();
-                                                            ">Reserver</a>
-    <?php
-} else {
-    if ($nb == 9 && $marep == true) {
-        ?>
+									    <a href="#" class="button big btn btn-success" onclick="javascript:msg();">Reserver</a>
+										<?php
+									
+									} 
+									//echo "<script>alert(".$etat.");</script>";
+									if (isset($_SESSION['myvtclogin']) && $etat == 1 ){
+										
+										if ($nb == 9 && $marep == true) {
+											?>
                                             <a href="paiementValide.php" class="button big btn btn-success">Confirmer</a>
                                             <?php
-                                        } else {
+                                        } else{
                                             ?>
-                                        <!--    <a href="#" class="button big btn btn-success" onClick="javascript:reservation()">Payer</a>!-->
-											 <a href="#" class="button big btn btn-success" onclick="javascript:msg();">Reserver</a>
+                                          <a href="#" class="button big btn btn-success" onClick="javascript:reservation()">Payer</a>
+										<!--  	 <a href="#" class="button big btn btn-success" onclick="javascript:msg();">Reserver</a>!-->
                                             <?php
                                         }
-                                    }
+                                    }  
+									
+									if (isset($_SESSION['myvtclogin']) && $etat == 2)
+									{
+									?>
+									<a href="#" class="button big btn btn-success" onclick="javascript:msgclose();">Reserver</a>
+									<?php
+									}
                                     ?> <a href="javascript:modifier()" class="button big btn btn-warning">Modifier</a></div>
                             </div>
                         </div>
