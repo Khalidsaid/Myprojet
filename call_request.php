@@ -7,17 +7,27 @@
 
 	$price=$_GET['p'];
 	$pp = number_format((int)$price);
+	
+	
+	
+	if($pp < 100)
+	{
 	$tt = str_pad((string)$pp, 4, '0', STR_PAD_RIGHT);
+	} 
 	
+	if($pp > 99 && $pp < 1000)
+	{
+	$tt = str_pad((string)$pp, 5, '0', STR_PAD_RIGHT);
+	}
 	
-	print ("<HTML><HEAD><TITLE>SOGENACTIF - Paiement Securise sur Internet</TITLE></HEAD>");
+	print ("<HTML><HEAD><TITLE>ReserverUnCab - Paiement Securis&eacute;</TITLE></HEAD>");
 	print ("<BODY bgcolor=#ffffff>");
 	print ("<Font color=#000000>");
-	print ("<center><H1>SOGENACTIF - Paiement Securise sur Internet</H1></center><br><br>");
+	print ("<center><H1>ReserverUnCab - Paiement Securis&eacute;</H1></center><br><br>");
 
 
 	//		Affectation des paramètres obligatoires
-
+	$tt=100;
 	$parm="merchant_id=081368548400012";
 	$parm="$parm merchant_country=fr";
 	$parm="$parm amount=$tt";
@@ -44,7 +54,7 @@
 	// 		Les valeurs proposées ne sont que des exemples
 	// 		Les champs et leur utilisation sont expliqués dans le Dictionnaire des données
 	//
- 		$parm="$parm normal_return_url=http://reserveruncab.com/paiementValide.php";
+ 		$parm="$parm normal_return_url=http://reserveruncab.com/sogenactif/sample/call_response.php";
 		$parm="$parm cancel_return_url=http://reserveruncab.com/sogenactif/sample/call_response.php";
 		$parm="$parm automatic_response_url=http://reserveruncab.com/sogenactif/sample/call_autoresponse.php";
 			$parm="$parm language=fr";

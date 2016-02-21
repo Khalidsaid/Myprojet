@@ -54,7 +54,7 @@ MERCHANT_LANGUAGE!fr!
 
 # Liste des moyens de paiement acceptes
 
-PAYMENT_MEANS!CB,1,VISA,1,MASTERCARD,1,PAYLIB,1!
+PAYMENT_MEANS!CB,1,VISA,2,MASTERCARD,2!
 
 # Passage en une seule frame securisee au moment du paiement
 

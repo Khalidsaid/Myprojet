@@ -27,7 +27,7 @@
     //    -> Windows : $pathfile="pathfile=c:/repertoire/pathfile";
     //    -> Unix    : $pathfile="pathfile=/home/repertoire/pathfile";
    
-   $pathfile="pathfile=../param/pathfile";
+   $pathfile="pathfile=/home/reserverrz/www/sogenactif/param/pathfile";
 
 	// Initialisation du chemin de l'executable response (à modifier)
 	// ex :
@@ -35,7 +35,7 @@
 	// -> Unix    : $path_bin = "/home/repertoire/bin/response";
 	//
 
-	$path_bin = "../bin/static/response";
+	$path_bin = "/home/reserverrz/www/sogenactif/bin/static/response";
 
 	// Appel du binaire response
   	$message = escapeshellcmd($message);
