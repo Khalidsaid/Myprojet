@@ -10,7 +10,7 @@
 -->
 
 <?php
-
+	include("../../config.php");
 	// Récupération de la variable cryptée DATA
 	$message="message=$HTTP_POST_VARS[DATA]";
 
@@ -19,7 +19,7 @@
 	    //    -> Windows : $pathfile="pathfile=c:/repertoire/pathfile"
 	    //    -> Unix    : $pathfile="pathfile=/home/repertoire/pathfile"
 	    
-	$pathfile="pathfile=../param/pathfile";
+	$pathfile="pathfile=/home/reserverrz/www/sogenactif/param/pathfile";
 
 	//Initialisation du chemin de l'executable response (à modifier)
 	//ex :
@@ -27,7 +27,7 @@
 	//-> Unix    : $path_bin = "/home/repertoire/bin/response"
 	//
 
-	$path_bin = "../bin/static/response";
+	$path_bin = "/home/reserverrz/www/sogenactif/bin/static/response";
 
 	// Appel du binaire response
   	$message = escapeshellcmd($message);
@@ -92,7 +92,7 @@
     //    -> Unix    : $logfile="/home/repertoire/log/logfile.txt";
     //
 
-	$logfile="../bin/static/log.txt";
+	$logfile="/home/reserverrz/www/sogenactif/sample/logs.txt";
 
 	// Ouverture du fichier de log en append
 
@@ -109,6 +109,7 @@
 	//	Erreur, sauvegarde le message d'erreur
 
 	else if ( $code != 0 ){
+		mysql_query("insert into sogenactif_autoresponse(code,amount, date, heure)values('".$code."','".$amount."','".$payment_date."','".$payment_time."');");
         fwrite($fp, " API call error.\n");
         fwrite($fp, "Error message :  $error\n");
  	}

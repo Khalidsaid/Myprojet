@@ -13,14 +13,16 @@
 <!--	Affichage du header html -->
 
 <?php
+	include("../../config.php");
 
+	
 	print ("<HTML><HEAD><TITLE>SOGENACTIF - Paiement Securise sur Internet</TITLE></HEAD>");
 	print ("<BODY bgcolor=#ffffff>");
 	print ("<Font color=#000000>");
 	print ("<center><H1>Test de l'API plug-in SOGENACTIF</H1></center><br><br>");
 
 	// Récupération de la variable cryptée DATA
-	$message="message=$HTTP_POST_VARS[DATA]";
+	$message="message=$_POST[DATA]";
 	
 	// Initialisation du chemin du fichier pathfile (à modifier)
     //   ex :
@@ -53,13 +55,61 @@
 	$tableau = explode ("!", $result);
 
 	//	Récupération des données de la réponse
-
+	
 	$code = $tableau[1];
 	$error = $tableau[2];
+	$merchant_id = $tableau[3];
+	$merchant_country = $tableau[4];
+	$amount = $tableau[5];
+	$transaction_id = $tableau[6];
+	$payment_means = $tableau[7];
+	$transmission_date= $tableau[8];
+	$payment_time = $tableau[9];
+	$payment_date = $tableau[10];
+	$response_code = $tableau[11];
+	$payment_certificate = $tableau[12];
+	$authorisation_id = $tableau[13];
+	$currency_code = $tableau[14];
+	$card_number = $tableau[15];
+	$cvv_flag = $tableau[16];
+	$cvv_response_code = $tableau[17];
+	$bank_response_code = $tableau[18];
+	$complementary_code = $tableau[19];
+	$complementary_info = $tableau[20];
+	$return_context = $tableau[21];
+	$caddie = $tableau[22];
+	$receipt_complement = $tableau[23];
+	$merchant_language = $tableau[24];
+	$language = $tableau[25];
+	$customer_id = $tableau[26];
+	$order_id = $tableau[27];
+	$customer_email = $tableau[28];
+	$customer_ip_address = $tableau[29];
+	$capture_day = $tableau[30];
+	$capture_mode = $tableau[31];
+	$data = $tableau[32];
+	$order_validity = $tableau[33];  
+	$transaction_condition = $tableau[34];
+	$statement_reference = $tableau[35];
+	$card_validity = $tableau[36];
+	$score_value = $tableau[37];
+	$score_color = $tableau[38];
+	$score_info = $tableau[39];
+	$score_threshold = $tableau[40];
+	$score_profile = $tableau[41];
 
-
+	$auth = $authorisation_id;
 
 	//  analyse du code retour
+	
+	if ($code == 0)
+	{
+		mysql_query("insert into sogenactif(code,amount, date, heure)values('".$code."','".$amount."','".$payment_date."','".$payment_time."');");
+ 
+		//header('Location:../../paiementValide.php');
+	}
+	
+	
 
   if (( $code == "" ) && ( $error == "" ) )
  	{
@@ -70,9 +120,13 @@
 	//	Erreur, affiche le message d'erreur
 
 	else if ( $code != 0 ){
-		print ("<center><b><h2>Erreur appel API de paiement.</h2></center></b>");
-		print ("<br><br><br>");
-		print (" message erreur : $error <br>");
+		//print ("<center><b><h2>Erreur appel API de paiement.</h2></center></b>");
+		//print ("<br><br><br>");
+		//print (" message erreur : $error <br>");
+		
+		mysql_query("insert into sogenactif(code,amount)values('".$code."','".$amount."');");
+ 
+		//header('Location:../../paiementAnnule.php');
 	}
 
 	// OK, affichage des champs de la réponse
@@ -84,6 +138,7 @@
 	
 	print("<br><br><hr></b></h4>");
 	}
+	
 
 	print ("</body></html>");
 
