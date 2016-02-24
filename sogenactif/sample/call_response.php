@@ -99,31 +99,32 @@
 	$score_profile = $tableau[41];
 
 	$auth = $authorisation_id;
-
+	$codecommande = $_GET['ref'];
 	//  analyse du code retour
 	
-	if ($code == 0)
+	if ($response_code == 0)
 	{
 
 		$sql = mysql_query("insert into sogenactif(coderetour,error,merchant_id,merchant_country,amount,transaction_id,payment_means,transmission_date,payment_time,payment_date,
 		response_code, payment_certificate,authorisation_id,currency_code,card_number,cvv_flag,cvv_response_code,bank_response_code,complementary_code,complementary_info,
 		return_context,caddie,receipt_complement,merchant_language,language,customer_id,customer_email,customer_ip_address,capture_day,capture_mode,data,order_validity,
-		transaction_condition,statement_reference,card_validity,score_value,score_color,score_info,score_threshold, score_profile)values('".$code."','".$error."','".$merchant_id."',
+		transaction_condition,statement_reference,card_validity,score_value,score_color,score_info,score_threshold, score_profile, codecommande)values('".$code."','".$error."','".$merchant_id."',
 		'".$merchant_country."','".$amount."','".$transaction_id."','".$payment_means."','".$transmission_date."','".$payment_time."','".$payment_date."','".$response_code."',
 		'".$payment_certificate."','".$authorisation_id."','".$currency_code."','".$card_number."','".$cvv_flag."','".$cvv_response_code."','".$bank_response_code."','".$complementary_code."',
 		'".$complementary_info."','".$return_context."','".$caddie."','".$receipt_complement."','".$merchant_language."','".$language."','".$customer_id."','".$customer_email."',
 		'".$customer_ip_address."','".$capture_day."','".$capture_mode."','".$data."','".$order_validity."','".$transaction_condition."','".$statement_reference."',
-		'".$card_validity."','".$score_value."','".$score_color."','".$score_info."','".$score_threshold."','".$score_profile."');");
+		'".$card_validity."','".$score_value."','".$score_color."','".$score_info."','".$score_threshold."','".$score_profile."','".$codecommande."');");
 	
-		if ($sql)
+		/*if ($sql)
 		{
 			//echo "Insertion réussi !!";
-			header('Location:../../paiementValide.php');
+			
+			//header('Location:../../paiementValide.php');
 		} else
 		{
 			echo "Erreur durant l'insertion !";
-		}
-		//header('Location:../../paiementValide.php');
+		}*/
+		header('Location:../../paiementValide.php');
 	}
 	
 	
@@ -132,25 +133,27 @@
  	{
   	print ("<BR><CENTER>erreur appel response</CENTER><BR>");
   	print ("executable response non trouve $path_bin");
+	header('Location:../../paiementAnnule.php');
  	}
 
 	//	Erreur, affiche le message d'erreur
 
-	else if ( $code != 0 ){
+	else if ( $response_code != 0 ){
 		//print ("<center><b><h2>Erreur appel API de paiement.</h2></center></b>");
 		//print ("<br><br><br>");
 		//print (" message erreur : $error <br>");
 		
-		 mysql_query("insert into sogenactif(coderetour,error,merchant_id,merchant_country,amount,transaction_id,payment_means,transmission_date,payment_time,payment_date,
+		$sql = mysql_query("insert into sogenactif(coderetour,error,merchant_id,merchant_country,amount,transaction_id,payment_means,transmission_date,payment_time,payment_date,
 		response_code, payment_certificate,authorisation_id,currency_code,card_number,cvv_flag,cvv_response_code,bank_response_code,complementary_code,complementary_info,
 		return_context,caddie,receipt_complement,merchant_language,language,customer_id,customer_email,customer_ip_address,capture_day,capture_mode,data,order_validity,
-		transaction_condition,statement_reference,card_validity,score_value,score_color,score_info,score_threshold, score_profile)values('".$code."','".$error."','".$merchant_id."',
+		transaction_condition,statement_reference,card_validity,score_value,score_color,score_info,score_threshold, score_profile, codecommande)values('".$code."','".$error."','".$merchant_id."',
 		'".$merchant_country."','".$amount."','".$transaction_id."','".$payment_means."','".$transmission_date."','".$payment_time."','".$payment_date."','".$response_code."',
 		'".$payment_certificate."','".$authorisation_id."','".$currency_code."','".$card_number."','".$cvv_flag."','".$cvv_response_code."','".$bank_response_code."','".$complementary_code."',
 		'".$complementary_info."','".$return_context."','".$caddie."','".$receipt_complement."','".$merchant_language."','".$language."','".$customer_id."','".$customer_email."',
 		'".$customer_ip_address."','".$capture_day."','".$capture_mode."','".$data."','".$order_validity."','".$transaction_condition."','".$statement_reference."',
-		'".$card_validity."','".$score_value."','".$score_color."','".$score_info."','".$score_threshold."','".$score_profile."');");
-		//header('Location:../../paiementAnnule.php');
+		'".$card_validity."','".$score_value."','".$score_color."','".$score_info."','".$score_threshold."','".$score_profile."','".$codecommande."');");
+		
+		header('Location:../../paiementAnnule.php');
 	}
 
 	// OK, affichage des champs de la réponse

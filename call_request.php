@@ -6,6 +6,7 @@
 
 
 	$price=$_GET['p'];
+	$ref=$_GET['ref'];
 	$pp = number_format((int)$price);
 	
 	
@@ -54,9 +55,9 @@
 	// 		Les valeurs proposées ne sont que des exemples
 	// 		Les champs et leur utilisation sont expliqués dans le Dictionnaire des données
 	//
- 		$parm="$parm normal_return_url=http://reserveruncab.com/sogenactif/sample/call_response.php";
-		$parm="$parm cancel_return_url=http://reserveruncab.com/sogenactif/sample/call_response.php";
-		$parm="$parm automatic_response_url=http://reserveruncab.com/sogenactif/sample/call_autoresponse.php";
+ 		$parm="$parm normal_return_url=http://reserveruncab.com/sogenactif/sample/call_response.php?ref=$ref";
+		$parm="$parm cancel_return_url=http://reserveruncab.com/sogenactif/sample/call_response.php?ref=$ref";
+		$parm="$parm automatic_response_url=http://reserveruncab.com/sogenactif/sample/call_autoresponse.php?ref=$ref";
 			$parm="$parm language=fr";
 	//		$parm="$parm payment_means=CB,2,VISA,2,MASTERCARD,2";
 	//		$parm="$parm header_flag=no";

@@ -123,6 +123,7 @@ mysql_query("update reservation_tel set archive=1 where reservation_tel.dtdeb<'"
                                             </thead>
                                             <tbody>
                                                 <?php
+												
                                                 $sql = mysql_query("select reservation_attente.id, myvtc_users.nom, myvtc_users.prenom,reservation_attente.chauffeur, reservation_attente.heure, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from  myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.etat=1 and  reservation_attente.archive=0");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     $nom_complet1 = mysql_fetch_array(mysql_query("select chauffeur.nom,chauffeur.prenom from chauffeur where id_chauffeur=" . $data['chauffeur']));
