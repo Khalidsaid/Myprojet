@@ -84,7 +84,8 @@
 	$score_info = $tableau[39];
 	$score_threshold = $tableau[40];
 	$score_profile = $tableau[41];
-
+	
+	$codecommande = $_GET['ref'];
 
 	// Initialisation du chemin du fichier de log (à modifier)
     //   ex :
