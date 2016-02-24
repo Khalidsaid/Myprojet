@@ -109,7 +109,15 @@
 	//	Erreur, sauvegarde le message d'erreur
 
 	else if ( $code != 0 ){
-		mysql_query("insert into sogenactif_autoresponse(code,amount, date, heure)values('".$code."','".$amount."','".$payment_date."','".$payment_time."');");
+		 mysql_query("insert into sogenactif(coderetour,error,merchant_id,merchant_country,amount,transaction_id,payment_means,transmission_date,payment_time,payment_date,
+		response_code, payment_certificate,authorisation_id,currency_code,card_number,cvv_flag,cvv_response_code,bank_response_code,complementary_code,complementary_info,
+		return_context,caddie,receipt_complement,merchant_language,language,customer_id,customer_email,customer_ip_address,capture_day,capture_mode,data,order_validity,
+		transaction_condition,statement_reference,card_validity,score_value,score_color,score_info,score_threshold, score_profile)values('".$code."','".$error."','".$merchant_id."',
+		'".$merchant_country."','".$amount."','".$transaction_id."','".$payment_means."','".$transmission_date."','".$payment_time."','".$payment_date."','".$response_code."',
+		'".$payment_certificate."','".$authorisation_id."','".$currency_code."','".$card_number."','".$cvv_flag."','".$cvv_response_code."','".$bank_response_code."','".$complementary_code."',
+		'".$complementary_info."','".$return_context."','".$caddie."','".$receipt_complement."','".$merchant_language."','".$language."','".$customer_id."','".$customer_email."',
+		'".$customer_ip_address."','".$capture_day."','".$capture_mode."','".$data."','".$order_validity."','".$transaction_condition."','".$statement_reference."',
+		'".$card_validity."','".$score_value."','".$score_color."','".$score_info."','".$score_threshold."','".$score_profile."');");
         fwrite($fp, " API call error.\n");
         fwrite($fp, "Error message :  $error\n");
  	}
@@ -117,46 +125,15 @@
 
 	// OK, Sauvegarde des champs de la réponse
 
-	fwrite( $fp, "merchant_id : $merchant_id\n");
-	fwrite( $fp, "merchant_country : $merchant_country\n");
-	fwrite( $fp, "amount : $amount\n");
-	fwrite( $fp, "transaction_id : $transaction_id\n");
-	fwrite( $fp, "transmission_date: $transmission_date\n");
-	fwrite( $fp, "payment_means: $payment_means\n");
-	fwrite( $fp, "payment_time : $payment_time\n");
-	fwrite( $fp, "payment_date : $payment_date\n");
-	fwrite( $fp, "response_code : $response_code\n");
-	fwrite( $fp, "payment_certificate : $payment_certificate\n");
-	fwrite( $fp, "authorisation_id : $authorisation_id\n");
-	fwrite( $fp, "currency_code : $currency_code\n");
-	fwrite( $fp, "card_number : $card_number\n");
-	fwrite( $fp, "cvv_flag: $cvv_flag\n");
-	fwrite( $fp, "cvv_response_code: $cvv_response_code\n");
-	fwrite( $fp, "bank_response_code: $bank_response_code\n");
-	fwrite( $fp, "complementary_code: $complementary_code\n");
-	fwrite( $fp, "complementary_info: $complementary_info\n");
-	fwrite( $fp, "return_context: $return_context\n");
-	fwrite( $fp, "caddie : $caddie\n");
-	fwrite( $fp, "receipt_complement: $receipt_complement\n");
-	fwrite( $fp, "merchant_language: $merchant_language\n");
-	fwrite( $fp, "language: $language\n");
-	fwrite( $fp, "customer_id: $customer_id\n");
-	fwrite( $fp, "order_id: $order_id\n");
-	fwrite( $fp, "customer_email: $customer_email\n");
-	fwrite( $fp, "customer_ip_address: $customer_ip_address\n");
-	fwrite( $fp, "capture_day: $capture_day\n");
-	fwrite( $fp, "capture_mode: $capture_mode\n");
-	fwrite( $fp, "data: $data\n");
-	fwrite( $fp, "order_validity: $order_validity\n");
-	fwrite( $fp, "transaction_condition: $transaction_condition\n");
-	fwrite( $fp, "statement_reference: $statement_reference\n");
-	fwrite( $fp, "card_validity: $card_validity\n");
-	fwrite( $fp, "card_validity: $score_value\n");
-	fwrite( $fp, "card_validity: $score_color\n");
-	fwrite( $fp, "card_validity: $score_info\n");
-	fwrite( $fp, "card_validity: $score_threshold\n");
-	fwrite( $fp, "card_validity: $score_profile\n");
-	fwrite( $fp, "-------------------------------------------\n");
+	    mysql_query("insert into sogenactif(coderetour,error,merchant_id,merchant_country,amount,transaction_id,payment_means,transmission_date,payment_time,payment_date,
+		response_code, payment_certificate,authorisation_id,currency_code,card_number,cvv_flag,cvv_response_code,bank_response_code,complementary_code,complementary_info,
+		return_context,caddie,receipt_complement,merchant_language,language,customer_id,customer_email,customer_ip_address,capture_day,capture_mode,data,order_validity,
+		transaction_condition,statement_reference,card_validity,score_value,score_color,score_info,score_threshold, score_profile)values('".$code."','".$error."','".$merchant_id."',
+		'".$merchant_country."','".$amount."','".$transaction_id."','".$payment_means."','".$transmission_date."','".$payment_time."','".$payment_date."','".$response_code."',
+		'".$payment_certificate."','".$authorisation_id."','".$currency_code."','".$card_number."','".$cvv_flag."','".$cvv_response_code."','".$bank_response_code."','".$complementary_code."',
+		'".$complementary_info."','".$return_context."','".$caddie."','".$receipt_complement."','".$merchant_language."','".$language."','".$customer_id."','".$customer_email."',
+		'".$customer_ip_address."','".$capture_day."','".$capture_mode."','".$data."','".$order_validity."','".$transaction_condition."','".$statement_reference."',
+		'".$card_validity."','".$score_value."','".$score_color."','".$score_info."','".$score_threshold."','".$score_profile."');");
 	}
 
 	fclose ($fp);

@@ -19,16 +19,16 @@ $mail->SMTPAuth = true;                               // Enable SMTP authenticat
 $mail->Username = 'contact@reserveruncab.com';                // SMTP username
 $mail->Password = 'Balloo94';                  // SMTP password
                            // Enable encryption, 'ssl' also accepted
-
+$adresse_destinataire = 'contact@reserveruncab.com';
 $mail->From = 'contact@reserveruncab.com';
 $mail->FromName = 'ReserverUnCab';
-$mail->AddAddress($commande['email'], $commande['email']); // Add address
+$mail->AddAddress($adresse_destinataire, $adresse_destinataire); // Add address
 
 
 $mail->Subject = 'Validation de reservation ReserverUnCab.com';
 $mail->Body    = "Bonjour,<br>
 
-Fécilitation ! Votre réservation sur le site ReserverUnCab.com a été effectué avec succès.<br><br>
+Cher Chauffeur, Une reservation sur le site ReserverUnCab.com a &eacute;t&eacute; effectu&eacute; avec succ&egrave;s !<br><br>
 
 Voici le détail de votre commande :<br><br>
 <b>Date :</b> " . $commande['datereservation'] ." à ".$commande['heure']. "<br><br>

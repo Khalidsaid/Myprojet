@@ -104,8 +104,25 @@
 	
 	if ($code == 0)
 	{
-		mysql_query("insert into sogenactif(code,amount, date, heure)values('".$code."','".$amount."','".$payment_date."','".$payment_time."');");
- 
+
+		$sql = mysql_query("insert into sogenactif(coderetour,error,merchant_id,merchant_country,amount,transaction_id,payment_means,transmission_date,payment_time,payment_date,
+		response_code, payment_certificate,authorisation_id,currency_code,card_number,cvv_flag,cvv_response_code,bank_response_code,complementary_code,complementary_info,
+		return_context,caddie,receipt_complement,merchant_language,language,customer_id,customer_email,customer_ip_address,capture_day,capture_mode,data,order_validity,
+		transaction_condition,statement_reference,card_validity,score_value,score_color,score_info,score_threshold, score_profile)values('".$code."','".$error."','".$merchant_id."',
+		'".$merchant_country."','".$amount."','".$transaction_id."','".$payment_means."','".$transmission_date."','".$payment_time."','".$payment_date."','".$response_code."',
+		'".$payment_certificate."','".$authorisation_id."','".$currency_code."','".$card_number."','".$cvv_flag."','".$cvv_response_code."','".$bank_response_code."','".$complementary_code."',
+		'".$complementary_info."','".$return_context."','".$caddie."','".$receipt_complement."','".$merchant_language."','".$language."','".$customer_id."','".$customer_email."',
+		'".$customer_ip_address."','".$capture_day."','".$capture_mode."','".$data."','".$order_validity."','".$transaction_condition."','".$statement_reference."',
+		'".$card_validity."','".$score_value."','".$score_color."','".$score_info."','".$score_threshold."','".$score_profile."');");
+	
+		if ($sql)
+		{
+			//echo "Insertion réussi !!";
+			header('Location:../../paiementValide.php');
+		} else
+		{
+			echo "Erreur durant l'insertion !";
+		}
 		//header('Location:../../paiementValide.php');
 	}
 	
@@ -124,8 +141,15 @@
 		//print ("<br><br><br>");
 		//print (" message erreur : $error <br>");
 		
-		mysql_query("insert into sogenactif(code,amount)values('".$code."','".$amount."');");
- 
+		 mysql_query("insert into sogenactif(coderetour,error,merchant_id,merchant_country,amount,transaction_id,payment_means,transmission_date,payment_time,payment_date,
+		response_code, payment_certificate,authorisation_id,currency_code,card_number,cvv_flag,cvv_response_code,bank_response_code,complementary_code,complementary_info,
+		return_context,caddie,receipt_complement,merchant_language,language,customer_id,customer_email,customer_ip_address,capture_day,capture_mode,data,order_validity,
+		transaction_condition,statement_reference,card_validity,score_value,score_color,score_info,score_threshold, score_profile)values('".$code."','".$error."','".$merchant_id."',
+		'".$merchant_country."','".$amount."','".$transaction_id."','".$payment_means."','".$transmission_date."','".$payment_time."','".$payment_date."','".$response_code."',
+		'".$payment_certificate."','".$authorisation_id."','".$currency_code."','".$card_number."','".$cvv_flag."','".$cvv_response_code."','".$bank_response_code."','".$complementary_code."',
+		'".$complementary_info."','".$return_context."','".$caddie."','".$receipt_complement."','".$merchant_language."','".$language."','".$customer_id."','".$customer_email."',
+		'".$customer_ip_address."','".$capture_day."','".$capture_mode."','".$data."','".$order_validity."','".$transaction_condition."','".$statement_reference."',
+		'".$card_validity."','".$score_value."','".$score_color."','".$score_info."','".$score_threshold."','".$score_profile."');");
 		//header('Location:../../paiementAnnule.php');
 	}
 

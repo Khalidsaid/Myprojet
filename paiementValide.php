@@ -2,11 +2,7 @@
 include("config.php");
 require 'phpmailer/class.phpmailer.php';
 
-$mavar= $_GET['response_code'];
-echo $mavar;
 
-
-$reference = $_SESSION['reference'];
 $user = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
 $ll = mysql_query("select reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,reservation_attente.dtdeb,reservation_attente.codecommande,reservation_attente.prix,reservation_attente.dtdeb,reservation_attente.heure from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  myvtc_users.id=" . $user['id'] . " order by reservation_attente.id desc limit 1")or die(mysql_error());
 $commande = mysql_fetch_array($ll);
@@ -14,7 +10,7 @@ $commande = mysql_fetch_array($ll);
 mysql_query("update reservation_attente set etat=1 where codecommande='" . $commande['codecommande'] . "'")or die(mysql_error());
 
 // reference the Dompdf namespace
-use Dompdf\Dompdf;
+/*use Dompdf\Dompdf;
 
 // instantiate and use the dompdf class
 $dompdf = new Dompdf();
@@ -70,7 +66,7 @@ $dompdf->render();
 
 // Get the generated PDF file contents
 //$pdf = $dompdf->output();
-file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $dompdf->output());
+file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $dompdf->output());*/
 
 //$mail->IsSMTP();                                // Set mailer to use SMTP
 $mail->Host = 'SSL0.OVH.NET';                 // Specify main and backup server
@@ -87,8 +83,10 @@ $mail->Username = 'contact@reserveruncab.com';                // SMTP username
 $mail->Password = 'Balloo94';                  // SMTP password
                            // Enable encryption, 'ssl' also accepted
 
+$adresse_destinataire = 'contact@reserveruncab.com';						   
 $mail->From = 'contact@reserveruncab.com';
 $mail->FromName = 'ReserverUnCab';
+//$mail->AddBCC($adresse_destinataire, $adresse_destinataire);
 $mail->AddAddress($_SESSION['myvtclogin'], $_SESSION['myvtclogin']); // Add address
 
 
@@ -109,55 +107,49 @@ L'&eacute;quipe ReserverUnCab.com.";
 $mail->AddAttachment("Facture_" . $commande['codecommande'] . ".pdf");  
    // Pour finir, on envoi l'e-mail
    $mail->send();
+   
+// Idem pour le chauffeur
 
-/*function mail_attachment($filename, $path, $mailto, $from_mail, $from_name, $replyto, $subject, $message) {
-    $file = $path . $filename;
-    $file_size = filesize($file);
-    $handle = fopen($file, "r");
-    $content = fread($handle, $file_size);
-    fclose($handle);
-    $content = chunk_split(base64_encode($content));
-    $uid = md5(uniqid(time()));
-    $header = "From: " . $from_name . " <" . $from_mail . ">\r\n";
-    $header .= "Reply-To: " . $replyto . "\r\n";
-    $header .= "MIME-Version: 1.0\r\n";
-    $header .= "Content-Type: multipart/mixed; boundary=\"" . $uid . "\"\r\n\r\n";
-    $header .= "This is a multi-part message in MIME format.\r\n";
-    $header .= "--" . $uid . "\r\n";
-    $header .= "Content-type:text/plain; charset=iso-8859-1\r\n";
-    $header .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-    $header .= $message . "\r\n\r\n";
-    $header .= "--" . $uid . "\r\n";
-    $header .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"\r\n"; // use different content types here
-    $header .= "Content-Transfer-Encoding: base64\r\n";
-    $header .= "Content-Disposition: attachment; filename=\"" . $filename . "\"\r\n\r\n";
-    $header .= $content . "\r\n\r\n";
-    $header .= "--" . $uid . "--";
-    if (mail($mailto, $subject, "", $header)) {
-        echo "mail send ... OK"; // or use booleans here
-    } else {
-        echo "mail send ... ERROR!";
-    }
-}
+$mail2->Host = 'SSL0.OVH.NET';                 // Specify main and backup server
+$mail2->Port = 465; 
 
-$my_file = "Facture_" . $commande['codecommande'] . ".pdf";
-$my_path = "http://reserveruncab.com/";
-$my_name = "ReserverUnCab";
-$my_mail = "contact@reserveruncab.com";
-$my_replyto = "contact@reserveruncab.com";
-$my_subject = "Validation de paiement ReserverUnCab.com‏";
-$my_message = "Bonjour " . $user["prenom"] . ",
+$mail2 = new PHPMailer;
 
-Fécilitation ! Votre paiement sur le site ReserverUnCab.com a été effectué avec succès.
+$mail2->IsHTML(true); 
+$mail2->CharSet = 'UTF-8';  
+$mail2->Host = 'smtp.gmail.com';                 // Specify main and backup server
+$mail2->Port = 26;                                    // Set the SMTP port
+$mail2->SMTPAuth = true;                               // Enable SMTP authentication
+$mail2->Username = 'contact@reserveruncab.com';                // SMTP username
+$mail2->Password = 'Balloo94';      
+$adresse_destinataire = 'contact@reserveruncab.com';						   
+$mail2->From = 'contact@reserveruncab.com';
+$mail2->FromName = 'ReserverUnCab';
+$mail2->AddAddress($adresse_destinataire, $adresse_destinataire); // Add address
 
-Voici le détail de votre commande :\n
-Départ : " . $commande['depart'] . "\n\n
-Arrivée : " . $commande['arrivee'] . "\n\n
-Prix : " . $commande['prix'] . "\n\n
-Date : " . $commande['dtdeb'] . "\n\n
 
-L'équipe ReserverUnCab.com.";
-mail_attachment($my_file, $my_path, $_SESSION['myvtclogin'], $my_mail, $my_name, $my_replyto, $my_subject, $my_message);*/
+$mail2->Subject = 'Notification de reservation ReserverUnCab.com';
+$mail2->Body    = "Salam Alaykoum,<br><br>
+
+Cher Chauffeur, Une reservation sur le site ReserverUnCab.com a &eacute;t&eacute; effectu&eacute; avec succ&egrave;s !<br><br>
+
+Voici le d&eacute;tail de la commande :<br><br>
+
+Type: " . $user["type_user"] . " <br><br>
+Client : " . $user["prenom"] . "<br><br>
+Tel : " . $user["tel"] . " <br><br>
+Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
+D&eacute;part : " . $commande['depart'] . "<br><br>
+Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
+Prix : " . $commande['prix'] . "€<br><br>
+
+L'&eacute;quipe ReserverUnCab.com.";
+
+
+   // Pour finir, on envoi l'e-mail
+   $mail2->send();  
+
+
 ?>
 <!DOCTYPE HTML>
 <!--
