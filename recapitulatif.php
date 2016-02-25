@@ -14,10 +14,11 @@ $datedep_tab = explode("/", $_GET['datedep']);
 $datedep = $datedep_tab[2] . "-" . $datedep_tab[1] . "-" . $datedep_tab[0];
 $date_affichage=$datedep_tab[0] . "/" . $datedep_tab[1] . "/" . $datedep_tab[2];
 $heyres = $_GET['heyres'];
+$prix = $_GET['offre'];
 date_default_timezone_set('Europe/Paris');
 $date = date('Y-m-d H:i:s');
 
-$requete = "insert into reservation_attente(codecommande,depart, arrivee,passager,valise,dtdeb,heure,distance,  date_add, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($arrivee) . "', '" . addslashes($totalpers) . "', '" . addslashes($totalbag) . "', '" . trim($datedep) . "', '" . addslashes($heyres) . "', '" . addslashes($distance) . "', '" . addslashes($date) . "', 0);";
+$requete = "insert into reservation_attente(codecommande,depart, arrivee,prix,passager,valise,dtdeb,heure,distance,date_add, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($arrivee) . "','" . addslashes($prix) . "', '" . addslashes($totalpers) . "', '" . addslashes($totalbag) . "', '" . trim($datedep) . "', '" . addslashes($heyres) . "', '" . addslashes($distance) . "', '" . addslashes($date) . "', 0);";
 $exec = mysql_query($requete)or die(mysql_error());
 
 
