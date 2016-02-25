@@ -18,7 +18,9 @@ $prix = $_GET['offre'];
 date_default_timezone_set('Europe/Paris');
 $date = date('Y-m-d H:i:s');
 
-$requete = "insert into reservation_attente(codecommande,depart, arrivee,prix,passager,valise,dtdeb,heure,distance,date_add, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($arrivee) . "','" . addslashes($prix) . "', '" . addslashes($totalpers) . "', '" . addslashes($totalbag) . "', '" . trim($datedep) . "', '" . addslashes($heyres) . "', '" . addslashes($distance) . "', '" . addslashes($date) . "', 0);";
+$userr = mysql_fetch_array(mysql_query("select * from myvtc_users where email='" . $_SESSION['myvtclogin'] . "'"));
+$id_user = $userr['id'];
+$requete = "insert into reservation_attente(codecommande,depart,id_user, arrivee,prix,passager,valise,dtdeb,heure,distance,date_add, etat) values ('" . addslashes($identifiant) . "', '" . addslashes($depart) . "', '" . addslashes($id_user) . "', '" . addslashes($arrivee) . "','" . addslashes($prix) . "', '" . addslashes($totalpers) . "', '" . addslashes($totalbag) . "', '" . trim($datedep) . "', '" . addslashes($heyres) . "', '" . addslashes($distance) . "', '" . addslashes($date) . "', 0);";
 $exec = mysql_query($requete)or die(mysql_error());
 
 
