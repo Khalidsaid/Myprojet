@@ -39,7 +39,7 @@ if ($nom != "" or $tel != "" or $prenom != "") {
 
 $nom_chauffeur = mysql_fetch_array(mysql_query("select * from chauffeur where id_chauffeur =" . $chauffeur));
 $nom_complet = $nom_chauffeur['prenom'] . " " . $nom_chauffeur['nom'];
-
+$mail = 'contact@reserveruncab.com';
 
 
 if ($client != "" or $client > 0) {
@@ -63,7 +63,7 @@ Prix : " . $commande['prix'] . "\n
 Passagers : " . $commande['passager'] . "\n
 Valises : " . $commande['valise'] . "\n
     ";
-    mail($nom_chauffeur['email'], "Notification sur ReserverUnCab.com", $message, $headers);
+    mail($mail, "Notification sur ReserverUnCab.com", $message, $headers);
 } else {
 
     $sql = mysql_query("Insert into reservation_tel(id_chauffeur, tel, part_societe ,part_chauffeur, depart, arrivee, prix, date_add, dtdeb, heure, valise, passager, client, siren, societe, type_vehicule, etat, notif, archive, paiement, ,note) values('" . $chauffeur . "','" . $tel . "', '" . $part_societe . "', '" . $part_chauffeur . "' , '" . $depart . "', '" . $arrivee . "', '" . $prix . "','" . date('d-m-Y') . "', '" . $dtdeb . "', '" . $heure . "', '" . $valise . "', '" . $passager . "',0,'" . $siren . "','" . $societe . "','" . $type_vehicule . "', 0, 1, 0,'" . $paiement . "','" . $note . "';")or die(mysql_error());
@@ -72,7 +72,7 @@ Valises : " . $commande['valise'] . "\n
     $ll = mysql_query("select client_tel.nom,client_tel.prenom,client_tel.type_user,client_tel.tel, reservation_tel.depart,reservation_tel.arrivee,reservation_tel.id as id_cmd,reservation_tel.dtdeb,reservation_tel.prix,reservation_tel.dtdeb,client_tel.email,reservation_tel.heure,reservation_tel.passager,reservation_tel.valise from client_tel inner join reservation_tel on reservation_tel.client = client_tel.id where  reservation_tel.id=" . $id_cmd . " order by reservation_tel.id desc limit 1")or die(mysql_error());
     $commande = mysql_fetch_array($ll);
 
-    $headers = 'From: contact@reserveruncab.com' . "\r\n" .
+   $headers = 'From: contact@reserveruncab.com' . "\r\n" .
             'Reply-To: contact@reserveruncab.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
     $message = "Notification de réservation :\n
@@ -86,7 +86,7 @@ Prix : " . $commande['prix'] . "\n
 Passagers : " . $commande['passager'] . "\n
 Valises : " . $commande['valise'] . "\n
     ";
-    mail($nom_chauffeur['email'], "Notification sur ReserverUnCab.com", $message, $headers);
+    mail($mail, "Notification sur ReserverUnCab.com", $message, $headers);
 }
 
 

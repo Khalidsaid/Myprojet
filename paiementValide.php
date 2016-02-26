@@ -10,63 +10,23 @@ $commande = mysql_fetch_array($ll);
 mysql_query("update reservation_attente set etat=1 where codecommande='" . $commande['codecommande'] . "'")or die(mysql_error());
 
 // reference the Dompdf namespace
-/*use Dompdf\Dompdf;
+//use Dompdf\Dompdf;
 
 // instantiate and use the dompdf class
-$dompdf = new Dompdf();
-$chaine = utf8_encode('<table border="0" style="width:100%">
-            <tr>
-                <td colspan="2" style="text-align: center"><img src="http://www.reserveruncab.com/images/logo.png" alt="" /></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: center"><h2>Facture N&deg; ' . $commande['codecommande'] . '</h2></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: left"><br><br><br><br>Bonjour ' . $user["prenom"] . ',<br><br>Ci-dessous, vous trouvez le d&eacute;tail de votre commande : <br><br><br></td>
-            </tr>
-             <tr>
-                 <td colspan="2" >
-                     <table border="1" style="width:600px">
-                         <tr>
-                             <td style="height:25px; width:200px">D&eacute;part</td>
-                             <td> ' . $commande['depart'] . '</td>
-                         </tr>
-                         <tr style="height:35px">
-                             <td style="height:25px">Arriv&eacute;</td>
-                             <td> ' . $commande['arrivee'] . '</td>
-                         </tr>
-                         <tr style="height:35px">
-                             <td style="height:25px">Date</td>
-                             <td> ' . $commande['dtdeb'] . '</td>
-                         </tr>
-                         <tr style="height:35px">
-                             <td style="height:25px">Heure</td>
-                             <td> ' . $commande['heure'] . '</td>
-                         </tr>
-                         <tr style="height:35px">
-                             <td style="height:25px">Prix</td>
-                             <td> ' . $commande['prix'] . ' €</td>
-                         </tr>
-                     </table>
-                 </td>
-               
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: center; padding-top:200px">L\'&eacute;quipe ReserverUnCab.com</td>
-            </tr>
-        </table>');
-$dompdf->loadHtml($chaine, 'UTF-8');
+//$dompdf = new Dompdf();
+$chaine = 'aaa';
+//$dompdf->loadHtml($chaine, 'UTF-8');
 
 
 // (Optional) Setup the paper size and orientation
-$dompdf->setPaper('A4', 'paysage');
+//$dompdf->setPaper('A4', 'paysage');
 
 // Render the HTML as PDF
-$dompdf->render();
+//$dompdf->render();
 
 // Get the generated PDF file contents
 //$pdf = $dompdf->output();
-file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $dompdf->output());*/
+//file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $dompdf->output());
 
 //$mail->IsSMTP();                                // Set mailer to use SMTP
 $mail->Host = 'SSL0.OVH.NET';                 // Specify main and backup server

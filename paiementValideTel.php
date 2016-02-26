@@ -43,7 +43,7 @@ L'équipe ReserverUnCab.com.";
 
 //$mail->AddAttachment("Facture_" . $commande['id_cmd'] . ".pdf");  
    // Pour finir, on envoi l'e-mail
-   $mail->send();
+  // $mail->send();
 
 ?>
 <!DOCTYPE HTML>
