@@ -2067,6 +2067,7 @@ ol.default li {
 
     #main-wrapper {
         padding: 4em 0 4em 0;
+		margin-right: 100px;
     }
 
     #footer-wrapper {

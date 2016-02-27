@@ -49,7 +49,9 @@ if (!isset($_SESSION['backend']))
         <link rel="stylesheet" href="assets/css/style-switcher.css">
         <link rel="stylesheet/less" type="text/css" href="assets/less/theme.less">
         <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.2.0/less.min.js"></script>
-
+		  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <!--Modernizr-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     </head>
@@ -67,33 +69,10 @@ if (!isset($_SESSION['backend']))
                     </div><!-- /.main-bar -->
                 </header><!-- /.head -->
             </div><!-- /#top -->
-            <div id="left">
-                <div class="media user-media bg-dark dker">
-                    <div class="user-media-toggleHover">
-                        <span class="fa fa-user"></span> 
-                    </div>
-
-                </div>
-
-                <!-- #menu -->
-                <?php include("menu.php"); ?><!-- /#menu -->
-            </div><!-- /#left -->
-            <div id="content">
-                <div class="outer">
-                    <div class="inner bg-light lter">
-
-                        <!--Begin Datatables-->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="box">
-                                    <header>
-                                        <div class="icons">
-                                            <i class="fa fa-user"></i>
-                                        </div>
-                                        <h5>Contact</h5>
-                                    </header>
-                                    <div id="collapse4" class="body">
-                                        <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
+       
+           <br>
+								<center><a class="btn btn-danger btn-sm" href="./index.php" >Retour</a></center>
+                                        <table class="table">
                                             <thead>
                                                 <tr>
                                                     
@@ -111,33 +90,28 @@ if (!isset($_SESSION['backend']))
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     ?>
                                                     <tr>
-                                                        
+                                                        <input type="hidden" value="<?php echo $data['id'] ?>" id="id"/>
                                                         <td><?php echo $data['prenom'] . " " . $data['nom']; ?></td>
                                                         <td><?php echo $data['email']; ?></td>
                                                         <td><?php echo $data['dt']; ?></td>
                                                         <td><?php echo $data['sujet']; ?></td>
                                                         <td><?php echo $data['msg']; ?></td>
-														<td><a class="btn btn-success btn-sm" onclick="msgread(<?php echo $_GET['id']; ?>)">Archiver</a></td>
-														<input type="hidden" value="<?php echo $data['id'] ?>" id="id"/>
+														<td><a class="btn btn-success btn-sm" onclick="msgread(<?php echo $data['id']; ?>)">Archiver</a></td>
+														
                                                           </tr>
                                                     <?php
                                                 }
                                                 ?>
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- /.row -->
+                             
 
-                        <!--End Datatables-->
-
+                        <br>
+						<center><a class="btn btn-danger btn-sm" href="./index.php" >Retour</a></center>
+						<br><br>
                     </div><!-- /.inner -->
-                </div><!-- /.outer -->
-            </div><!-- /#content -->
-            <div id="right" class="bg-light lter">
-                
-            </div><!-- /#right -->
+          
+    
         </div><!-- /#wrap -->
         <footer class="Footer bg-dark dker">
             <p>2015 &copy; Ad.prestiges</p>
@@ -169,12 +143,11 @@ if (!isset($_SESSION['backend']))
             function msgread(id) {
 
          
-                var id = document.getElementById("id").value;
+                //var id = document.getElementById("id").value;
                 $.ajax({
                     url: 'archiver.php?id=' + id,
                     success: function (data) {
-                        var t = eval(data);
-
+                  
                         alert("Message Archivé !");
 						location.reload();
                     }

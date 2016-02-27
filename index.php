@@ -1012,22 +1012,22 @@ $menu = 1;
                     Réservez votre cab maintenant
                     ORLY
                     À PARTIR DE 
-                    32€ CDG
+                    39€ CDG
                     À PARTIR DE 
-                    42€
-                    En réservant 24h à l’avance
+                    49€
+                    En réservant à l’avance
 
                     Plus d'infos sur notre page <br/>
                     <a href="tarifs.php">- Offre Aéroport -</a></i>
                 <i id="mapro2" style="top: 250px; right: 16px"><br/><h4>Offre spéciale !</h4> 
-                    Votre 10 ème réservation est offerte. Profitez-en vite!</i>
+                    PRIX BAS. Profitez-en vite!</i>
                 <br/>
                 <br/>
                 <br/>
                 <br/>
                 <!-- Intro -->
                 <section id="intro" class="container" style="margin-top: 20px;">
-                    <div class="row">
+                    <div class="row" style="margin-right: 40px; margin-left: -15px;">
                         <div class="4u 12u(mobile)">
                             <section class="first">
                                 <i class="icon featured alt fa-space-shuttle"></i>

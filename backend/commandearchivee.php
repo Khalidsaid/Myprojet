@@ -83,7 +83,20 @@ mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<
             <div id="content">
                 <div class="outer">
                     <div class="inner bg-light lter">
-
+						 <?php
+                        if (isset($_GET['id'])) {
+                            mysql_query("delete from reservation_attente where id=" . $_GET['id']);
+                            echo "<script>alert('Commande supprimée !')</script>";
+                            echo "<script>window.location='commandearchivee.php'</script>";
+                        }
+                        ?>
+                        <?php
+                        if (isset($_GET['id_tel'])) {
+                            mysql_query("delete from reservation_tel where id=" . $_GET['id_tel']);
+                            echo "<script>alert('Commande supprimée !')</script>";
+                            echo "<script>window.location='commandearchivee.php'</script>";
+                        }
+                        ?>
                         <!--Begin Datatables-->
                         <div class="row">
                             <div class="col-lg-12">
@@ -105,13 +118,13 @@ mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<
                                                     <th>Date</th>
                                                     <th>Total</th>
                                                     <th>Chauffeur</th>
-                                                   
+                                                    <th>Action</th>
                                                  
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = mysql_query("select  myvtc_users.nom, myvtc_users.prenom,  reservation_attente.heure,reservation_attente.chauffeur, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from  myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.dtdeb>='2016-01-01'  AND reservation_attente.etat=1 and  reservation_attente.archive=1  ;");
+                                                $sql = mysql_query("select  reservation_attente.id, myvtc_users.nom, myvtc_users.prenom,reservation_attente.heure,reservation_attente.chauffeur, reservation_attente.depart,reservation_attente.arrivee,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.prix from  myvtc_users inner join  reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.dtdeb>='2016-01-01'  AND reservation_attente.etat=1 and  reservation_attente.archive=1  ;");
                                                 while ($data = mysql_fetch_array($sql)) {
                                                     $nom_complet1=  mysql_fetch_array(mysql_query("select chauffeur.nom,chauffeur.prenom from chauffeur where id_chauffeur=".$data['chauffeur']));
                                                     $nom_complet = $nom_complet1['nom'] . " " . $nom_complet1['prenom'];
@@ -119,20 +132,19 @@ mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<
                                                     <tr>
 
                                                         <td><?php echo $data['prenom']." ".$data['nom']; ?></td>
-                                                      
                                                         <td><?php echo $data['depart'];?></td>
                                                         <td><?php echo $data['arrivee']; ?></td>
                                                         <td><?php echo $data['dtdeb']; ?></td>
                                                         <td><?php echo $data['prix']; ?> euros</td>
                                                         <td><?php echo $nom_complet; ?></td>
-                                                       
+                                                        <td><a class="btn btn-danger btn-sm" href="commandearchivee.php?id=<?php echo $data['id']; ?>" >Supprimer</a></td>
                                                      
                                                     </tr>
                                                     <?php
                                                 }
                                                 ?>
 												  <?php
-                                                $sql1 = mysql_query("select chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom,reservation_tel.depart,reservation_tel.arrivee, reservation_tel.id as id_cmd, client_tel.nom, client_tel.prenom, DATE_FORMAT(reservation_tel.dtdeb, '%d/%m/%Y') as dtdeb, prix  from reservation_tel, client_tel, chauffeur WHERE client_tel.id = reservation_tel.client AND reservation_tel.id_chauffeur=chauffeur.id_chauffeur AND reservation_tel.archive=1");
+                                                $sql1 = mysql_query("select reservation_tel.id, chauffeur.nom as chauffeurnom, chauffeur.prenom as chauffeurprenom,reservation_tel.depart,reservation_tel.arrivee, reservation_tel.id as id_cmd, client_tel.nom, client_tel.prenom, DATE_FORMAT(reservation_tel.dtdeb, '%d/%m/%Y') as dtdeb, prix  from reservation_tel, client_tel, chauffeur WHERE client_tel.id = reservation_tel.client AND reservation_tel.id_chauffeur=chauffeur.id_chauffeur AND reservation_tel.archive=1");
                                                 while ($data1 = mysql_fetch_array($sql1)) {                                                 
                                                     $nom_complet = $data1['chauffeurnom'] . " " . $data1['chauffeurprenom'];
                                                     ?>
@@ -144,7 +156,7 @@ mysql_query("update  reservation_tel set archive=1 where  reservation_tel.dtdeb<
                                                         <td><?php echo $data1['dtdeb']; ?></td>
                                                         <td><?php echo $data1['prix']; ?> euros</td>
                                                         <td><?php echo $nom_complet; ?></td>
-                                                   
+														<td><a class="btn btn-danger btn-sm" href="commandearchivee.php?id_tel=<?php echo $data1['id']; ?>" >Supprimer</a></td>
                                                     </tr>
                                                     <?php
                                                 }
