@@ -464,7 +464,7 @@ $etat = $et['etat'];
                         rep = true;
                     } else if (rep == false && (b == true && e == true) || (a == true && f == true))
                     {
-                        window.prixtotal = 69;
+                        window.prixtotal = 0;
                         rep = true;
                     } else if (rep == false)
                     {

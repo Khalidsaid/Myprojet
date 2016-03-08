@@ -113,7 +113,7 @@ L'&eacute;quipe ReserverUnCab.com.";
 
 $mail->AddAttachment("Facture_" . $commande['codecommande'] . ".pdf");  
    // Pour finir, on envoi l'e-mail
-   $mail->send();
+   //$mail->send();
    
 // Idem pour le chauffeur
 
@@ -154,7 +154,7 @@ L'&eacute;quipe ReserverUnCab.com.";
 
 
    // Pour finir, on envoi l'e-mail
-   $mail2->send();  
+   //$mail2->send();  
 
 
 ?>

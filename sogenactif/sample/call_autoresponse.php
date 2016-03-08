@@ -170,20 +170,21 @@
 		$mail2->Body    = "Salam Alaykoum,<br><br>
 
 		Cher Chauffeur, Une reservation sur le site ReserverUnCab.com a &eacute;t&eacute; effectu&eacute; avec succ&egrave;s !<br><br>
+		
 		Type: " . $commande["type_user"] . " <br><br>
-Client : " . $commande["prenom"] . "<br><br>
-Tel : " . $commande["tel"] . " <br><br>
-Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
-D&eacute;part : " . $commande['depart'] . "<br><br>
-Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
-Prix : " . $commande['prix'] . "€<br><br>
+		Client : " . $commande["prenom"] . "<br><br>
+		Tel : " . $commande["tel"] . " <br><br>
+		Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
+		D&eacute;part : " . $commande['depart'] . "<br><br>
+		Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
+		Prix : " . $commande['prix'] . "€<br><br>
 	
 
 		L'&eacute;quipe ReserverUnCab.com.";
 
 
-   // Pour finir, on envoi l'e-mail
-   $mail2->send();  
+	   // Pour finir, on envoi l'e-mail
+	   $mail2->send();  
    
    
    
@@ -232,48 +233,47 @@ Prix : " . $commande['prix'] . "€<br><br>
 
    
 
-    require_once(dirname(__FILE__).'../../html2pdf/html2pdf.class.php');
+    require_once('../../html2pdf/html2pdf.class.php');
     $html2pdf = new HTML2PDF('P','A4','fr');
     $html2pdf->WriteHTML($chaine);
     $content_PDF = $html2pdf->Output('', true);
 	file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $content_PDF);
    
-   $mail->Host = 'SSL0.OVH.NET';                 // Specify main and backup server
-$mail->Port = 465; 
+    $mail->Host = 'SSL0.OVH.NET';                 // Specify main and backup server
+	$mail->Port = 465; 
 
-$mail = new PHPMailer;
+	$mail = new PHPMailer;
 
-$mail->IsHTML(true); 
-$mail->CharSet = 'UTF-8';  
-$mail->Host = 'smtp.gmail.com';                 // Specify main and backup server
-$mail->Port = 26;                                    // Set the SMTP port
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'contact@reserveruncab.com';                // SMTP username
-$mail->Password = 'Balloo94';                  // SMTP password
+	$mail->IsHTML(true); 
+	$mail->CharSet = 'UTF-8';  
+	$mail->Host = 'smtp.gmail.com';                 // Specify main and backup server
+	$mail->Port = 26;                                    // Set the SMTP port
+	$mail->SMTPAuth = true;                               // Enable SMTP authentication
+	$mail->Username = 'contact@reserveruncab.com';                // SMTP username
+	$mail->Password = 'Balloo94';                  // SMTP password
                            // Enable encryption, 'ssl' also accepted
 
-$adresse_destinataire = 'contact@reserveruncab.com';						   
-$mail->From = 'contact@reserveruncab.com';
-$mail->FromName = 'ReserverUnCab';
-//$mail->AddBCC($adresse_destinataire, $adresse_destinataire);
-$mail->AddAddress($commande['email'], $commande['email']); // Add address
+	$adresse_destinataire = 'khalidsaid.box@gmail.com';						   
+	$mail->From = 'contact@reserveruncab.com';
+	$mail->FromName = 'ReserverUnCab';
+	$mail->AddAddress($commande['email'], $commande['email']); // Add address
 
 
-$mail->Subject = 'Validation de paiement ReserverUnCab.com';
-$mail->Body    = "Bonjour " . $commande["prenom"] . ",<br><br>
+	$mail->Subject = 'Validation de paiement ReserverUnCab.com';
+	$mail->Body    = "Bonjour " . $commande["prenom"] . ",<br><br>
 
-F&eacute;cilitation ! Votre paiement sur le site ReserverUnCab.com a &eacute;t&eacute; effectu&eacute; avec succ&egrave;s.<br><br>
+	F&eacute;cilitation ! Votre paiement sur le site ReserverUnCab.com a &eacute;t&eacute; effectu&eacute; avec succ&egrave;s.<br><br>
 
-Voici le d&eacute;tail de votre commande :<br><br>
-Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
-D&eacute;part : " . $commande['depart'] . "<br><br>
-Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
-Prix : " . $commande['prix'] . "€<br><br>
+	Voici le d&eacute;tail de votre commande :<br><br>
+	Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
+	D&eacute;part : " . $commande['depart'] . "<br><br>
+	Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
+	Prix : " . $commande['prix'] . "€<br><br>
 
-L'&eacute;quipe ReserverUnCab.com.";
+	L'&eacute;quipe ReserverUnCab.com.";
 
 
-$mail->AddAttachment("Facture_" . $commande['codecommande'] . ".pdf");  
+	$mail->AddAttachment("Facture_" . $commande['codecommande'] . ".pdf");  
    // Pour finir, on envoi l'e-mail
    $mail->send();
 		
