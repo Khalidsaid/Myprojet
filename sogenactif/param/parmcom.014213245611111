@@ -13,7 +13,7 @@ LOGO!merchant.gif!
 
 # URL de retour automatique de la reponse du paiement
 
-#AUTO_RESPONSE_URL!http://reserveruncab.com/autoResponse.php!
+AUTO_RESPONSE_URL!http://reserveruncab.com/call_autoresponse.php!
 
 # URL de retour suite a paiement refuse
 

@@ -10,24 +10,16 @@
 -->
 
 <?php
-	include("../../config.php");
-	require '../../phpmailer/class.phpmailer.php';
-	
-	$ref = $_GET['ref'];
-	$ll = mysql_query("select myvtc_users.type_user, myvtc_users.id, myvtc_users.prenom, myvtc_users.nom, myvtc_users.email as email, myvtc_users.tel, reservation_attente.depart,reservation_attente.arrivee,reservation_attente.id,DATE_FORMAT(reservation_attente.dtdeb, '%d/%m/%Y') as dtdeb,reservation_attente.codecommande,reservation_attente.prix,reservation_attente.heure from myvtc_users inner join reservation_attente on reservation_attente.id_user = myvtc_users.id where  reservation_attente.codecommande='". $ref ."' order by reservation_attente.id desc limit 1")or die(mysql_error());
-	
-	$commande = mysql_fetch_array($ll);
-	
-	
+	include("config.php");
 	// Récupération de la variable cryptée DATA
-	$message="message=$_POST[DATA]";
+	$message="message=$HTTP_POST_VARS[DATA]";
 
 	// Initialisation du chemin du fichier pathfile (à modifier)
 	    //   ex :
 	    //    -> Windows : $pathfile="pathfile=c:/repertoire/pathfile"
 	    //    -> Unix    : $pathfile="pathfile=/home/repertoire/pathfile"
 	    
-	$pathfile="pathfile=/home/reserverrz/www/sogenactif/param/pathfile";
+	$pathfile="pathfile=http://reserveruncab.com/sogenactif/param/pathfile";
 
 	//Initialisation du chemin de l'executable response (à modifier)
 	//ex :
@@ -35,7 +27,7 @@
 	//-> Unix    : $path_bin = "/home/repertoire/bin/response"
 	//
 
-	$path_bin = "/home/reserverrz/www/sogenactif/bin/static/response";
+	$path_bin = "http://reserveruncab.com/sogenactif/bin/static/response";
 
 	// Appel du binaire response
   	$message = escapeshellcmd($message);
@@ -111,10 +103,9 @@
 
   if (( $code == "" ) && ( $error == "" ) )
  	{
-  	
+  	//fwrite($fp, "erreur appel response\n");
   	print ("executable response non trouve $path_bin\n");
  	}
-
 
 	//	Erreur, sauvegarde le message d'erreur
 
@@ -145,137 +136,6 @@
 		'".$complementary_info."','".$return_context."','".$caddie."','".$receipt_complement."','".$merchant_language."','".$language."','".$customer_id."','".$customer_email."',
 		'".$customer_ip_address."','".$capture_day."','".$capture_mode."','".$data."','".$order_validity."','".$transaction_condition."','".$statement_reference."',
 		'".$card_validity."','".$score_value."','".$score_color."','".$score_info."','".$score_threshold."','".$score_profile."','".$codecommande."');");
-		
-
-		
-		$mail2->Host = 'SSL0.OVH.NET';                 // Specify main and backup server
-		$mail2->Port = 465; 
-
-		$mail2 = new PHPMailer;
-
-		$mail2->IsHTML(true); 
-		$mail2->CharSet = 'UTF-8';  
-		$mail2->Host = 'smtp.gmail.com';                 // Specify main and backup server
-		$mail2->Port = 26;                                    // Set the SMTP port
-		$mail2->SMTPAuth = true;                               // Enable SMTP authentication
-		$mail2->Username = 'contact@reserveruncab.com';                // SMTP username
-		$mail2->Password = 'Balloo94';      
-		$adresse_destinataire = 'contact@reserveruncab.com';						   
-		$mail2->From = 'contact@reserveruncab.com';
-		$mail2->FromName = 'ReserverUnCab';
-		$mail2->AddAddress($adresse_destinataire, $adresse_destinataire); // Add address
-
-
-		$mail2->Subject = 'Notification de reservation ReserverUnCab.com';
-		$mail2->Body    = "Salam Alaykoum,<br><br>
-
-		Cher Chauffeur, Une reservation sur le site ReserverUnCab.com a &eacute;t&eacute; effectu&eacute; avec succ&egrave;s !<br><br>
-		Type: " . $commande["type_user"] . " <br><br>
-Client : " . $commande["prenom"] . "<br><br>
-Tel : " . $commande["tel"] . " <br><br>
-Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
-D&eacute;part : " . $commande['depart'] . "<br><br>
-Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
-Prix : " . $commande['prix'] . "€<br><br>
-	
-
-		L'&eacute;quipe ReserverUnCab.com.";
-
-
-   // Pour finir, on envoi l'e-mail
-   $mail2->send();  
-   
-   
-   
-   
-   $chaine = utf8_encode('<table border="0" style="width:100%">
-            <tr>
-                <td colspan="2" style="margin-right: 50px;"><img src="http://www.reserveruncab.com/images/logo.png" alt="" /></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: center"><h2>Facture N&deg; ' . $commande['codecommande'] . '</h2></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: left"><br><br><br><br>Bonjour ' . $commande["prenom"] . ',<br><br>Ci-dessous, vous trouvez le d&eacute;tail de votre commande : <br><br><br></td>
-            </tr>
-             <tr>
-                 <td colspan="2" >
-                     <table border="1" style="width:600px">
-                         <tr>
-                             <td style="height:25px; width:200px">D&eacute;part</td>
-                             <td> ' . $commande['depart'] . '</td>
-                         </tr>
-                         <tr style="height:35px">
-                             <td style="height:25px">Arriv&eacute;e</td>
-                             <td> ' . $commande['arrivee'] . '</td>
-                         </tr>
-                         <tr style="height:35px">
-                             <td style="height:25px">Date</td>
-                             <td> ' . $commande['dtdeb']  . '</td>
-                         </tr>
-                         <tr style="height:35px">
-                             <td style="height:25px">Heure</td>
-                             <td> ' . $commande['heure'] . '</td>
-                         </tr>
-                         <tr style="height:35px">
-                             <td style="height:25px">Prix TTC</td>
-                             <td> ' . $commande['prix'] . ' euros</td>
-                         </tr>
-                     </table>
-                 </td>
-               
-            </tr>
-            <tr>
-                <td colspan="2" style="margin-right: 50px; padding-top:200px">L\'&eacute;quipe ReserverUnCab.com</td>
-            </tr>
-        </table>');
-
-   
-
-    require_once(dirname(__FILE__).'../../html2pdf/html2pdf.class.php');
-    $html2pdf = new HTML2PDF('P','A4','fr');
-    $html2pdf->WriteHTML($chaine);
-    $content_PDF = $html2pdf->Output('', true);
-	file_put_contents('Facture_' . $commande["codecommande"] . '.pdf', $content_PDF);
-   
-   $mail->Host = 'SSL0.OVH.NET';                 // Specify main and backup server
-$mail->Port = 465; 
-
-$mail = new PHPMailer;
-
-$mail->IsHTML(true); 
-$mail->CharSet = 'UTF-8';  
-$mail->Host = 'smtp.gmail.com';                 // Specify main and backup server
-$mail->Port = 26;                                    // Set the SMTP port
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'contact@reserveruncab.com';                // SMTP username
-$mail->Password = 'Balloo94';                  // SMTP password
-                           // Enable encryption, 'ssl' also accepted
-
-$adresse_destinataire = 'contact@reserveruncab.com';						   
-$mail->From = 'contact@reserveruncab.com';
-$mail->FromName = 'ReserverUnCab';
-//$mail->AddBCC($adresse_destinataire, $adresse_destinataire);
-$mail->AddAddress($commande['email'], $commande['email']); // Add address
-
-
-$mail->Subject = 'Validation de paiement ReserverUnCab.com';
-$mail->Body    = "Bonjour " . $commande["prenom"] . ",<br><br>
-
-F&eacute;cilitation ! Votre paiement sur le site ReserverUnCab.com a &eacute;t&eacute; effectu&eacute; avec succ&egrave;s.<br><br>
-
-Voici le d&eacute;tail de votre commande :<br><br>
-Date : " . $commande['dtdeb'] ." à ".$commande['heure']. "<br><br>
-D&eacute;part : " . $commande['depart'] . "<br><br>
-Arriv&eacute;e : " . $commande['arrivee'] . "<br><br>
-Prix : " . $commande['prix'] . "€<br><br>
-
-L'&eacute;quipe ReserverUnCab.com.";
-
-
-$mail->AddAttachment("Facture_" . $commande['codecommande'] . ".pdf");  
-   // Pour finir, on envoi l'e-mail
-   $mail->send();
 		
 	}
 
